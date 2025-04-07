@@ -55,8 +55,8 @@
                                     <td>
                                         <ng-container *ngFor="let permiso of PERMISSION.permisos">
                                             <div class="form-check form-check-sm form-check-custom form-check-solid py-1">
-                                                <input class="form-check-input" name="permissions" type="checkbox" value="1">
-                                                {{permiso.name}}
+                                                <input class="form-check-input" type="checkbox" name="permissions" (click)="addPermission(permiso.permiso)">
+                                                {{ permiso.name }}
                                             </div>
                                         </ng-container>
                                     </td>
