@@ -1,1 +1,114 @@
-<p>list-roles works!</p>
+<div class="card">
+    <!--begin::Card header-->
+    <div class="card-header border-0 pt-6">
+        <!--begin::Card title-->
+        <div class="card-title">
+            <!--begin::Search-->
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                        class="path2"></span></i> <input type="text" data-kt-customer-table-filter="search"
+                    class="form-control form-control-solid w-250px ps-12" placeholder="Search Roles">
+            </div>
+            <!--end::Search-->
+        </div>
+        <!--begin::Card title-->
+
+        <!--begin::Card toolbar-->
+        <div class="card-toolbar">
+            <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                <!--begin::Add customer-->
+                <button type="button" class="btn btn-primary" (click)="createRol()">
+                    + Agregar Roles
+                </button>
+                <!--end::Add customer-->
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Group actions-->
+            <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
+                <div class="fw-bold me-5">
+                    <span class="me-2" data-kt-customer-table-select="selected_count">1</span> Selected
+                </div>
+
+                <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">
+                    Delete Selected
+                </button>
+            </div>
+            <!--end::Group actions-->
+        </div>
+        <!--end::Card toolbar-->
+    </div>
+    <!--end::Card header-->
+
+    <!--begin::Card body-->
+    <div class="card-body pt-0">
+
+        <!--begin::Table-->
+        <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+            <div id="" class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
+                    style="width: 100%;">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0">
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                                colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Rol</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Permisos</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1"
+                                colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Fecha de registro</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="text-end min-w-70px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1"
+                                aria-label="Actions"><span class="dt-column-title">Actions</span><span
+                                    class="dt-column-order"></span></th>
+
+                        </tr>
+                    </thead>
+                    <tbody class="fw-semibold text-gray-600">
+                        <tr>
+                            <!-- <td>
+                                <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                    <input class="form-check-input" type="checkbox" value="1">
+                                </div>
+                            </td> -->
+                            <td>
+                                ASESOR COMERCIAL
+                            </td>
+
+                            <td>
+                                ["register_contract"]
+                            </td>
+
+                            <td>
+                                14 Dec 2020, 8:43 pm </td>
+                            <td class="">
+                                <a href="#" onclick="return false;"
+                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                    <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span
+                                            class="path2"></span></i>
+                                </a>
+
+                                <a href="#" onclick="return false;"
+                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                    <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span
+                                            class="path2"></span><span class="path3"></span><span
+                                            class="path4"></span><span class="path5"></span></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+            <!--end::Table-->
+        </div>
+        <!--end::Card body-->
+    </div>
