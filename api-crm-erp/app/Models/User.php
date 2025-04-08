@@ -4,7 +4,9 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -14,6 +16,7 @@ class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
     use HasRoles;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +27,15 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
+
+        'surname',
+        'phone',
+        'role_id',
+        'sucursal_id',
+        'type_document',
+        'n_document',
+        'gender',
+        'avatar',
     ];
 
     /**
@@ -46,6 +58,12 @@ class User extends Authenticatable implements JWTSubject
         'password' => 'hashed',
     ];
 
+    //roles
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -55,7 +73,7 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->getKey();
     }
- 
+
     /**
      * Return a key value array, containing any custom claims to be added to the JWT.
      *

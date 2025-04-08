@@ -52,6 +52,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/roles/roles.module').then((m) => m.RolesModule),
   },
   {
+    path: 'usuarios',
+    loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

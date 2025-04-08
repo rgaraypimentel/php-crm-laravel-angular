@@ -1,0 +1,164 @@
+<!--begin::Modal content CREATE-->
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="kt_modal_add_user_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bolder">Edit User: {{ USER_SELECTED.full_name }}</h2>
+        
+        <!--end::Modal title-->
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 my-3">
+        <!--begin::Form-->
+        <form id="kt_modal_add_user_form" class="form" action="#">
+             <!--begin::Scroll-->
+            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                <!--begin::Input group-->
+                <div class="fv-row row my-1">
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Nombre: </label>
+                        <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Name" [(ngModel)]="name" />
+                    </div>
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Apellido: </label>
+                        <input type="text" name="surname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Surname" [(ngModel)]="surname" />
+                    </div>
+                </div>
+
+                <div class="fv-row row my-1">
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Email: </label>
+                        <input type="email" name="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@gmail.com" [(ngModel)]="email" />
+                    </div>
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Phone: </label>
+                        <input type="number" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="99999999" [(ngModel)]="phone" />
+                    </div>
+                </div>
+
+                <div class="fv-row row my-1">
+                    <div class="col-12">
+                        <label class="required fw-bold fs-6 mb-2">Roles: </label>
+                        <select
+                            class="form-control form-select-solid fw-bolder"
+                            name="role_selected"
+                            placeholder="Selec. Rol"
+                            [(ngModel)]="role_id"
+                        >
+                         <option value="">Selec. Rol</option>
+                        <ng-container *ngFor="let rol of roles">
+                            <option [value]="rol.id">{{ rol.name }}</option>
+                        </ng-container>
+                        
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="fv-row row my-1">
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Genero: </label>
+                        <div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" [checked]="gender == 'MASCULINO'" (click)="gender = 'MASCULINO'" id="gender1">
+                                <label class="form-check-label" for="gender1">
+                                  Masculino
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="gender" [checked]="gender == 'FEMENINO'" (click)="gender = 'FEMENINO'" id="gender2">
+                                <label class="form-check-label" for="gender2">
+                                  Femenino
+                                </label>
+                              </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <!-- <label class="required fw-bold fs-6 mb-2">Phone: </label>
+                        <input type="number" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="99999999" [(ngModel)]="phone" /> -->
+                    </div>
+                </div>
+
+                <div class="fv-row row my-1">
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Tipo de documento: </label>
+                        <select
+                            class="form-control form-select-solid fw-bolder"
+                            name="categorie"
+                            placeholder="Selec. Tipo"
+                            [(ngModel)]="type_document"
+                        >
+                            <option value="DNI">DNI</option>
+                            <option value="CARNET DE EXTRANJERIA">CARNET DE EXTRANJERIA</option>
+                            <option value="PASAPORTE">PASAPORTE</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">N° de documento: </label>
+                        <input type="number" [(ngModel)]="n_document" name="n_document" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="99999999" />
+                    </div>
+                </div>
+
+                <div class="fv-row row my-1">
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Dirección: </label>
+                        <textarea name="address" id="" cols="20" rows="5" [(ngModel)]="address"></textarea>
+                    </div>
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Avatar: </label>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
+                            <label class="custom-file-label" for="customFile">Choose file</label>
+                        </div>
+                        <div *ngIf="imagen_previzualiza">
+                            <img [src]="imagen_previzualiza" style="height: 100px;" alt="" srcset="">
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="fv-row row my-1">
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Contraseña: </label>
+                        <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="*******" [(ngModel)]="password" />
+                    </div>
+                    <div class="col-6">
+                        <label class="required fw-bold fs-6 mb-2">Repetir Contraseña: </label>
+                        <input type="password" name="password" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="********" [(ngModel)]="password_repit" />
+                    </div>
+                </div>
+
+            </div>
+            <!--end::Scroll-->
+
+            <!--begin::Actions-->
+            <div class="text-center pt-15">
+                <button type="reset" class="btn btn-light me-3" (click)="modal.dismiss()">Cerrar</button>
+                <button type="button" (click)="store()" class="btn btn-primary" data-kt-users-modal-action="submit">
+                    <span class="indicator-label">Editar</span>
+
+                    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading | async"></span>
+                    <!-- <span class="indicator-progress">Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> -->
+                </button>
+            </div>
+            <!--end::Actions-->
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Modal body-->
+</div>
+<!--end::Modal content CREATE-->

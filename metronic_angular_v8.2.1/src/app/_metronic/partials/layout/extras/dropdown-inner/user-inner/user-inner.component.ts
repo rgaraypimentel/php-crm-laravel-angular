@@ -13,7 +13,7 @@ export class UserInnerComponent implements OnInit, OnDestroy {
   @HostBinding('attr.data-kt-menu') dataKtMenu = 'true';
 
   language: LanguageFlag;
-  user$: Observable<UserType>;
+  user$: Observable<any>;
   langs = languages;
   private unsubscribe: Subscription[] = [];
 
