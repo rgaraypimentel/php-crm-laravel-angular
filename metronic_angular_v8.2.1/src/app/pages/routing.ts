@@ -55,6 +55,11 @@ const Routing: Routes = [
     path: 'usuarios',
     loadChildren: () => import('../modules/users/users.module').then((m) => m.UsersModule),
   },
+  // MIS MODULOS localhost:4200/configuraciones/sucursales/list
+  {
+    path: 'configuraciones',
+    loadChildren: () => import('../modules/configuration/configuration.module').then((m) => m.ConfigurationModule),
+  },
   {
     path: '',
     redirectTo: '/dashboard',

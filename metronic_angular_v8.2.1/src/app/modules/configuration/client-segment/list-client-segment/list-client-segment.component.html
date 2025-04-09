@@ -1,0 +1,122 @@
+<div class="card">
+    <!--begin::Card header-->
+    <div class="card-header border-0 pt-6">
+        <!--begin::Card title-->
+        <div class="card-title">
+            <!--begin::Search-->
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                        class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listClientSegments()" name="search" data-kt-customer-table-filter="search"
+                    class="form-control form-control-solid w-250px ps-12" placeholder="Search Client Segment">
+            </div>
+            <!--end::Search-->
+        </div>
+        <!--begin::Card title-->
+        <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+        <!--begin::Card toolbar-->
+        <div class="card-toolbar">
+            <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                <!--begin::Add customer-->
+                <button type="button" class="btn btn-primary" (click)="createClientSegment()">
+                    + Agregar Client Segment
+                </button>
+                <!--end::Add customer-->
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Group actions-->
+            <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
+                <div class="fw-bold me-5">
+                    <span class="me-2" data-kt-customer-table-select="selected_count"></span> Selected
+                </div>
+
+                <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">
+                    Delete Selected
+                </button>
+            </div>
+            <!--end::Group actions-->
+        </div>
+        <!--end::Card toolbar-->
+    </div>
+    <!--end::Card header-->
+
+    <!--begin::Card body-->
+    <div class="card-body pt-0">
+
+        <!--begin::Table-->
+        <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+            <div id="" class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
+                    style="width: 1199.5px;">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
+                            
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                                colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Segmento de cliente</span><span
+                                    class="dt-column-order"></span></th>
+
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Estado</span><span
+                                    class="dt-column-order"></span></th>
+
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1"
+                                colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Fecha de registro</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="text-end min-w-70px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1"
+                                aria-label="Actions"><span class="dt-column-title">Actions</span><span
+                                    class="dt-column-order"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-semibold text-gray-600">
+                        <ng-container *ngFor="let CLIENTE_SEGMENT of CLIENTE_SEGMENTS">
+                            <tr>
+                                <td>
+                                    {{ CLIENTE_SEGMENT.name }}
+                                </td>
+    
+                                <td >
+                                    <span class="badge badge-light-success" *ngIf="CLIENTE_SEGMENT.state == 1">Activo</span>
+                                    <span class="badge badge-light-danger" *ngIf="CLIENTE_SEGMENT.state == 2">Inactivo</span>
+                                </td>
+                                
+                                <td>
+                                    {{ CLIENTE_SEGMENT.created_at }}
+                                </td>
+
+                                <td class="">
+                                    <a href="#" onclick="return false;" (click)="editClientSegment(CLIENTE_SEGMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                        <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i> 
+                                    </a>
+    
+                                    <a href="#" onclick="return false;" (click)="deleteClientSegment(CLIENTE_SEGMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                        <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ng-container>
+                        
+                        
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+            <ngb-pagination
+                [collectionSize]="totalPages"
+                [(page)]="currentPage"
+                [pageSize]="25"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+            ></ngb-pagination>
+        </div>
+        <!--end::Table-->
+    </div>
+    <!--end::Card body-->
+</div>

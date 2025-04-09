@@ -5,6 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserAccessController;
+use App\Http\Controllers\Configuration\UnitController;
+use App\Http\Controllers\Configuration\SucursaleController;
+use App\Http\Controllers\Configuration\WerehouseController;
+use App\Http\Controllers\Configuration\ClientSegmentController;
+use App\Http\Controllers\Configuration\MethodPaymentController;
+use App\Http\Controllers\Configuration\ProductCategorieController;
+use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,4 +49,13 @@ Route::group([
     Route::post('/users/{id}', [UserAccessController::class, 'update']);
     Route::get('/users/config', [UserAccessController::class, 'config']);
     Route::resource("users",UserAccessController::class);
+
+    Route::resource("sucursales",SucursaleController::class); 
+    Route::resource("warehouses",WerehouseController::class);
+    Route::resource("sucursale_deliveries",SucursaleDeliverieController::class);
+    Route::resource("method_payments",MethodPaymentController::class);
+    Route::resource("client_segments",ClientSegmentController::class); 
+
+    Route::post('/product_categories/{id}', [ProductCategorieController::class, 'update']);
+    Route::resource("product_categories",ProductCategorieController::class); 
 });
