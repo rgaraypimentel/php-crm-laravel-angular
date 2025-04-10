@@ -11,7 +11,7 @@ import { ProductCategoriesService } from '../service/product-categories.service'
 export class EditProductCategorieComponent {
   @Output() ProductCategorieE: EventEmitter<any> = new EventEmitter();
   @Input() CATEGORIE_SELECTED:any;
-  
+
   name:string = '';
   state:number = 1;
   isLoading:any;
@@ -23,7 +23,7 @@ export class EditProductCategorieComponent {
     public productCategorieService: ProductCategoriesService,
     public toast: ToastrService,
   ) {
-    
+
   }
 
   ngOnInit(): void {

@@ -3,8 +3,8 @@
     <!--begin::Modal header-->
     <div class="modal-header" id="kt_modal_add_user_header">
         <!--begin::Modal title-->
-        <h2 class="fw-bolder">Edit User: {{ USER_SELECTED.full_name }}</h2>
-        
+        <h2 class="fw-bolder">Editar Usuario: {{ USER_SELECTED.full_name }}</h2>
+
         <!--end::Modal title-->
         <!--begin::Close-->
         <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
@@ -24,7 +24,7 @@
     <div class="modal-body scroll-y mx-5 my-3">
         <!--begin::Form-->
         <form id="kt_modal_add_user_form" class="form" action="#">
-             <!--begin::Scroll-->
+            <!--begin::Scroll-->
             <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                 <!--begin::Input group-->
                 <div class="fv-row row my-1">
@@ -58,15 +58,15 @@
                             placeholder="Selec. Rol"
                             [(ngModel)]="role_id"
                         >
-                         <option value="">Selec. Rol</option>
+                        <option value="">Selec. Rol</option>
                         <ng-container *ngFor="let rol of roles">
                             <option [value]="rol.id">{{ rol.name }}</option>
                         </ng-container>
-                        
+
                         </select>
                     </div>
                 </div>
-                
+
 
                 <div class="fv-row row my-1">
                     <div class="col-6">
@@ -78,7 +78,7 @@
                                   Masculino
                                 </label>
                               </div>
-                              <div class="form-check">
+                              <div class="form-check mt-2">
                                 <input class="form-check-input" type="radio" name="gender" [checked]="gender == 'FEMENINO'" (click)="gender = 'FEMENINO'" id="gender2">
                                 <label class="form-check-label" for="gender2">
                                   Femenino
@@ -118,15 +118,21 @@
                         <textarea name="address" id="" cols="20" rows="5" [(ngModel)]="address"></textarea>
                     </div>
                     <div class="col-6">
-                        <label class="required fw-bold fs-6 mb-2">Avatar: </label>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
-                            <label class="custom-file-label" for="customFile">Choose file</label>
-                        </div>
-                        <div *ngIf="imagen_previzualiza">
-                            <img [src]="imagen_previzualiza" style="height: 100px;" alt="" srcset="">
-                        </div>
-                    </div>
+                      <label class="required fw-bold fs-6 mb-2">Avatar: </label>
+                      <div class="d-flex flex-column align-items-start gap-2 w-100">
+                          <div class="btn btn-primary btn-sm">
+                              <label for="customFile" class="mb-0 cursor-pointer text-white">Subir Imagen</label>
+                              <input type="file"
+                                  id="customFile"
+                                  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"
+                                  (change)="processFile($event)"
+                                  class="d-none" />
+                          </div>
+                          <div *ngIf="imagen_previzualiza">
+                              <img [src]="imagen_previzualiza" alt="Avatar preview" class="img-thumbnail" style="max-height: 100px; max-width: 100%;">
+                          </div>
+                      </div>
+                  </div>
                 </div>
 
 

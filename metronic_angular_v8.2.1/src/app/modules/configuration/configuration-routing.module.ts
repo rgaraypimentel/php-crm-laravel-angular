@@ -26,10 +26,14 @@ const routes: Routes = [
     path: 'categoria-de-productos',
     loadChildren: () => import('./product-categories/product-categories.module').then((m) => m.ProductCategoriesModule),
   },
-  // {
-  //   path: 'provedores',
-  //   loadChildren: () => import('./providers/providers.module').then((m) => m.ProvidersModule),
-  // },
+  {
+    path: 'proveedores',
+    loadChildren: () => import('./providers/providers.module').then((m) => m.ProvidersModule),
+  },
+  {
+    path: 'unidades',
+    loadChildren: () => import('./units/units.module').then((m) => m.UnitsModule),
+  },
 ];
 
 @NgModule({

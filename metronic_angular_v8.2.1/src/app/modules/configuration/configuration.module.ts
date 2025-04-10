@@ -8,7 +8,8 @@ import { SucursalDeliveriesModule } from './sucursal-deliveries/sucursal-deliver
 import { MethodPaymentModule } from './method-payment/method-payment.module';
 import { ClientSegmentModule } from './client-segment/client-segment.module';
 import { ProductCategoriesModule } from './product-categories/product-categories.module';
-// import { ProvidersModule } from './providers/providers.module';
+import { ProvidersModule } from './providers/providers.module';
+import { UnitsModule } from './units/units.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ProductCategoriesModule } from './product-categories/product-categories
     MethodPaymentModule,
     ClientSegmentModule,
     ProductCategoriesModule,
-    // ProvidersModule,
+    ProvidersModule,
+    UnitsModule,
   ]
 })
 export class ConfigurationModule { }

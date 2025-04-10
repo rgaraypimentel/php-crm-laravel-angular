@@ -11,6 +11,7 @@ use App\Http\Controllers\Configuration\WerehouseController;
 use App\Http\Controllers\Configuration\ClientSegmentController;
 use App\Http\Controllers\Configuration\MethodPaymentController;
 use App\Http\Controllers\Configuration\ProductCategorieController;
+use App\Http\Controllers\Configuration\ProviderController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 
 /*
@@ -45,17 +46,24 @@ Route::group([
 Route::group([
     'middleware' => 'auth:api',
 ], function ($router) {
-    Route::resource("roles",RolePermissionController::class); 
+    Route::resource("roles",RolePermissionController::class);
     Route::post('/users/{id}', [UserAccessController::class, 'update']);
     Route::get('/users/config', [UserAccessController::class, 'config']);
     Route::resource("users",UserAccessController::class);
 
-    Route::resource("sucursales",SucursaleController::class); 
+    Route::resource("sucursales",SucursaleController::class);
     Route::resource("warehouses",WerehouseController::class);
     Route::resource("sucursale_deliveries",SucursaleDeliverieController::class);
     Route::resource("method_payments",MethodPaymentController::class);
-    Route::resource("client_segments",ClientSegmentController::class); 
+    Route::resource("client_segments",ClientSegmentController::class);
 
     Route::post('/product_categories/{id}', [ProductCategorieController::class, 'update']);
-    Route::resource("product_categories",ProductCategorieController::class); 
+    Route::resource("product_categories",ProductCategorieController::class);
+
+    Route::post('/providers/{id}', [ProviderController::class, 'update']);
+    Route::resource("providers",ProviderController::class);
+
+    Route::post('/units/add-transform', [UnitController::class, 'add_transform']);
+    Route::delete('/units/delete-transform/{id}', [UnitController::class, 'delete_transform']);
+    Route::resource("units",UnitController::class);
 });
