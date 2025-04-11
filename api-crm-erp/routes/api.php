@@ -13,6 +13,7 @@ use App\Http\Controllers\Configuration\MethodPaymentController;
 use App\Http\Controllers\Configuration\ProductCategorieController;
 use App\Http\Controllers\Configuration\ProviderController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
+use App\Http\Controllers\Product\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -66,4 +67,10 @@ Route::group([
     Route::post('/units/add-transform', [UnitController::class, 'add_transform']);
     Route::delete('/units/delete-transform/{id}', [UnitController::class, 'delete_transform']);
     Route::resource("units",UnitController::class);
+
+    // Route::post('/products/index', [ProductController::class, 'index']);
+    // Route::post('/products/import', [ProductController::class, 'import_product']);
+    Route::post('/products/{id}', [ProductController::class, 'update']);
+    Route::get("products/config", [ProductController::class, 'config']);
+    Route::resource("products",ProductController::class);
 });

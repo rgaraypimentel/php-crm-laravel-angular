@@ -61,6 +61,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/configuration/configuration.module').then((m) => m.ConfigurationModule),
   },
   {
+    path: 'productos',
+    loadChildren: () => import('../modules/products/products.module').then((m) => m.ProductsModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
