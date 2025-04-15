@@ -21,7 +21,7 @@ export class ListProductCategorieComponent {
     public modalService: NgbModal,
     public productCategorieService: ProductCategoriesService,
   ) {
-    
+
   }
 
   ngOnInit(): void {

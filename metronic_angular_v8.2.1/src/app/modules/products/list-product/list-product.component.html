@@ -62,7 +62,7 @@
           <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
               <!--begin::Add customer-->
               <button type="button" class="btn btn-primary" routerLink="/productos/registro">
-                  + Add Product
+                  + Agregar Producto
               </button>
               <!--end::Add customer-->
           </div>
@@ -137,7 +137,7 @@
               <!--begin::Description-->
               <div class="text-muted fs-7">Disponibilidad de stock.</div>
           </div>
-          <!-- <div class="col-2">
+          <div class="col-2">
               <button class="btn btn-success btn-sm" (click)="downloadProducts()">
                   <i class="ki-duotone ki-folder-down fs-2"><span class="path1"></span><span class="path2"></span></i>
               </button>
@@ -153,7 +153,7 @@
                   ({{ num_products_por_agotar  }})
               </button>
 
-          </div> -->
+          </div>
       </div>
       <!--begin::Table-->
       <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
@@ -233,7 +233,7 @@
                               </td>
 
                               <td >
-                                  {{ getDisponibilidad(PRODUCT.disponiblidad) }} </td>
+                                  {{ getDisponibilidad(PRODUCT.disponibilidad) }} </td>
 
                               <td >
                                   {{ PRODUCT.sku }} </td>
@@ -242,11 +242,10 @@
                                   {{ getTaxSelected(PRODUCT.tax_selected) }} </td>
 
 
-                                  <td>
-                                      <span class="badge badge-light-success" *ngIf="PRODUCT.state == 1">Activo</span>
+                              <td>
+                                  <span class="badge badge-light-success" *ngIf="PRODUCT.state == 1">Activo</span>
                                   <span class="badge badge-light-danger" *ngIf="PRODUCT.state == 2">Inactivo</span>
-
-                                  </td>
+                              </td>
                               <td class="">
                                   <a [routerLink]="'/productos/list/editar/'+PRODUCT.id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                       <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>

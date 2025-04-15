@@ -29,14 +29,14 @@ export class ProductsService {
     );
   }
 
-  // importProduct(data:any) {
-  //   this.isLoadingSubject.next(true);
-  //   let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-  //   let URL = URL_SERVICIOS+"/products/import";
-  //   return this.http.post(URL,data,{headers: headers}).pipe(
-  //     finalize(() => this.isLoadingSubject.next(false))
-  //   );
-  // }
+  importProduct(data:any) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
+    let URL = URL_SERVICIOS+"/products/import";
+    return this.http.post(URL,data,{headers: headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
 
   listProducts(page = 1,data:any = null){
     this.isLoadingSubject.next(true);

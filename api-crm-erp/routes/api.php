@@ -14,6 +14,8 @@ use App\Http\Controllers\Configuration\ProductCategorieController;
 use App\Http\Controllers\Configuration\ProviderController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Product\ProductWalletController;
+use App\Http\Controllers\Product\ProductWarehouseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -68,9 +70,14 @@ Route::group([
     Route::delete('/units/delete-transform/{id}', [UnitController::class, 'delete_transform']);
     Route::resource("units",UnitController::class);
 
-    // Route::post('/products/index', [ProductController::class, 'index']);
-    // Route::post('/products/import', [ProductController::class, 'import_product']);
+    Route::post('/products/index', [ProductController::class, 'index']);
+    Route::post('/products/import', [ProductController::class, 'import_product']);
     Route::post('/products/{id}', [ProductController::class, 'update']);
     Route::get("products/config", [ProductController::class, 'config']);
     Route::resource("products",ProductController::class);
+
+    Route::resource("product_wallets",ProductWalletController::class);
+    Route::resource("product_warehouses",ProductWarehouseController::class);
 });
+
+Route::get("excel/export-products",[ProductController::class,"export_products"]);

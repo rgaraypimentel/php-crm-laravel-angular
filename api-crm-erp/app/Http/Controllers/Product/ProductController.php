@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers\Product;
 
+use App\Exports\Product\DownloadProduct;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Product\ProductCollection;
+use App\Http\Resources\Product\ProductResource;
+use App\Imports\ProductsImport;
 use App\Models\Configuration\ClientSegment;
 use App\Models\Configuration\ProductCategorie;
 use App\Models\Configuration\Provider;
@@ -14,6 +18,7 @@ use App\Models\Product\ProductWallet;
 use App\Models\Product\ProductWarehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductController extends Controller
 {
@@ -23,32 +28,29 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
-        // $product_categorie_id = $request->product_categorie_id;
-        // $disponibilidad = $request->disponibilidad;
-        // $tax_selected = $request->tax_selected;
+        $product_categorie_id = $request->product_categorie_id;
+        $disponibilidad = $request->disponibilidad;
+        $tax_selected = $request->tax_selected;
 
-        // $sucursale_price_multiple = $request->sucursale_price_multiple;
-        // $client_segment_price_multiple = $request->client_segment_price_multiple;
-        // $almacen_warehouse = $request->almacen_warehouse;
-        // $unit_warehouse = $request->unit_warehouse;
-        // $state_stock = $request->state_stock;
-        // // where("title","like","%".$search."%")
-        // $products = Product::filterAdvance($search,$product_categorie_id,$disponibilidad,$tax_selected,
-        // $sucursale_price_multiple,$client_segment_price_multiple,$almacen_warehouse,$unit_warehouse,$state_stock)
-        //             ->orderBy("id","desc")
-        //             ->paginate(25);
+        $sucursale_price_multiple = $request->sucursale_price_multiple;
+        $client_segment_price_multiple = $request->client_segment_price_multiple;
+        $almacen_warehouse = $request->almacen_warehouse;
+        $unit_warehouse = $request->unit_warehouse;
+        $state_stock = $request->state_stock;
+        // where("title","like","%".$search."%")
+        $products = Product::filterAdvance($search,$product_categorie_id,$disponibilidad,$tax_selected,
+        $sucursale_price_multiple,$client_segment_price_multiple,$almacen_warehouse,$unit_warehouse,$state_stock)
+                    ->orderBy("id","desc")
+                    ->paginate(25);
 
-        // $num_products_agotado = Product::where("state_stock",3)->count();
-        // $num_products_por_agotar = Product::where("state_stock",2)->count();
-
-        $products = Product::where("title","like","%".$search."%")->orderBy("id","desc")->paginate(25);
+        $num_products_agotado = Product::where("state_stock",3)->count();
+        $num_products_por_agotar = Product::where("state_stock",2)->count();
 
         return response()->json([
             "total" => $products->total(),
-            "products" => $products,
-            // "products" => ProductCollection::make($products),
-            // "num_products_agotado" => $num_products_agotado,
-            // "num_products_por_agotar" => $num_products_por_agotar,
+            "products" => ProductCollection::make($products),
+            "num_products_agotado" => $num_products_agotado,
+            "num_products_por_agotar" => $num_products_por_agotar,
         ]);
     }
 
@@ -70,25 +72,25 @@ class ProductController extends Controller
         ]);
     }
 
-    // public function export_products(Request $request) {
+    public function export_products(Request $request) {
 
-    //     $search = $request->get("search");
-    //     $product_categorie_id = $request->get("product_categorie_id");
-    //     $disponibilidad = $request->get("disponibilidad");
-    //     $tax_selected = $request->get("tax_selected");
+        $search = $request->get("search");
+        $product_categorie_id = $request->get("product_categorie_id");
+        $disponibilidad = $request->get("disponibilidad");
+        $tax_selected = $request->get("tax_selected");
 
-    //     $sucursale_price_multiple = $request->get("sucursale_price_multiple");
-    //     $client_segment_price_multiple = $request->get("client_segment_price_multiple");
-    //     $almacen_warehouse = $request->get("almacen_warehouse");
-    //     $unit_warehouse = $request->get("unit_warehouse");
-    //     $state_stock = $request->get("state_stock");
+        $sucursale_price_multiple = $request->get("sucursale_price_multiple");
+        $client_segment_price_multiple = $request->get("client_segment_price_multiple");
+        $almacen_warehouse = $request->get("almacen_warehouse");
+        $unit_warehouse = $request->get("unit_warehouse");
+        $state_stock = $request->get("state_stock");
 
-    //     $products = Product::filterAdvance($search,$product_categorie_id,$disponibilidad,$tax_selected,
-    //     $sucursale_price_multiple,$client_segment_price_multiple,$almacen_warehouse,$unit_warehouse,$state_stock)
-    //                 ->orderBy("id","desc")->get();
+        $products = Product::filterAdvance($search,$product_categorie_id,$disponibilidad,$tax_selected,
+        $sucursale_price_multiple,$client_segment_price_multiple,$almacen_warehouse,$unit_warehouse,$state_stock)
+                    ->orderBy("id","desc")->get();
 
-    //     return Excel::download(new DownloadProduct($products),"productos_descargados.xlsx");
-    // }
+        return Excel::download(new DownloadProduct($products),"productos_descargados.xlsx");
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -135,19 +137,19 @@ class ProductController extends Controller
         ]);
     }
 
-    // public function import_product(Request $request)
-    // {
-    //     $request->validate([
-    //         "import_file" => 'required|file|mimes:xls,xlsx,csv'
-    //     ]);
-    //     $path = $request->file("import_file");
+    public function import_product(Request $request)
+    {
+        $request->validate([
+            "import_file" => 'required|file|mimes:xls,xlsx,csv'
+        ]);
+        $path = $request->file("import_file");
 
-    //     $data = Excel::import(new ProductsImport,$path);
+        $data = Excel::import(new ProductsImport,$path);
 
-    //     return response()->json([
-    //         "message" => 200
-    //     ]);
-    // }
+        return response()->json([
+            "message" => 200
+        ]);
+    }
 
     /**
      * Display the specified resource.
@@ -157,11 +159,8 @@ class ProductController extends Controller
         $product = Product::findOrFail($id);
 
         return response()->json([
-            "product" => $product,
+            "product" => ProductResource::make($product),
         ]);
-        // return response()->json([
-        //     "product" => ProductResource::make($product),
-        // ]);
     }
 
     /**

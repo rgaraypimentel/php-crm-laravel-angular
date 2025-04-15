@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { DeleteProductComponent } from '../delete-product/delete-product.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsService } from '../service/products.service';
+import { URL_SERVICIOS } from 'src/app/config/config';
+import { ImportProductsComponent } from '../import-products/import-products.component';
 
 @Component({
   selector: 'app-list-product',
@@ -44,7 +46,7 @@ export class ListProductComponent {
     //Add 'implements OnInit' to the class.
     this.isLoading$ = this.productService.isLoading$;
     this.listProducts();
-    // this.configAll();
+    this.configAll();
   }
 
   listProducts(page = 1){
@@ -82,16 +84,16 @@ export class ListProductComponent {
     this.state_stock = '';
     this.listProducts();
   }
-  // configAll(){
-  //   this.productService.configAll().subscribe((resp:any) => {
-  //     console.log(resp);
-  //     this.CATEGORIES = resp.categories;
-  //     this.SUCURSALES = resp.sucursales;
-  //     this.WAREHOUSES = resp.almacens;
-  //     this.CLIENT_SEGMENTS = resp.segments_clients;
-  //     this.UNITS = resp.units;
-  //   })
-  // }
+  configAll(){
+    this.productService.configAll().subscribe((resp:any) => {
+      console.log(resp);
+      this.CATEGORIES = resp.categories;
+      this.SUCURSALES = resp.sucursales;
+      this.WAREHOUSES = resp.almacens;
+      this.CLIENT_SEGMENTS = resp.segments_clients;
+      this.UNITS = resp.units;
+    })
+  }
   getDisponibilidad(val:number){
     let TEXTO = "";
     switch (val) {
@@ -149,40 +151,40 @@ export class ListProductComponent {
     })
   }
 
-  // downloadProducts(){
-  //   let LINK = "";
-  //   if(this.product_categorie_id){
-  //     LINK += "&product_categorie_id="+this.product_categorie_id;
-  //   }
-  //   if(this.disponibilidad){
-  //     LINK += "&disponibilidad="+this.disponibilidad;
-  //   }
-  //   if(this.search){
-  //     LINK += "&search="+this.search;
-  //   }
-  //   if(this.sucursale_price_multiple){
-  //     LINK += "&sucursale_price_multiple="+this.sucursale_price_multiple;
-  //   }
-  //   if(this.client_segment_price_multiple){
-  //     LINK += "&client_segment_price_multiple="+this.client_segment_price_multiple;
-  //   }
-  //   if(this.almacen_warehouse){
-  //     LINK += "&almacen_warehouse="+this.almacen_warehouse;
-  //   }
-  //   if(this.unit_warehouse){
-  //     LINK += "&unit_warehouse="+this.unit_warehouse;
-  //   }
-  //   if(this.state_stock){
-  //     LINK += "&state_stock="+this.state_stock;
-  //   }
-  //   window.open(URL_SERVICIOS+"/excel/export-products?k=1"+LINK,"_blank");
-  // }
+  downloadProducts(){
+    let LINK = "";
+    if(this.product_categorie_id){
+      LINK += "&product_categorie_id="+this.product_categorie_id;
+    }
+    if(this.disponibilidad){
+      LINK += "&disponibilidad="+this.disponibilidad;
+    }
+    if(this.search){
+      LINK += "&search="+this.search;
+    }
+    if(this.sucursale_price_multiple){
+      LINK += "&sucursale_price_multiple="+this.sucursale_price_multiple;
+    }
+    if(this.client_segment_price_multiple){
+      LINK += "&client_segment_price_multiple="+this.client_segment_price_multiple;
+    }
+    if(this.almacen_warehouse){
+      LINK += "&almacen_warehouse="+this.almacen_warehouse;
+    }
+    if(this.unit_warehouse){
+      LINK += "&unit_warehouse="+this.unit_warehouse;
+    }
+    if(this.state_stock){
+      LINK += "&state_stock="+this.state_stock;
+    }
+    window.open(URL_SERVICIOS+"/excel/export-products?k=1"+LINK,"_blank");
+  }
 
-  // importProducts(){
-  //   const modalRef = this.modalService.open(ImportProductsComponent,{centered:true, size: 'md'});
-  //   modalRef.componentInstance.ImportProductD.subscribe((prod:any) => {
-  //     this.listProducts();
-  //   })
-  // }
+  importProducts(){
+    const modalRef = this.modalService.open(ImportProductsComponent,{centered:true, size: 'md'});
+    modalRef.componentInstance.ImportProductD.subscribe((prod:any) => {
+      this.listProducts();
+    })
+  }
 }
 

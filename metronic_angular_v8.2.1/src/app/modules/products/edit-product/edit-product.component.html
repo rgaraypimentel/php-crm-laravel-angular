@@ -1,1 +1,857 @@
-<p>edit-product works!</p>
+<div class="d-flex flex-column flex-column-fluid">
+  <!--begin::Toolbar-->
+  <div id="kt_app_toolbar" class="app-toolbar py-3 py-lg-6">
+      <!--begin::Toolbar container-->
+      <div id="kt_app_toolbar_container" class="app-container container-xxl d-flex flex-stack">
+          <!--begin::Page title-->
+          <div class="page-title d-flex flex-column justify-content-center flex-wrap me-3">
+              <!--begin::Title-->
+              <h1 class="page-heading d-flex text-gray-900 fw-bold fs-3 flex-column justify-content-center my-0">Editar Product: "{{ PRODUCT_SELECTED.title }}"</h1>
+              <!--end::Title-->
+          </div>
+          <!--end::Page title-->
+          <!--begin::Actions-->
+          <div class="d-flex align-items-center gap-2 gap-lg-3">
+          </div>
+          <!--end::Actions-->
+      </div>
+      <!--end::Toolbar container-->
+  </div>
+  <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+  <!--end::Toolbar-->
+  <!--begin::Content-->
+  <div id="kt_app_content" class="app-content flex-column-fluid">
+      <!--begin::Content container-->
+      <div id="kt_app_content_container" class="app-container container-xxl">
+          <!--begin::Form-->
+          <form id="kt_ecommerce_add_product_form" class="form d-flex flex-column flex-lg-row" data-kt-redirect="apps/ecommerce/catalog/products.html">
+              <!--begin::Aside column-->
+              <div class="d-flex flex-column gap-7 gap-lg-10 w-100 w-lg-300px mb-7 me-lg-10">
+                  <!--begin::Thumbnail settings-->
+                  <div class="card card-flush py-4">
+                      <!--begin::Card header-->
+                      <div class="card-header">
+                          <!--begin::Card title-->
+                          <div class="card-title">
+                              <h2>Thumbnail</h2>
+                          </div>
+                          <!--end::Card title-->
+                      </div>
+                      <!--end::Card header-->
+                      <!--begin::Card body-->
+                      <div class="card-body text-center pt-0">
+                          <!--begin::Image input-->
+                          <!--begin::Image input placeholder-->
+                          <!--end::Image input placeholder-->
+                          <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
+                           [ngStyle]="{'background-image': 'url('+imagen_previzualiza+')' }"
+                            data-kt-image-input="true">
+                              <!--begin::Preview existing avatar-->
+                              <div class="image-input-wrapper w-150px h-150px"></div>
+                              <!--end::Preview existing avatar-->
+                              <!--begin::Label-->
+                              <label class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="change" data-bs-toggle="tooltip" title="Change avatar">
+                                  <i class="ki-duotone ki-pencil fs-7" >
+                                      <span class="path1"></span>
+                                      <span class="path2"></span>
+                                  </i>
+                                  <!--begin::Inputs-->
+                                  <input type="file" name="avatar" accept=".png, .jpg, .jpeg" (change)="processFile($event)" />
+                                  <input type="hidden" name="avatar_remove" />
+                                  <!--end::Inputs-->
+                              </label>
+                              <!--end::Label-->
+                              <!--begin::Cancel-->
+                              <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="cancel" data-bs-toggle="tooltip" title="Cancel avatar">
+                                  <i class="ki-duotone ki-cross fs-2">
+                                      <span class="path1"></span>
+                                      <span class="path2"></span>
+                                  </i>
+                              </span>
+                              <!--end::Cancel-->
+                              <!--begin::Remove-->
+                              <span class="btn btn-icon btn-circle btn-active-color-primary w-25px h-25px bg-body shadow" data-kt-image-input-action="remove" data-bs-toggle="tooltip" title="Remove avatar">
+                                  <i class="ki-duotone ki-cross fs-2">
+                                      <span class="path1"></span>
+                                      <span class="path2"></span>
+                                  </i>
+                              </span>
+                              <!--end::Remove-->
+                          </div>
+                          <!--end::Image input-->
+                          <!--begin::Description-->
+                          <div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+                          <!--end::Description-->
+                      </div>
+                      <!--end::Card body-->
+                  </div>
+                  <!--end::Thumbnail settings-->
+                  <!--begin::Status-->
+                  <div class="card card-flush py-4">
+                      <!--begin::Card header-->
+                      <div class="card-header">
+                          <!--begin::Card title-->
+                          <div class="card-title">
+                              <h2>Status</h2>
+                          </div>
+                          <!--end::Card title-->
+                          <!--begin::Card toolbar-->
+                          <div class="card-toolbar">
+                              <div class="rounded-circle bg-success w-15px h-15px" id="kt_ecommerce_add_product_status"></div>
+                          </div>
+                          <!--begin::Card toolbar-->
+                      </div>
+                      <!--end::Card header-->
+                      <!--begin::Card body-->
+                      <div class="card-body pt-0">
+                          <!--begin::Select2-->
+                          <select class="form-select mb-2" [(ngModel)]="state" name="state" data-control="select2" data-hide-search="true" data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select">
+                              <option value="1">Published</option>
+                              <option value="2">Inactive</option>
+                          </select>
+                          <!--end::Select2-->
+                          <!--begin::Description-->
+                          <div class="text-muted fs-7">Set the product status.</div>
+                          <!--end::Description-->
+                          <!--begin::Datepicker-->
+                          <div class="d-none mt-10">
+                              <label for="kt_ecommerce_add_product_status_datepicker" class="form-label">Select publishing date and time</label>
+                              <input class="form-control" id="kt_ecommerce_add_product_status_datepicker" placeholder="Pick date & time" />
+                          </div>
+                          <!--end::Datepicker-->
+                      </div>
+                      <!--end::Card body-->
+                  </div>
+                  <!--end::Status-->
+                  <!--begin::Template settings-->
+                  <div class="card card-flush py-4">
+                      <!--begin::Card header-->
+                      <div class="card-header">
+                          <!--begin::Card title-->
+                          <div class="card-title">
+                              <h2>Categoria Producto</h2>
+                          </div>
+                          <!--end::Card title-->
+                      </div>
+                      <!--end::Card header-->
+                      <!--begin::Card body-->
+                      <div class="card-body pt-0">
+                          <!--begin::Select store template-->
+                          <label for="kt_ecommerce_add_product_store_template" class="form-label">Select a categorie</label>
+                          <!--end::Select store template-->
+                          <!--begin::Select2-->
+                          <select class="form-select mb-2" [(ngModel)]="product_categorie_id" name="product_categorie_id">
+                              <ng-container *ngFor="let CATEGORIE of CATEGORIES">
+                                  <option [value]="CATEGORIE.id" >{{ CATEGORIE.name }}</option>
+                              </ng-container>
+                          </select>
+                          <!--end::Select2-->
+                          <!--begin::Description-->
+                          <div class="text-muted fs-7">Assign a template from your current theme to define how a single product is displayed.</div>
+                          <!--end::Description-->
+                      </div>
+                      <!--end::Card body-->
+                  </div>
+                  <!--end::Template settings-->
+              </div>
+              <!--end::Aside column-->
+              <!--begin::Main column-->
+              <div class="d-flex flex-column flex-row-fluid gap-7 gap-lg-10">
+                  <!--begin:::Tabs-->
+                  <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-n2">
+                      <!--begin:::Tab item-->
+                      <li class="nav-item">
+                          <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 1}" data-bs-toggle="tab" href="#kt_ecommerce_add_product_general" onclick="return false;" (click)="selectedTab(1)">General</a>
+                      </li>
+                      <!--end:::Tab item-->
+                      <!--begin:::Tab item-->
+                      <li class="nav-item">
+                          <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 2}" data-bs-toggle="tab" href="#kt_ecommerce_add_product_advanced" onclick="return false;" (click)="selectedTab(2)">Avanzado</a>
+                      </li>
+                      <!--end:::Tab item-->
+                  </ul>
+                  <!--end:::Tabs-->
+                  <!--begin::Tab content-->
+                  <div class="tab-content">
+                      <!--begin::Tab pane-->
+                      <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 1}" id="kt_ecommerce_add_product_general" role="tab-panel">
+                          <div class="d-flex flex-column gap-7 gap-lg-10">
+                              <!--begin::General options-->
+                              <div class="card card-flush py-4">
+                                  <!--begin::Card header-->
+                                  <div class="card-header">
+                                      <div class="card-title">
+                                          <h2>General</h2>
+                                      </div>
+                                  </div>
+                                  <!--end::Card header-->
+                                  <!--begin::Card body-->
+                                  <div class="card-body pt-0">
+                                      <!--begin::Input group-->
+                                      <div class="mb-10 fv-row">
+                                          <!--begin::Label-->
+                                          <label class="required form-label">Product Name</label>
+                                          <!--end::Label-->
+                                          <!--begin::Input-->
+                                          <input type="text" [(ngModel)]="title" name="title" class="form-control mb-2" placeholder="Product name" />
+                                          <!--end::Input-->
+                                          <!--begin::Description-->
+                                          <div class="text-muted fs-7">A product name is required and recommended to be unique.</div>
+                                          <!--end::Description-->
+                                      </div>
+                                      <!--end::Input group-->
+                                      <!--begin::Input group-->
+                                      <div>
+                                          <!--begin::Label-->
+                                          <label class="form-label">Description</label>
+                                          <!--end::Label-->
+                                          <textarea class="form-control form-control-solid" rows="3" [(ngModel)]="description" name="description" placeholder="Type Target Details"></textarea>
+
+                                          <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
+                                          <!--end::Description-->
+                                      </div>
+
+                                      <div class="row">
+                                          <div class="col-4">
+                                              <label class="required form-label">Proveedor: (Opcional)</label>
+                                              <select class="form-select mb-2" [(ngModel)]="provider_id" name="provider_id">
+                                                  <ng-container *ngFor="let PROVIDER of PROVIDERS">
+                                                      <option [value]="PROVIDER.id" >{{ PROVIDER.full_name }}</option>
+                                                  </ng-container>
+
+                                              </select>
+                                          </div>
+                                          <div class="col-8">
+                                              <label class="required form-label">Especificaciones: (Opcional)</label>
+                                              <div class="d-flex">
+                                                  <input type="text" [(ngModel)]="key_v" name="key_v" class="form-control mb-2" placeholder="Propiedad" />
+                                                  <input type="text" [(ngModel)]="value_v" name="value_v" class="form-control mb-2" placeholder="Valor" />
+                                                  <button class="btn btn-primary btn-sm" (click)="addEspecif()">+</button>
+                                              </div>
+                                              <div>
+
+                                                  <div class="table-responsive">
+                                                      <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                                         <thead>
+                                                            <tr class="fw-bold text-muted">
+                                                               <th class="">Propiedad</th>
+                                                               <th class="">Valor</th>
+                                                               <th class="">Actions</th>
+                                                            </tr>
+                                                         </thead>
+                                                         <tbody>
+
+                                                              <ng-container *ngFor="let ESPECIFICACION of ESPECIFICACIONES;let i=index">
+                                                                  <tr>
+
+                                                                     <td>
+                                                                        <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ ESPECIFICACION.key_v }}</a>
+                                                                     </td>
+
+                                                                     <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                                      {{ ESPECIFICACION.value_v }}
+                                                                     </td>
+                                                                     <td class="">
+
+                                                                        <a href="#" onclick="return false" (click)="removeEspecif(i)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                        <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
+
+                                                                     </td>
+                                                                  </tr>
+                                                              </ng-container>
+
+
+                                                         </tbody>
+                                                      </table>
+                                                   </div>
+
+                                              </div>
+
+                                          </div>
+                                      </div>
+                                      <!--end::Input group-->
+                                  </div>
+                                  <!--end::Card header-->
+                              </div>
+                              <!--end::General options-->
+                              <!--begin::Pricing-->
+                              <div class="card card-flush py-4">
+                                  <!--begin::Card header-->
+                                  <div class="card-header">
+                                      <div class="card-title">
+                                          <h2>Adicionales</h2>
+                                      </div>
+                                  </div>
+                                  <!--end::Card header-->
+                                  <!--begin::Card body-->
+                                  <div class="card-body pt-0">
+                                      <!--begin::Input group-->
+                                      <div class="mb-10 row fv-row">
+                                          <div class="col-4">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Base Price</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <input type="number" [(ngModel)]="price_general" name="price_general" class="form-control mb-2" placeholder="Product price" />
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Set the product price.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-4">
+                                              <label class="required form-label">Disponibilidad</label>
+                                              <select class="form-select mb-2" [(ngModel)]="disponibilidad" name="disponibilidad">
+                                                  <option value="1" selected="selected">Vender los productos sin stock</option>
+                                                  <option value="2">No vender los productos sin stock </option>
+                                                  <option value="3">Proyectar con los contratos que se tenga</option>
+                                              </select>
+                                          </div>
+                                          <div class="col-4">
+                                              <label class="required form-label">Tiempo de abastecimiento</label>
+                                              <input type="number" [(ngModel)]="tiempo_de_abastecimiento" name="tiempo_de_abastecimiento" class="form-control mb-2" placeholder="Product price" />
+                                          </div>
+                                      </div>
+                                      <!--end::Input group-->
+                                      <!--begin::Input group-->
+                                      <div class="fv-row mb-10">
+                                          <!--begin::Label-->
+                                          <label class="fs-6 fw-semibold mb-2">Discount Type
+                                          <span class="ms-1" data-bs-toggle="tooltip" title="Select a discount type that will be applied to this product">
+                                              <i class="ki-duotone ki-information-5 text-gray-500 fs-6">
+                                                  <span class="path1"></span>
+                                                  <span class="path2"></span>
+                                                  <span class="path3"></span>
+                                              </i>
+                                          </span></label>
+                                          <!--End::Label-->
+                                          <!--begin::Row-->
+                                          <div class="row row-cols-1 row-cols-md-3 row-cols-lg-1 row-cols-xl-3 g-9" data-kt-buttons="true" data-kt-buttons-target="[data-kt-button='true']">
+                                              <!--begin::Col-->
+                                              <div class="col">
+                                                  <!--begin::Option-->
+                                                  <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6" [ngClass]="{'active': is_discount == 1}" data-kt-button="true">
+                                                      <!--begin::Radio-->
+                                                      <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                          <input class="form-check-input" type="radio" name="discount_option" (click)="selectedDiscount(1)" checked="checked" />
+                                                      </span>
+                                                      <!--end::Radio-->
+                                                      <!--begin::Info-->
+                                                      <span class="ms-5">
+                                                          <span class="fs-4 fw-bold text-gray-800 d-block">No Discount</span>
+                                                      </span>
+                                                      <!--end::Info-->
+                                                  </label>
+                                                  <!--end::Option-->
+                                              </div>
+                                              <!--end::Col-->
+                                              <!--begin::Col-->
+                                              <div class="col">
+                                                  <!--begin::Option-->
+                                                  <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6" [ngClass]="{'active': is_discount == 2}" data-kt-button="true">
+                                                      <!--begin::Radio-->
+                                                      <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
+                                                          <input class="form-check-input" type="radio" name="discount_option" (click)="selectedDiscount(2)" />
+                                                      </span>
+                                                      <!--end::Radio-->
+                                                      <!--begin::Info-->
+                                                      <span class="ms-5">
+                                                          <span class="fs-4 fw-bold text-gray-800 d-block">Percentage %</span>
+                                                      </span>
+                                                      <!--end::Info-->
+                                                  </label>
+                                                  <!--end::Option-->
+                                              </div>
+                                              <!--end::Col-->
+                                          </div>
+                                          <!--end::Row-->
+                                      </div>
+                                      <!--end::Input group-->
+
+                                      <!--begin::Input group-->
+                                      <div class="mb-10 row fv-row" *ngIf="is_discount == 2" id="kt_ecommerce_add_product_discount_fixed">
+                                          <div class="col-4">
+                                              <!--begin::Label-->
+                                              <label class="form-label">Descuento Minimo: </label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <input type="number" [(ngModel)]="min_discount" name="min_discount" class="form-control mb-2" placeholder="Discounted price" />
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7"></div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-4">
+                                              <!--begin::Label-->
+                                              <label class="form-label">Descuento Maximo:</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <input type="number" [(ngModel)]="max_discount" name="max_discount" class="form-control mb-2" placeholder="Discounted price" />
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7"></div>
+                                              <!--end::Description-->
+                                          </div>
+                                      </div>
+                                      <!--end::Input group-->
+                                      <!--begin::Tax-->
+                                      <div class="d-flex flex-wrap gap-5">
+                                          <!--begin::Input group-->
+                                          <div class="fv-row w-100 flex-md-root">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Tax Class</label>
+                                              <!--end::Label-->
+                                              <!--begin::Select2-->
+                                              <select class="form-select mb-2" [(ngModel)]="tax_selected" name="tax_selected" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                                                  <option value="1">Tax Free</option>
+                                                  <option value="2">Taxable Goods</option>
+                                                  <option value="3">Downloadable Product</option>
+                                              </select>
+                                              <!--end::Select2-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Set the product tax class.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <!--end::Input group-->
+                                          <!--begin::Input group-->
+                                          <div class="fv-row w-100 flex-md-root">
+                                              <!--begin::Label-->
+                                              <label class="form-label">VAT Amount (%)</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <input type="number" [(ngModel)]="importe_iva" name="importe_iva" class="form-control mb-2" />
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Set the product VAT about.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <!--end::Input group-->
+                                      </div>
+                                      <!--end:Tax-->
+                                  </div>
+                                  <!--end::Card header-->
+                              </div>
+                              <!--end::Pricing-->
+                          </div>
+                      </div>
+                      <!--end::Tab pane-->
+                      <!--begin::Tab pane-->
+                      <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 2}" id="kt_ecommerce_add_product_advanced" role="tab-panel">
+                          <div class="d-flex flex-column gap-7 gap-lg-10">
+                              <!--begin::Inventory-->
+                              <div class="card card-flush py-4">
+                                  <!--begin::Card header-->
+                                  <div class="card-header">
+                                      <div class="card-title">
+                                          <h2>Inventario</h2>
+                                      </div>
+                                  </div>
+                                  <!--end::Card header-->
+                                  <!--begin::Card body-->
+                                  <div class="card-body pt-0">
+                                      <!--begin::Input group-->
+                                      <div class="mb-10 fv-row row">
+                                          <div class="col-6">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">SKU</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <input type="text" [(ngModel)]="sku" name="sku" class="form-control mb-2" placeholder="SKU Number" />
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Enter the product SKU.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-6">
+                                              <!--begin::Label-->
+                                              <label class="form-label">¿Es gratuito?</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <div class="form-check form-check-custom form-check-solid mb-2">
+                                                  <input class="form-check-input" type="checkbox" (click)="isGift()" [checked]="is_gift == 2" />
+                                                  <label class="form-check-label">Yes</label>
+                                              </div>
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Es posible que el producto tenga costo 0.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                      </div>
+                                      <!--end::Input group-->
+                                      <div class="mb-10 fv-row row">
+                                          <div class="col-6">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">UMBRAL</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <input type="text" [(ngModel)]="umbral" name="umbral" class="form-control mb-2" placeholder="SKU Number" />
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Enter the product UMBRAL.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-6">
+                                              <!--begin::Label-->
+                                              <label class="form-label">Unidad Umbral: </label>
+                                              <!--end::Label-->
+                                              <select class="form-select mb-2" [(ngModel)]="umbral_unit_id" name="umbral_unit_id" placeholder="Select an option">
+                                                  <ng-container *ngFor="let UNIT of UNITS">
+                                                      <option [value]="UNIT.id">{{ UNIT.name }}</option>
+                                                  </ng-container>
+                                              </select>
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Es posible que el producto .....</div>
+                                              <!--end::Description-->
+                                          </div>
+                                      </div>
+                                      <!--begin::Input group-->
+                                      <div class="mb-10 fv-row row">
+                                          <div class="col-4">
+                                              <!--begin::Label-->
+
+                                              <label class="required form-label">Unidad</label>
+                                              <!--end::Label-->
+                                              <!--begin::Select2-->
+                                              <select class="form-select mb-2" [(ngModel)]="unit_warehouse" name="unit_warehouse" placeholder="Select an option">
+                                                  <ng-container *ngFor="let UNIT of UNITS">
+                                                      <option [value]="UNIT.id">{{ UNIT.name }}</option>
+                                                  </ng-container>
+                                              </select>
+                                              <!--end::Select2-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Defina unidad.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-4">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Almacen</label>
+                                              <!--end::Label-->
+                                              <!--begin::Select2-->
+                                              <select class="form-select mb-2" [(ngModel)]="almacen_warehouse" name="almacen_warehouse" placeholder="Select an option">
+                                                  <ng-container *ngFor="let WAREHOUSE of WAREHOUSES">
+                                                      <option [value]="WAREHOUSE.id">{{ WAREHOUSE.name }}</option>
+                                                  </ng-container>
+                                              </select>
+                                              <!--end::Select2-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Defina Almacen.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-3">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Quantity</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <div class="d-flex gap-3">
+                                                  <input type="number" [(ngModel)]="quantity_warehouse" name="quantity_warehouse" class="form-control mb-2" placeholder="On shelf" />
+                                              </div>
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Enter the product quantity.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-1">
+                                              <label class="required form-label">Agregar</label>
+                                              <button class="btn btn-primary btn-sm" (click)="addWarehouse()">+</button>
+                                          </div>
+                                      </div>
+                                      <!--end::Input group-->
+                                      <div class="mb-10 fv-row row">
+                                          <div class="col-12">
+                                              <div class="table-responsive">
+                                                  <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                                     <thead>
+                                                        <tr class="fw-bold text-muted">
+                                                           <th class="">Unidad</th>
+                                                           <th class="">Almacen</th>
+                                                           <th class="">Cantidad</th>
+                                                           <th class="">Actions</th>
+                                                        </tr>
+                                                     </thead>
+                                                     <tbody>
+
+                                                          <ng-container *ngFor="let WAREHOUSES_PROD of WAREHOUSES_PRODUCT">
+                                                              <tr>
+                                                                 <!--<td>
+                                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                       <input class="form-check-input widget-13-check" type="checkbox" value="1">
+                                                                    </div>
+                                                                 </td>-->
+
+                                                                 <td>
+                                                                    <a href="#" onclick="return false;" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WAREHOUSES_PROD.unit.name }}</a>
+                                                                    <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Code: PH</span> -->
+                                                                 </td>
+
+                                                                 <!--<td>
+                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Intertico</a>
+                                                                    <span class="text-muted fw-semibold text-muted d-block fs-7">Web, UI/UX Design</span>
+                                                                 </td>-->
+
+                                                                 <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                                  {{ WAREHOUSES_PROD.warehouse.name }}
+                                                                 </td>
+                                                                 <td>
+                                                                    <!-- <span class="badge badge-light-success">Approved</span> -->
+                                                                    {{ WAREHOUSES_PROD.quantity }}
+                                                                 </td>
+                                                                 <td class="">
+
+                                                                    <a href="#" onclick="return false" (click)="editWarehouse(WAREHOUSES_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                    <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a>
+
+                                                                    <a href="#" onclick="return false" (click)="removeWarehouse(WAREHOUSES_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                    <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
+
+                                                                 </td>
+                                                              </tr>
+                                                          </ng-container>
+
+
+                                                     </tbody>
+                                                  </table>
+                                               </div>
+                                          </div>
+                                      </div>
+
+                                  </div>
+                                  <!--end::Card header-->
+                              </div>
+                              <!--end::Inventory-->
+                              <!--begin::PRICES MULTIPLE-->
+                              <div class="card card-flush py-4">
+                                  <!--begin::Card header-->
+                                  <div class="card-header">
+                                      <div class="card-title">
+                                          <h2>Pricio Multiples</h2>
+                                      </div>
+                                  </div>
+                                  <!--end::Card header-->
+                                  <!--begin::Card body-->
+                                  <div class="card-body pt-0">
+                                      <!--begin::Input group-->
+                                      <div class="mb-10 fv-row row">
+                                          <div class="col-3">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Unidad</label>
+                                              <!--end::Label-->
+                                              <!--begin::Select2-->
+                                              <select class="form-select mb-2" [(ngModel)]="unit_price_multiple" name="unit_price_multiple" placeholder="Select an option">
+                                                  <ng-container *ngFor="let UNIT of UNITS">
+                                                      <option [value]="UNIT.id">{{ UNIT.name }}</option>
+                                                  </ng-container>
+                                              </select>
+                                              <!--end::Select2-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Defina unidad.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-3">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Sucursales</label>
+                                              <!--end::Label-->
+                                              <!--begin::Select2-->
+                                              <select class="form-select mb-2" [(ngModel)]="sucursale_price_multiple" name="sucursale_price_multiple" placeholder="Select an option">
+                                                  <ng-container *ngFor="let SUCURSALE of SUCURSALES">
+                                                      <option [value]="SUCURSALE.id">{{ SUCURSALE.name }}</option>
+                                                  </ng-container>
+                                              </select>
+                                              <!--end::Select2-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Defina Sucursales.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-3">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Segmento de cliente</label>
+                                              <!--end::Label-->
+                                              <!--begin::Select2-->
+                                              <select class="form-select mb-2" [(ngModel)]="client_segment_price_multiple" name="client_segment_price_multiple" placeholder="Select an option">
+                                                  <ng-container *ngFor="let CLIENT_SEGMENT of CLIENT_SEGMENTS">
+                                                      <option [value]="CLIENT_SEGMENT.id">{{ CLIENT_SEGMENT.name }}</option>
+                                                  </ng-container>
+                                              </select>
+                                              <!--end::Select2-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Defina Segmento de cliente.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-2">
+                                              <!--begin::Label-->
+                                              <label class="required form-label">Precio</label>
+                                              <!--end::Label-->
+                                              <!--begin::Input-->
+                                              <div class="d-flex gap-3">
+                                                  <input type="number" [(ngModel)]="quantity_price_multiple" name="quantity_price_multiple" class="form-control mb-2" placeholder="On shelf" />
+                                              </div>
+                                              <!--end::Input-->
+                                              <!--begin::Description-->
+                                              <div class="text-muted fs-7">Enter the product price.</div>
+                                              <!--end::Description-->
+                                          </div>
+                                          <div class="col-1">
+                                              <label class="required form-label">Agregar</label>
+                                              <button class="btn btn-primary btn-sm" (click)="addPriceMultiple()">+</button>
+                                          </div>
+                                      </div>
+                                      <!--end::Input group-->
+                                      <div class="mb-10 fv-row row">
+                                          <div class="col-12">
+                                              <div class="table-responsive">
+                                                  <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                                     <thead>
+                                                        <tr class="fw-bold text-muted">
+                                                           <th class="">Unidad</th>
+                                                           <th class="">Sucursal</th>
+                                                           <th class="">Segmento de cliente</th>
+                                                           <th class="">Precio</th>
+                                                           <th class="">Actions</th>
+                                                        </tr>
+                                                     </thead>
+                                                     <tbody>
+                                                          <ng-container *ngFor="let WALLETS_PROD of WALLETS_PRODUCT">
+                                                              <tr>
+                                                                 <!--<td>
+                                                                    <div class="form-check form-check-sm form-check-custom form-check-solid">
+                                                                       <input class="form-check-input widget-13-check" type="checkbox" value="1">
+                                                                    </div>
+                                                                 </td>-->
+
+                                                                 <td>
+                                                                    <a href="#" onclick="return false;" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WALLETS_PROD.unit.name }}</a>
+                                                                    <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Code: PH</span> -->
+                                                                 </td>
+
+                                                                 <!--<td>
+                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Intertico</a>
+                                                                    <span class="text-muted fw-semibold text-muted d-block fs-7">Web, UI/UX Design</span>
+                                                                 </td>-->
+
+                                                                 <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                                    {{ WALLETS_PROD.sucursale ? WALLETS_PROD.sucursale.name : '---' }}
+                                                                 </td>
+
+                                                                 <td>
+                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WALLETS_PROD.client_segment ? WALLETS_PROD.client_segment.name : '---' }}   </a>
+
+                                                                 </td>
+
+                                                                 <td>
+                                                                    <!-- <span class="badge badge-light-success">Approved</span> -->
+                                                                    {{ WALLETS_PROD.price_general }} PEN
+                                                                 </td>
+                                                                 <td class="">
+
+                                                                    <a href="#" onclick="return false" (click)="editProductWallet(WALLETS_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                    <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a>
+
+                                                                    <a href="#" onclick="return false;" (click)="removePriceMultiple(WALLETS_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                    <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
+
+                                                                 </td>
+                                                              </tr>
+                                                          </ng-container>
+
+
+                                                     </tbody>
+                                                  </table>
+                                               </div>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <!--end::Card header-->
+                              </div>
+                              <!--end::Shipping-->
+                              <!--begin::Shipping-->
+                              <div class="card card-flush py-4">
+                                  <!--begin::Card header-->
+                                  <div class="card-header">
+                                      <div class="card-title">
+                                          <h2>Dimensiones</h2>
+                                      </div>
+                                  </div>
+                                  <!--end::Card header-->
+                                  <!--begin::Card body-->
+                                  <div class="card-body pt-0">
+
+                                      <!--begin::Shipping form-->
+                                      <div id="kt_ecommerce_add_product_shipping" class="">
+                                          <!--begin::Input group-->
+                                          <div class="mb-10 fv-row row">
+                                              <div class="col-3">
+                                                  <!--begin::Label-->
+                                                  <label class="form-label">Weight</label>
+                                                  <!--end::Label-->
+                                                  <!--begin::Editor-->
+                                                  <input type="text" [(ngModel)]="weight" name="weight" name="weight" class="form-control mb-2" placeholder="Product weight" />
+                                                  <!--end::Editor-->
+                                                  <!--begin::Description-->
+                                                  <div class="text-muted fs-7">Set a product weight in kilograms (kg).</div>
+                                                  <!--end::Description-->
+                                              </div>
+                                              <div class="col-3">
+                                                  <!--begin::Label-->
+                                                  <label class="form-label">Ancho</label>
+                                                  <!--end::Label-->
+                                                  <!--begin::Input-->
+                                                  <div class="d-flex flex-wrap flex-sm-nowrap gap-3">
+                                                      <input type="number" [(ngModel)]="width" name="width" class="form-control mb-2" placeholder="Width (w)" />
+                                                  </div>
+                                                  <!--end::Input-->
+
+                                              </div>
+                                              <div class="col-3">
+                                                  <!--begin::Label-->
+                                                  <label class="form-label">Alto</label>
+                                                  <!--end::Label-->
+                                                  <!--begin::Input-->
+                                                  <div class="d-flex flex-wrap flex-sm-nowrap gap-3">
+                                                      <input type="number" [(ngModel)]="height" name="height"  class="form-control mb-2" placeholder="Height (h)" />
+                                                  </div>
+                                                  <!--end::Input-->
+
+                                              </div>
+                                              <div class="col-3">
+                                                  <!--begin::Label-->
+                                                  <label class="form-label">Largo</label>
+                                                  <!--end::Label-->
+                                                  <!--begin::Input-->
+                                                  <div class="d-flex flex-wrap flex-sm-nowrap gap-3">
+                                                      <input type="number" [(ngModel)]="length" name="length" class="form-control mb-2" placeholder="Lengtn (l)" />
+                                                  </div>
+                                                  <!--end::Input-->
+
+                                              </div>
+                                          </div>
+                                          <!--end::Input group-->
+                                      </div>
+                                      <!--end::Shipping form-->
+                                  </div>
+                                  <!--end::Card header-->
+                              </div>
+                              <!--end::Shipping-->
+                          </div>
+                      </div>
+                      <!--end::Tab pane-->
+                  </div>
+                  <!--end::Tab content-->
+                  <div class="d-flex justify-content-end">
+                      <!--begin::Button-->
+                      <!-- <a href="apps/ecommerce/catalog/products.html" id="kt_ecommerce_add_product_cancel" class="btn btn-light me-5">Cancel</a> -->
+                      <!--end::Button-->
+                      <!--begin::Button-->
+                      <button type="button" (click)="store()" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
+                          <span class="indicator-label">Save Changes</span>
+                          <span class="indicator-progress">Please wait...
+                          <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                      </button>
+                      <!--end::Button-->
+                  </div>
+              </div>
+              <!--end::Main column-->
+          </form>
+          <!--end::Form-->
+      </div>
+      <!--end::Content container-->
+  </div>
+  <!--end::Content-->
+</div>
