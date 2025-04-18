@@ -29,7 +29,7 @@ class UserAccessController extends Controller
                     'role_id' => $user->role_id,
                     'role' => $user->role,
                     'roles' => $user->roles,
-                    'sucursal_id' => $user->sucursal_id,
+                    'sucursale_id' => $user->sucursale_id,
                     'type_document' => $user->type_document,
                     'n_document' => $user->n_document,
                     'gender' => $user->gender,
@@ -42,7 +42,7 @@ class UserAccessController extends Controller
 
     public function config(){
         return response()->json([
-            "roles" => Role::all(), 
+            "roles" => Role::all(),
         ]);
     }
 
@@ -83,7 +83,7 @@ class UserAccessController extends Controller
                     'role_id' => $user->role_id,
                     'role' => $user->role,
                     'roles' => $user->roles,
-                    'sucursal_id' => $user->sucursal_id,
+                    'sucursale_id' => $user->sucursale_id,
                     'type_document' => $user->type_document,
                     'n_document' => $user->n_document,
                     'gender' => $user->gender,
@@ -129,7 +129,7 @@ class UserAccessController extends Controller
             $request->request-> add(["password" => bcrypt($request->password)]);
         }
 
-        
+
         if($request->role_id != $user->role_id){
             // viejo rol
             $role_old = Role::findOrFail($user->role_id);
@@ -153,7 +153,7 @@ class UserAccessController extends Controller
                     'role_id' => $user->role_id,
                     'role' => $user->role,
                     'roles' => $user->roles,
-                    'sucursal_id' => $user->sucursal_id,
+                    'sucursale_id' => $user->sucursale_id,
                     'type_document' => $user->type_document,
                     'n_document' => $user->n_document,
                     'gender' => $user->gender,

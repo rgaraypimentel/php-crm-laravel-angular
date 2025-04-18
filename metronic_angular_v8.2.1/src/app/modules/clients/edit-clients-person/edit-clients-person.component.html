@@ -1,0 +1,303 @@
+<!--begin::Modal content CREATE-->
+<div class="modal-content">
+  <!--begin::Modal header-->
+  <div class="modal-header" id="kt_modal_add_user_header">
+      <!--begin::Modal title-->
+      <h2 class="fw-bolder">Editar Cliente de tipo Persona: "{{ client_selected.full_name }}"</h2>
+
+      <!--end::Modal title-->
+      <!--begin::Close-->
+      <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
+          <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+          <span class="svg-icon svg-icon-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                  <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+              </svg>
+          </span>
+          <!--end::Svg Icon-->
+      </div>
+      <!--end::Close-->
+  </div>
+  <!--end::Modal header-->
+  <!--begin::Modal body-->
+  <div class="modal-body scroll-y mx-5 my-7">
+      <!--begin::Form-->
+      <form id="kt_modal_add_user_form" class="form" action="#">
+          <!--begin:::Tabs-->
+          <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+              <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-5">
+                  <!--begin:::Tab item-->
+                  <li class="nav-item">
+                      <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 1}" data-bs-toggle="tab" href="#kt_ecommerce_add_product_general" onclick="return false;" (click)="selectedTab(1)">General</a>
+                  </li>
+                  <!--end:::Tab item-->
+                  <!--begin:::Tab item-->
+                  <li class="nav-item">
+                      <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 2}" data-bs-toggle="tab" href="#kt_ecommerce_add_product_advanced" onclick="return false;" (click)="selectedTab(2)">Avanzado</a>
+                  </li>
+                  <!--end:::Tab item-->
+              </ul>
+              <!--end:::Tabs-->
+              <div class="tab-content">
+
+                  <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 1}" id="kt_ecommerce_add_product_general" role="tab-panel">
+                      <div class="d-flex flex-column scroll-y">
+                          <!--begin::Input group-->
+                          <div class="fv-row row mb-7">
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Nombre completo: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nombre" [(ngModel)]="name" />
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Apellido completo: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" name="surname" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Apellido" [(ngModel)]="surname" />
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Segmento de Cliente: (*) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="client_segment_id"
+                                      [(ngModel)]="client_segment_id"
+                                      placeholder="Selec. Segment"
+                                  >
+                                  <option value="">Ninguno</option>
+                                      <ng-container *ngFor="let client_segment of client_segments">
+                                          <option [value]="client_segment.id">{{ client_segment.name }}</option>
+                                      </ng-container>
+
+
+                                  </select>
+
+                              </div>
+                          </div>
+                          <div class="fv-row row mb-7">
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Tipo de Documento: (*) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="type_document"
+                                      [(ngModel)]="type_document"
+                                      placeholder="Selec. Tipo"
+                                  >
+                                      <option value="">Ninguno</option>
+                                      <option value="DNI">DNI</option>
+                                      <option value="RUC">RUC</option>
+                                      <option value="CARNET DE EXTRANJERIA">CARNET DE EXTRANJERIA</option>
+                                  </select>
+
+                              </div>
+
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">N° de documento: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="number" name="n_document" [(ngModel)]="n_document" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="#00000000" />
+                                  <!--end::Input-->
+                              </div>
+
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Origen: (*) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="origen"
+                                      [(ngModel)]="origen"
+                                      placeholder="Selec. Tipo"
+                                  >
+                                      <option value="">Ninguno</option>
+                                      <option value="FACEBOOK">FACEBOOK</option>
+                                      <option value="GOOGLE">GOOGLE</option>
+                                      <option value="YOUTUBE">YOUTUBE</option>
+                                      <option value="CORREO">CORREO</option>
+                                      <option value="TIKTOK">TIKTOK</option>
+                                  </select>
+
+                              </div>
+
+                          </div>
+
+                          <div class="fv-row row mb-7">
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Sexo: (*) </label>
+
+                                  <div class="d-flex mt-3">
+                                      <!--begin::Radio-->
+                                      <div class="form-check form-check-custom form-check-solid me-5">
+                                          <input class="form-check-input" type="radio" value="1" name="sexo" id="sexo_yes" [checked]="sexo == 1 ? true : false" (click)="sexo = 1">
+                                          <label class="form-check-label" for="sexo_yes">
+                                              Hombre
+                                          </label>
+                                      </div>
+
+                                      <div class="form-check form-check-custom form-check-solid">
+                                          <input class="form-check-input" type="radio" value="2" name="sexo" id="sexo_no" [checked]="sexo == 2 ? true : false" (click)="sexo = 2">
+                                          <label class="form-check-label" for="sexo_no">
+                                              Mujer
+                                          </label>
+                                      </div>
+                                      <!--end::Radio-->
+                                  </div>
+
+                              </div>
+
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Cumpleaño: (*) </label>
+                                  <!--end::Label-->
+                                  <div class="input-group input-group-solid">
+                                      <input type="date"
+                                      name="birthdate"
+                                      class="form-control form-control-lg form-control-solid"
+                                      [(ngModel)]="birthdate"
+                                      />
+                                  </div>
+                              </div>
+
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Telefono: (*) </label>
+
+                                  <!--begin::Input-->
+                                  <input type="number" name="phone" [(ngModel)]="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="000-000-000" />
+                                  <!--end::Input-->
+                              </div>
+
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Correo electronico: (Opcional) </label>
+
+                                  <!--begin::Input-->
+                                  <input type="text" name="email" [(ngModel)]="email" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="example@gmail.com" />
+                                  <!--end::Input-->
+                              </div>
+
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 2}" id="kt_ecommerce_add_product_advanced" role="tab-panel">
+                      <div class="d-flex flex-column scroll-y">
+                          <div class="fv-row row mb-7">
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Región: (*) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="ubigeo_region"
+                                      [(ngModel)]="ubigeo_region"
+                                      placeholder="Selec. Región"
+                                      (change)="changeRegion($event)"
+                                  >
+                                  <option value="">Ninguno</option>
+                                      <ng-container *ngFor="let REGION of REGIONES">
+                                          <option [value]="REGION.id">{{ REGION.name }}</option>
+                                      </ng-container>
+
+                                  </select>
+
+                              </div>
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Provincia: (*) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="ubigeo_provincia"
+                                      [(ngModel)]="ubigeo_provincia"
+                                      placeholder="Selec. Provincia"
+                                      (change)="changeProvincia($event)"
+                                  >
+                                      <option value="">Ninguno</option>
+                                       <ng-container *ngFor="let PROVINCIA of PROVINCIA_SELECTEDS">
+                                          <option [value]="PROVINCIA.id">{{ PROVINCIA.name }}</option>
+                                      </ng-container>
+
+                                  </select>
+                              </div>
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Distrito: (*) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="ubigeo_distrito"
+                                      [(ngModel)]="ubigeo_distrito"
+                                      placeholder="Selec. Distrito"
+                                  >
+                                      <option value="">Ninguno</option>
+
+                                      <ng-container *ngFor="let DISTRITO of DISTRITO_SELECTEDS">
+                                          <option [value]="DISTRITO.id">{{ DISTRITO.name }}</option>
+                                      </ng-container>
+                                  </select>
+
+                              </div>
+                          </div>
+                          <div class="fv-row row mb-7">
+                              <div class="col-5">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Dirección: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" name="address" [(ngModel)]="address" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Av, Mz ,Calle" />
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-3">
+                                  <label class="required fw-bold fs-6 mb-2">¿Necesita adelanto?: (Opcional) </label>
+
+                                  <div class="form-check form-check-custom form-check-solid mb-2">
+                                      <input class="form-check-input" type="checkbox" (click)="selectedParcial()" [checked]="is_parcial == 2 ? true : false" />
+                                      <label class="form-check-label">Si</label>
+                                  </div>
+
+                              </div>
+                              <div class="col-4">
+                                  <label class="required fw-bold fs-6 mb-2">Asesores: (Opcional) </label>
+                                  <select
+                                      class="form-control form-select-solid fw-bolder"
+                                      name="asesor_id"
+                                      [(ngModel)]="asesor_id"
+                                      placeholder="Selec. Asesor"
+                                  >
+                                      <option value="">Ninguno</option>
+
+                                      <ng-container *ngFor="let asesor of asesores">
+                                          <option [value]="asesor.id">{{ asesor.full_name }}</option>
+                                      </ng-container>
+                                  </select>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+          <!--end::Scroll-->
+          <!--begin::Actions-->
+          <div class="text-center pt-15">
+              <button type="reset" class="btn btn-light me-3" (click)="modal.dismiss()">Cerrar</button>
+              <button type="button" (click)="store()" class="btn btn-primary" data-kt-users-modal-action="submit">
+                  <span class="indicator-label">Editar</span>
+
+                  <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading | async"></span>
+                  <!-- <span class="indicator-progress">Please wait...
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> -->
+              </button>
+          </div>
+          <!--end::Actions-->
+      </form>
+      <!--end::Form-->
+  </div>
+  <!--end::Modal body-->
+</div>
+<!--end::Modal content CREATE-->

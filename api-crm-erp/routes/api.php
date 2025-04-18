@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\Configuration\UnitController;
@@ -78,6 +79,12 @@ Route::group([
 
     Route::resource("product_wallets",ProductWalletController::class);
     Route::resource("product_warehouses",ProductWarehouseController::class);
+
+    Route::post("clients/index",[ClientController::class,'index']);
+    Route::post("clients/import",[ClientController::class,'import_clients']);
+    Route::get("clients/config", [ClientController::class, 'config']);
+    Route::resource("clients",ClientController::class);
 });
 
 Route::get("excel/export-products",[ProductController::class,"export_products"]);
+Route::get("excel/export-clients",[ClientController::class,"export_clients"]);

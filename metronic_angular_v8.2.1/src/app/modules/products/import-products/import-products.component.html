@@ -29,9 +29,14 @@
                 <!--begin::Input group-->
                 <div class="fv-row mb-7">
                     <label class="form-label">Sube tu archivo excel: *</label>
-                    <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="customFile"  accept=".xls, .xlsx, .csv"  (change)="processFile($event)">
-                        <label class="custom-file-label" for="customFile">Choose file</label>
+                    <div class="d-flex flex-column align-items-start gap-2 w-100">
+                      <div class="btn btn-primary btn-sm">
+                        <input type="file" class="custom-file-input" id="customFile"  accept=".xls, .xlsx, .csv"  (change)="processFile($event)" class="d-none">
+                        <label class="custom-file-label" for="customFile">Subir Archivo</label>
+                      </div>
+                    </div>
+                    <div *ngIf="nameArchivo" class="mt-2 text-muted">
+                      Archivo seleccionado: {{ nameArchivo }}
                     </div>
                 </div>
             </div>

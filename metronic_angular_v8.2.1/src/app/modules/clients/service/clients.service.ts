@@ -1,13 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, finalize, Observable } from 'rxjs';
-import { AuthService } from '../../auth';
+import { Observable, BehaviorSubject, finalize } from 'rxjs';
 import { URL_SERVICIOS } from 'src/app/config/config';
+import { AuthService } from '../../auth';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ProductsService {
+export class ClientsService {
 
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
@@ -20,64 +20,55 @@ export class ProductsService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  registerProduct(data:any) {
+  registerClient(data:any) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products";
+    let URL = URL_SERVICIOS+"/clients";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-  importProduct(data:any) {
+  importClient(data:any) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products/import";
+    let URL = URL_SERVICIOS+"/clients/import";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-  listProducts(page = 1,data:any = null){
+  listConfig(){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products/index?page="+page;
-    return this.http.post(URL,data,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-
-  showProduct(PRODUCT_ID:string){
-    this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products/"+PRODUCT_ID;
+    let URL = URL_SERVICIOS+"/clients/config";
     return this.http.get(URL,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-  configAll(){
+  listClients(page = 1,data:any = {}){
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products/config";
-    return this.http.get(URL,{headers: headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-
-  updateProduct(ID_PRODUCT:string,data:any) {
-    this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products/"+ID_PRODUCT;
+    let URL = URL_SERVICIOS+"/clients/index?page="+page;
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-    deleteProduct(ID_PRODUCT:string) {
+  updateClient(ID_CLIENT_SEGMENT:string,data:any) {
     this.isLoadingSubject.next(true);
     let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
-    let URL = URL_SERVICIOS+"/products/"+ID_PRODUCT;
+    let URL = URL_SERVICIOS+"/clients/"+ID_CLIENT_SEGMENT;
+    return this.http.put(URL,data,{headers: headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  deleteClient(ID_CLIENT_SEGMENT:string) {
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
+    let URL = URL_SERVICIOS+"/clients/"+ID_CLIENT_SEGMENT;
     return this.http.delete(URL,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );

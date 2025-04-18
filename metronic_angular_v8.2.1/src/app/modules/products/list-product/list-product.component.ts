@@ -139,12 +139,12 @@ export class ListProductComponent {
     this.state_stock = '2';
     this.listProducts();
   }
-  deleteProduct(PRODUCT:any){
+  deleteProduct(PRODUCT_SELECTED:any){
     const modalRef = this.modalService.open(DeleteProductComponent,{centered:true, size: 'md'});
-    modalRef.componentInstance.PRODUCT_SELECTED = PRODUCT;
+    modalRef.componentInstance.PRODUCT_SELECTED = PRODUCT_SELECTED;
 
     modalRef.componentInstance.ProductD.subscribe((prod:any) => {
-      let INDEX = this.PRODUCTS.findIndex((prod:any) => prod.id == PRODUCT.id);
+      let INDEX = this.PRODUCTS.findIndex((prod:any) => prod.id == PRODUCT_SELECTED.id);
       if(INDEX != -1){
         this.PRODUCTS.splice(INDEX,1);
       }

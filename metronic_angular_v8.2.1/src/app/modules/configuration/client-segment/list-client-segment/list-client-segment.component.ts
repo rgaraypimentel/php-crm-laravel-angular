@@ -21,7 +21,7 @@ export class ListClientSegmentComponent {
     public modalService: NgbModal,
     public clientSegmentService: ClientSegmentService,
   ) {
-    
+
   }
 
   ngOnInit(): void {

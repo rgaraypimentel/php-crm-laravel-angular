@@ -2,7 +2,7 @@
   <!--begin::Modal header-->
   <div class="modal-header" id="kt_modal_add_user_header">
       <!--begin::Modal title-->
-      <h2 class="fw-bolder">Eliminar Producto : "{{ PRODUCT_SELECTED.title }}"</h2>
+      <h2 class="fw-bolder">Eliminar Cliente : {{ client_selected.full_name }}</h2>
 
       <!--end::Modal title-->
       <!--begin::Close-->
@@ -24,7 +24,7 @@
       <!--begin::Form-->
       <form id="kt_modal_add_user_form" class="form" action="#">
           <p>
-              ¿ESTAS SEGURO DE ELIMINAR ESTE PRODUCTO?
+              ¿ESTAS SEGURO DE ELIMINAR ESTE CLIENTE?
           </p>
           <div class="text-center pt-15">
               <button type="reset" class="btn btn-light me-3" (click)="modal.dismiss()">Cerrar</button>

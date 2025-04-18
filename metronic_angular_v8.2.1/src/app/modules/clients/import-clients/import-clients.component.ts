@@ -1,26 +1,23 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { ProductsService } from '../service/products.service';
+import { ClientsService } from '../service/clients.service';
 
 @Component({
-  selector: 'app-import-products',
-  templateUrl: './import-products.component.html',
-  styleUrls: ['./import-products.component.scss']
+  selector: 'app-import-clients',
+  templateUrl: './import-clients.component.html',
+  styleUrls: ['./import-clients.component.scss']
 })
-export class ImportProductsComponent {
-
-  @Output() ImportProductD: EventEmitter<any> = new EventEmitter();
-  name:string = '';
-  address:string = '';
-  nameArchivo: string = '';
+export class ImportClientsComponent {
+  @Output() importClient: EventEmitter<any> = new EventEmitter();
 
   isLoading:any;
 
   file_excel:any;
+  nameArchivo: string = '';
   constructor(
     public modal: NgbActiveModal,
-    public productService: ProductsService,
+    public clientService: ClientsService,
     public toast: ToastrService,
   ) {
 
@@ -36,7 +33,7 @@ export class ImportProductsComponent {
     this.file_excel = $event.target.files[0];
     if (this.file_excel) {
       this.nameArchivo = this.file_excel.name;
-      // Aquí puedes procesarlo como desees
+      // Aquí se mostrara el nombre del archivo seleccionado
       console.log('Archivo seleccionado:', this.file_excel);
     }
   }
@@ -49,14 +46,13 @@ export class ImportProductsComponent {
     let formData = new FormData();
     formData.append("import_file",this.file_excel);
 
-    this.productService.importProduct(formData).subscribe((resp:any) => {
+    this.clientService.importClient(formData).subscribe((resp:any) => {
       console.log(resp);
-        this.toast.success("Exito","Los productos han sido importados exitosamente");
-        this.ImportProductD.emit(resp.message);
+        this.toast.success("Exito","Los clientes han sido importados exitosamente");
+        this.importClient.emit(resp.message);
         this.modal.close();
     },error => {
       console.log(error);
     })
   }
-
 }
