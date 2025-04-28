@@ -17,6 +17,8 @@ use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductWalletController;
 use App\Http\Controllers\Product\ProductWarehouseController;
+use App\Http\Controllers\Proforma\ProformaController;
+use App\Http\Controllers\Proforma\ProformaDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -84,7 +86,20 @@ Route::group([
     Route::post("clients/import",[ClientController::class,'import_clients']);
     Route::get("clients/config", [ClientController::class, 'config']);
     Route::resource("clients",ClientController::class);
+
+    Route::post("proformas/index",[ProformaController::class,'index']);
+    Route::get("proformas/eval-disponibilidad/{id}", [ProformaController::class, 'eval_disponibilidad']);
+    Route::get("proformas/search-clients", [ProformaController::class, 'search_clients']);
+    Route::get("proformas/search-products", [ProformaController::class, 'search_products']);
+    Route::get("proformas/config", [ProformaController::class, 'config']);
+    Route::post('/proformas/{id}', [ProformaController::class, 'update']);
+    Route::resource("proformas",ProformaController::class);
+
+    Route::resource("proforma-details",ProformaDetailController::class);
 });
 
+Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
+Route::get("excel/export-proforma-generales",[ProformaController::class,"export_proforma_general"]);
+Route::get("excel/export-proforma-details",[ProformaController::class,"export_proforma_details"]);
 Route::get("excel/export-products",[ProductController::class,"export_products"]);
 Route::get("excel/export-clients",[ClientController::class,"export_clients"]);

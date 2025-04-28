@@ -1,0 +1,106 @@
+<!--begin::Modal content CREATE-->
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="kt_modal_add_user_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bolder">Editar Producto Detail: {{ DETAIL_PRODUCT.product.title }}</h2>
+
+        <!--end::Modal title-->
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 my-7">
+        <!--begin::Form-->
+        <form id="kt_modal_add_user_form" class="form" action="#">
+             <!--begin::Scroll-->
+            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                <div class="fv-row row mb-7">
+                    <div class="col-6">
+                            <input type="number" [(ngModel)]="price" disabled name="price" class="form-control mb-2" placeholder="Precio" />
+                            <small>Precio del producto</small>
+                    </div>
+                    <div class="col-6">
+                        <input type="number" [(ngModel)]="quantity_product" name="quantity_product" class="form-control mb-2" placeholder="Cantidad" />
+                        <small>Cantidad del producto</small>
+                    </div>
+                    <div class="col-6">
+                        <select
+                            class="form-control form-select-solid fw-bolder"
+                            name="unidad_product"
+                            [(ngModel)]="unidad_product"
+                            placeholder="Selec. Unidad"
+                            *ngIf="!loadUnidad"
+                            (change)="changeUnitProduct($event)"
+                        >
+                            <option value="">Selec. Unidad</option>
+                            <ng-container *ngIf="PRODUCT_SELECTED">
+                                <ng-container *ngFor="let unit of PRODUCT_SELECTED.units">
+                                    <option [value]="unit.id">{{ unit.name }}</option>
+                                </ng-container>
+                            </ng-container>
+
+                        </select>
+                    </div>
+                    <div class="col-6">
+                            <select
+                                class="form-control form-select-solid fw-bolder"
+                                name="almacen_product"
+                                [(ngModel)]="almacen_product"
+                                placeholder="Selec. Almacen"
+                            >
+                                <option value="">Selec. Almacen</option>
+                                <ng-container *ngFor="let almacen of warehouses_product">
+                                    <option [value]="almacen.id">{{ almacen.warehouse.name }} ({{ almacen.quantity }})</option>
+                                </ng-container>
+
+                            </select>
+                    </div>
+                    <div class="col-6 mt-2">
+                        <textarea class="form-control form-control-solid" rows="3" [(ngModel)]="description_product" name="description_product" placeholder="Nota"></textarea>
+                    </div>
+                    <div class="col-6 mt-2" *ngIf="PRODUCT_SELECTED && PRODUCT_SELECTED.is_discount == 2">
+                        <!-- (keyup)="verifiedDiscount()" -->
+                        <input type="number" #discount [(ngModel)]="amount_discount" name="amount_discount"  class="form-control mb-2" placeholder="Descuento" />
+                        <small>Descuento del producto</small>
+                    </div>
+
+                    <div class="col-12">
+                        <span *ngIf="unidad_product && warehouses_product.length == 0" class="text-danger">No hay de esa unidad disponible en ninguna sucursal</span>
+                        <br>
+                        <span *ngIf="unidad_product && warehouses_product.length > 0 && exits_warehouse.length == 0" class="text-danger">No hay de esa unidad disponible en nuestra sucursal</span>
+                    </div>
+
+                </div>
+            </div>
+            <!--end::Scroll-->
+
+            <!--begin::Actions-->
+            <div class="text-center pt-15">
+                <button type="reset" class="btn btn-light me-3" (click)="modal.dismiss()">Cerrar</button>
+                <button type="button" (click)="edit()" class="btn btn-primary" data-kt-users-modal-action="submit">
+                    <span class="indicator-label">Editar</span>
+
+                    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+                    <!-- <span class="indicator-progress">Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> -->
+                </button>
+            </div>
+            <!--end::Actions-->
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Modal body-->
+</div>
+<!--end::Modal content CREATE-->

@@ -1,0 +1,124 @@
+<!--begin::Modal content CREATE-->
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="kt_modal_add_user_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bolder">Proforma #({{ PROFORMA.id }})</h2>
+        
+        <!--end::Modal title-->
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 my-7">
+        <!--begin::Form-->
+        <form id="kt_modal_add_user_form" class="form" action="#">
+            
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <!--begin::Table-->
+                        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                            <!--begin::Table head-->
+                            <thead>
+                                <tr class="fw-bold text-muted">
+                                    <th class="min-w-150px">Producto</th>
+                                    <th class="min-w-120px">Categoria</th>
+                                    <th class="min-w-140px">Unidad</th>
+                                    <th class="min-w-120px">Precio Unitario</th>
+                                    <th class="min-w-120px">Descuento</th>
+                                    <th class="min-w-120px">Subtotal</th>
+                                    <th class="min-w-120px">Impuesto</th>
+                                    <th class="min-w-120px">Cantidad</th>
+                                    <th class="min-w-120px">Total</th>
+                                </tr>
+                            </thead>
+                            <!--end::Table head-->
+            
+                            <!--begin::Table body-->
+                            <tbody>
+                                <ng-container *ngFor="let DETAIL_PROFORMA of PROFORMA.details">
+                                    <tr>
+                                        
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <div class="symbol symbol-50px me-5">
+                                                    <img [src]="DETAIL_PROFORMA.product.imagen" class="" alt="">
+                                                </div>
+                                                <div class="d-flex justify-content-start flex-column">
+                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">{{ DETAIL_PROFORMA.product.title }}</a>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.product_categorie.name }}</span>
+                                        </td>
+    
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.unit.name }}</span>
+                                        </td>
+    
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.price_unit }} PEN</span>
+                                        </td>
+    
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.discount }} PEN</span>
+                                        </td>   
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.subtotal }} PEN</span>
+                                        </td>   
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.impuesto }} PEN</span>
+                                        </td>     
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.quantity }}</span>
+                                        </td> 
+                                        <td>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ DETAIL_PROFORMA.total }} PEN</span>
+                                        </td>   
+                                    </tr>                 
+                                </ng-container>
+                                <tr>
+                                    <td></td>
+                                    <td colspan="2">Sede de ORIGEN:</td>
+                                    <td >{{ PROFORMA.sucursale.name }}</td>
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
+                                    <td colspan="2">Sede de ENTREGA:</td>
+                                    <td colspan="2">{{ PROFORMA.proforma_deliverie.sucursal_deliverie.name }}</td>
+                                    <!-- <td></td> -->
+                                    <!-- <td></td> -->
+                                </tr>
+                            </tbody>
+                            <!--end::Table body-->
+                        </table>
+                        <!--end::Table-->
+                    </div>
+
+                </div>
+            </div>
+
+            <!--begin::Actions-->
+            <div class="text-center pt-15">
+                <button type="reset" class="btn btn-light me-3" (click)="modal.dismiss()">Cerrar</button>
+            </div>
+            <!--end::Actions-->
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Modal body-->
+</div>
+<!--end::Modal content CREATE-->

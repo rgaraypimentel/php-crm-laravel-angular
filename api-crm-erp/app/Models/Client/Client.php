@@ -81,4 +81,17 @@ class Client extends Model
         }
         return $query;
     }
+
+    public function scopeFilterProforma($query,$n_document,$full_name,$phone){
+        if($n_document){
+            $query->where("n_document","like","%".$n_document."%");
+        }
+        if($full_name){
+            $query->where("full_name","like","%".$full_name."%");
+        }
+        if($phone){
+            $query->where("phone","like","%".$phone."%");
+        }
+        return $query;
+    }
 }

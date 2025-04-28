@@ -44,7 +44,7 @@
                           <!--begin::Image input placeholder-->
                           <!--end::Image input placeholder-->
                           <div class="image-input image-input-empty image-input-outline image-input-placeholder mb-3"
-                           [ngStyle]="{'background-image': 'url('+imagen_previzualiza+')' }"
+                          [ngStyle]="{'background-image': 'url('+imagen_previzualiza+')' }"
                             data-kt-image-input="true">
                               <!--begin::Preview existing avatar-->
                               <div class="image-input-wrapper w-150px h-150px"></div>
@@ -350,7 +350,7 @@
                                                   <label class="btn btn-outline btn-outline-dashed btn-active-light-primary d-flex text-start p-6" [ngClass]="{'active': is_discount == 2}" data-kt-button="true">
                                                       <!--begin::Radio-->
                                                       <span class="form-check form-check-custom form-check-solid form-check-sm align-items-start mt-1">
-                                                          <input class="form-check-input" type="radio" name="discount_option" (click)="selectedDiscount(2)" />
+                                                          <input class="form-check-input" type="radio" [checked]="is_discount == 2" name="discount_option" (click)="selectedDiscount(2)" />
                                                       </span>
                                                       <!--end::Radio-->
                                                       <!--begin::Info-->

@@ -1,0 +1,291 @@
+<div class="card">
+  <!--begin::Card header-->
+  <div class="card-header border-0 pt-6">
+      <!--begin::Card title-->
+      <div class="card-title">
+          <!--begin::Search-->
+          <div class="row align-items-center">
+              <div class="col-2">
+                  <div class="d-flex align-items-center position-relative my-1">
+                      <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                              class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listProformas()" name="search" data-kt-customer-table-filter="search"
+                          class="form-control form-control-solid ps-12" placeholder="(N°) Proforma ">
+                  </div>
+              </div>
+              <div class="col-3">
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                            class="path2"></span></i> <input type="text" [(ngModel)]="search_client" (keyup.enter)="listProformas()" name="search" data-kt-customer-table-filter="search"
+                        class="form-control form-control-solid ps-12" placeholder="Cliente">
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                            class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listProformas()" name="search" data-kt-customer-table-filter="search"
+                        class="form-control form-control-solid ps-12" placeholder="Producto">
+                </div>
+              </div>
+              <div class="col-2">
+                  <!-- <label class="required fw-bold fs-6 mb-2">Segmento de Cliente: (*) </label> -->
+                  <select
+                      class="form-control"
+                      name="client_segment_id"
+                      [(ngModel)]="client_segment_id"
+                      placeholder="Selec. Segment"
+                  >
+                  <option value="">Ninguno</option>
+                      <ng-container *ngFor="let client_segment of client_segments">
+                          <option [value]="client_segment.id">{{ client_segment.name }}</option>
+                      </ng-container>
+
+
+                  </select>
+                  <div class="text-muted fs-7">Segmento de cliente.</div>
+              </div>
+              <div class="col-2">
+                  <!-- <label class="required fw-bold fs-6 mb-2">Segmento de Cliente: (*) </label> -->
+                  <select
+                      class="form-control"
+                      name="product_categorie_id"
+                      [(ngModel)]="product_categorie_id"
+                      placeholder="Selec. Categoria"
+                  >
+                  <option value="">Ninguno</option>
+                      <ng-container *ngFor="let product_categorie of product_categories">
+                          <option [value]="product_categorie.id">{{ product_categorie.name }}</option>
+                      </ng-container>
+
+
+                  </select>
+                  <div class="text-muted fs-7">Categoria de producto.</div>
+              </div>
+
+              <div class="col-3">
+                  <select
+                      class="form-control"
+                      name="asesor_id"
+                      [(ngModel)]="asesor_id"
+                      placeholder="Selec. Asesores"
+                  >
+                      <option value="">Ninguno</option>
+                      <ng-container *ngFor="let asesor of asesores">
+                          <option [value]="asesor.id">{{ asesor.full_name }}</option>
+                      </ng-container>
+
+                  </select>
+                  <div class="text-muted fs-7">Asesores.</div>
+              </div>
+              <div class="col-2">
+                <select
+                    class="form-control"
+                    name="type"
+                    [(ngModel)]="type"
+                    placeholder="Selec. Status"
+                >
+                    <option value="">Ninguno</option>
+                    <option value="1">Cotización</option>
+                    <option value="2">Contrato</option>
+                </select>
+                <div class="text-muted fs-7">Proformas (Contrato/Cotización).</div>
+              </div>
+              <div class="col-2">
+                  <div class="input-group input-group-solid">
+                      <input type="date"
+                      class="form-control form-control-lg form-control-solid"
+                      [(ngModel)]="start_date"
+                      />
+                    </div>
+                    <div class="text-muted fs-7">Fecha de inicio.</div>
+              </div>
+              <div class="col-2">
+                  <div class="input-group input-group-solid">
+                      <input type="date"
+                      class="form-control form-control-lg form-control-solid"
+                      [(ngModel)]="end_date"
+                      />
+                    </div>
+                    <div class="text-muted fs-7">Fecha fin.</div>
+              </div>
+
+
+              <div class="col-3 d-flex">
+                  <button class="btn btn-primary btn-sm mx-1" placement="top-start" ngbTooltip="Buscar" (click)="listProformas()">
+                      <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                  </button>
+                  <button class="btn btn-dark btn-sm mx-1" placement="top-start" ngbTooltip="Limpiar"  (click)="resetlistProformas()">
+                      <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
+                  </button>
+                  <button class="btn btn-success btn-sm mx-1" placement="top-start" ngbTooltip="Exportar proformas generales" (click)="exportProformas()">
+                      <i class="ki-duotone ki-folder-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+                  </button>
+                  <button class="btn btn-success btn-sm mx-1" placement="top-start" ngbTooltip="Exportar proforma detalle"  (click)="exportProformasDetails()">
+                      <i class="ki-duotone ki-questionnaire-tablet fs-2"><span class="path1"></span><span class="path2"></span></i>
+                  </button>
+                  <a routerLink="/proformas/crear" placement="top-start" ngbTooltip="Crear Proforma" class="btn btn-primary btn-sm">
+                      + Add Proforma
+                  </a>
+              </div>
+          </div>
+
+          <!--end::Search-->
+      </div>
+      <!--begin::Card title-->
+      <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+      <!--begin::Card toolbar-->
+  </div>
+  <!--end::Card header-->
+
+  <!--begin::Card body-->
+  <div class="card-body pt-0">
+
+      <!--begin::Table-->
+      <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+          <div id="" class="table-responsive">
+              <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
+                  style="width: 1199.5px;">
+                  <thead>
+                      <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">N° de Proforma</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Datos cliente</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                          colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                              class="dt-column-title" role="button">Segmento de cliente</span><span
+                              class="dt-column-order"></span></th>
+
+                              <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Total</span><span
+                                  class="dt-column-order"></span></th>
+
+                              <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Estado de la proforma</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Estado de pago</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Adeudo</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                              colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Pagado</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1"
+                              colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Asesor</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1"
+                              colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Fecha de registro</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="text-end min-w-70px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1"
+                              aria-label="Actions"><span class="dt-column-title">Actions</span><span
+                                  class="dt-column-order"></span></th>
+                      </tr>
+                  </thead>
+                  <tbody class="fw-semibold text-gray-600">
+                      <ng-container *ngFor="let PROFORMA of PROFORMAS">
+                          <tr>
+                              <td>
+                                  {{ PROFORMA.id }}
+                              </td>
+                              <td>
+                                  <div class="d-flex align-items-center">
+                                      <div class="d-flex justify-content-start flex-column">
+                                          <a href="#" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">{{ PROFORMA.client.full_name }}</a>
+                                          <span class="text-muted fw-semibold text-muted d-block fs-7">Tipo: {{ PROFORMA.client.type == 1 ? 'PERSONA' : 'EMPRESA' }}</span>
+                                      </div>
+                                  </div>
+                              </td>
+
+                              <td>
+                                  {{ PROFORMA.client_segment.name }}
+                              </td>
+
+                              <td>
+                                  {{ PROFORMA.total }} PEN
+                              </td>
+
+                              <td >
+                                  <span class="badge badge-light-primary" *ngIf="PROFORMA.state_proforma == 1">Cotización</span>
+                                  <span class="badge badge-light-danger" *ngIf="PROFORMA.state_proforma == 2">Contrato</span>
+                                  </td>
+
+                              <td >
+                                  <span class="badge badge-light-danger" *ngIf="PROFORMA.state_payment == 1">Pendiente</span>
+                                  <span class="badge badge-light-warning" *ngIf="PROFORMA.state_payment == 2">Parcial</span>
+                                  <span class="badge badge-light-success" *ngIf="PROFORMA.state_payment == 3">Total</span>
+                              </td>
+
+
+                              <td>
+                                  {{ PROFORMA.debt }} PEN
+                              </td>
+
+                              <td>
+                                  {{ PROFORMA.paid_out }} PEN
+                              </td>
+
+                              <td >
+                                  {{ PROFORMA.asesor.full_name }} </td>
+
+                              <td >
+                                  {{ PROFORMA.created_at }} </td>
+
+                              <td class="d-flex">
+
+                                  <a href="#" onclick="return false;" (click)="proformaPdf(PROFORMA)" placement="top-start" ngbTooltip="Descargar en Pdf" class="btn btn-icon btn-bg-danger btn-active-color-danger btn-sm">
+                                      <i class="ki-duotone ki-paper-clip fs-2 text-white"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                  </a>
+
+                                  <a href="#" onclick="return false;" placement="top-start" ngbTooltip="Abrir Detallado" (click)="openProforma(PROFORMA)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                      <i class="ki-duotone ki-questionnaire-tablet fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                  </a>
+
+                                  <a [routerLink]="'/proformas/listado/edicion/'+PROFORMA.id"  placement="top-start" ngbTooltip="Editar Proforma" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1 mx-2">
+                                      <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                  </a>
+
+                                  <a href="#" onclick="return false;" placement="top-start" ngbTooltip="Eliminar un proforma" (click)="deleteProforma(PROFORMA)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                      <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                  </a>
+                              </td>
+                          </tr>
+                      </ng-container>
+
+                  </tbody>
+                  <tfoot></tfoot>
+              </table>
+          </div>
+          <ngb-pagination
+              [collectionSize]="totalPages"
+              [(page)]="currentPage"
+              [pageSize]="25"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              (pageChange)="loadPage($event)"
+          ></ngb-pagination>
+      </div>
+      <!--end::Table-->
+  </div>
+  <!--end::Card body-->
+</div>

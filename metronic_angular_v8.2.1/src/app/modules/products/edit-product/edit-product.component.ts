@@ -111,13 +111,17 @@ export class EditProductComponent {
       this.sku = this.PRODUCT_SELECTED.sku;
       this.is_gift = this.PRODUCT_SELECTED.is_gift;
       this.umbral = this.PRODUCT_SELECTED.umbral;
-      this.umbral_unit_id = this.PRODUCT_SELECTED.umbral_unit_id;
+
       this.weight = this.PRODUCT_SELECTED.weight;
       this.width = this.PRODUCT_SELECTED.width;
       this.height = this.PRODUCT_SELECTED.height;
       this.length = this.PRODUCT_SELECTED.length;
-
-      this.provider_id  = this.PRODUCT_SELECTED.provider_id;
+      if(this.umbral_unit_id){
+        this.umbral_unit_id = this.PRODUCT_SELECTED.umbral_unit_id;
+      }
+      if(this.provider_id){
+        this.provider_id  = this.PRODUCT_SELECTED.provider_id;
+      }
       this.ESPECIFICACIONES = this.PRODUCT_SELECTED.specifications;
 
       this.WAREHOUSES_PRODUCT = this.PRODUCT_SELECTED.warehouses;

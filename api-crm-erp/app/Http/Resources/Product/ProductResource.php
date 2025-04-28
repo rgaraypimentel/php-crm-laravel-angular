@@ -14,6 +14,10 @@ class ProductResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $units = collect([]);
+        foreach ($this->resource->wallets->groupBy("unit_id") as $unit_only) {
+            $units->push($unit_only[0]->unit);
+        }
         return [
             "id" => $this->resource->id,
             "title" => $this->resource->title,
@@ -71,6 +75,7 @@ class ProductResource extends JsonResource
                     "quantity" => $warehouse->stock,
                 ];
             }),
+            "units" => $units,
         ];
     }
 }

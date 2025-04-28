@@ -115,6 +115,7 @@ class AuthController extends Controller
                 "avatar" => auth('api')->user()->avatar ? env("APP_URL")."storage/".auth('api')->user()->avatar : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
                 "role_name" => auth("api")->user()->role->name,
                 "permissions" => $permissions,
+                "sucursale_id" => auth("api")->user()->sucursale_id,
             ]
         ]);
     }
