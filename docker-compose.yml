@@ -1,0 +1,28 @@
+services:
+  backend:
+    build:
+      context: ./api-crm-erp
+      dockerfile: docker/Dockerfile
+    container_name: backend
+    volumes:
+      - ./api-crm-erp:/var/www/html
+    ports:
+      - "8000:80"
+    networks:
+      - app_network
+
+  frontend:
+    build:
+      context: ./metronic_angular_v8.2.1
+      dockerfile: docker/Dockerfile
+    container_name: frontend
+    ports:
+      - "4200:4200"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

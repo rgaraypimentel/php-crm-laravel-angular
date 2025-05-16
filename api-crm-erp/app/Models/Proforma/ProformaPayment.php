@@ -3,6 +3,7 @@
 namespace App\Models\Proforma;
 
 use App\Models\Configuration\MethodPayment;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -18,7 +19,11 @@ class ProformaPayment extends Model
         "banco_id",
         "amount",
         "date_validation",
-        "n_transaccion"
+        "n_transaccion",
+        "vaucher",
+
+        "verification",
+        "user_verification"
     ];
 
     public function setCreatedAtAttribute($value) {
@@ -40,5 +45,9 @@ class ProformaPayment extends Model
 
     public function banco(){
         return $this->belongsTo(MethodPayment::class,"banco_id");
+    }
+
+    public function user_verific(){
+        return $this->belongsTo(User::class,"user_verification");
     }
 }

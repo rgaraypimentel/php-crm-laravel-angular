@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Caja\CajaEgresoController;
+use App\Http\Controllers\Caja\CajaIngresoController;
+use App\Http\Controllers\Caja\CajaSucursaleController;
 use App\Http\Controllers\Client\ClientController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserAccessController;
@@ -96,6 +99,28 @@ Route::group([
     Route::resource("proformas",ProformaController::class);
 
     Route::resource("proforma-details",ProformaDetailController::class);
+
+    Route::group(["prefix" => "caja"],function($router) {
+        Route::get("config",[CajaSucursaleController::class,"config"]);
+        Route::post("apertura_caja",[CajaSucursaleController::class,"apertura_caja"]);
+        Route::post("cierre_caja",[CajaSucursaleController::class,"cierre_caja"]);
+
+        Route::get("search_proformas/{client_id}",[CajaSucursaleController::class,"search_proformas"]);
+
+        Route::post("updated_payment/{id}",[CajaSucursaleController::class,"updated_payment"]);
+        Route::post("created_payment",[CajaSucursaleController::class,"created_payment"]);
+
+        Route::post("process_payment",[CajaSucursaleController::class,"process_payment"]);
+
+        Route::post("contract_process",[CajaSucursaleController::class,"contract_process"]);
+
+        Route::get("report_caja_day/{caja_sucursale_id}",[CajaSucursaleController::class,"report_caja_day"]);
+
+        Route::post("report_caja",[CajaSucursaleController::class,"report_caja"]);
+
+        Route::resource("ingresos",CajaIngresoController::class);
+        Route::resource("egresos",CajaEgresoController::class);
+    });
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
@@ -103,3 +128,4 @@ Route::get("excel/export-proforma-generales",[ProformaController::class,"export_
 Route::get("excel/export-proforma-details",[ProformaController::class,"export_proforma_details"]);
 Route::get("excel/export-products",[ProductController::class,"export_products"]);
 Route::get("excel/export-clients",[ClientController::class,"export_clients"]);
+Route::get("excel/export-contract-processs",[CajaSucursaleController::class,"export_report_caja"]);

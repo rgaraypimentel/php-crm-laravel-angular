@@ -73,6 +73,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/proformas/proformas.module').then((m) => m.ProformasModule),
   },
   {
+    path: 'caja',
+    loadChildren: () => import('../modules/cajas/cajas.module').then((m) => m.CajasModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
