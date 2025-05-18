@@ -1,0 +1,37 @@
+<div class="card">
+    <div class="card-body">
+        <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-5">
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 1}" data-bs-toggle="tab" href="#kt_comision_x_semana" onclick="return false;" (click)="selectedTab(1)">Comisión X Semana</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 2}" data-bs-toggle="tab" href="#kt_comision_x_categoria" onclick="return false;" (click)="selectedTab(2)">Comisión X Categoria</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 3}" data-bs-toggle="tab" href="#kt_comision_x_segment_client" onclick="return false;" (click)="selectedTab(3)">Comisión X Segmento de cliente</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-active-primary pb-4" [ngClass]="{'active': tab_selected == 4}" data-bs-toggle="tab" href="#kt_comision_x_position" onclick="return false;" (click)="selectedTab(4)">Comisión X Posición de Venta</a>
+            </li>
+        </ul>
+
+        <div class="tab-content">
+            <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 1}" id="kt_comision_x_semana" role="tab-panel">
+                <app-list-week-comission></app-list-week-comission>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 2}" id="kt_comision_x_categoria" role="tab-panel">
+                <app-list-categorie-comission></app-list-categorie-comission>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 3}" id="kt_comision_x_segment_client" role="tab-panel">
+                <app-list-segment-client-comission></app-list-segment-client-comission>
+            </div>
+
+            <div class="tab-pane fade" [ngClass]="{'show active': tab_selected == 4}" id="kt_comision_x_position" role="tab-panel">
+                <app-list-position-comission></app-list-position-comission>
+            </div>
+        </div>
+
+    </div>
+</div>

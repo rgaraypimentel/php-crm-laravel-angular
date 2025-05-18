@@ -1,0 +1,196 @@
+<div class="card">
+    <div class="card-body">
+        <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+        <div class="row align-items-center py-4">
+            <div class="col-3">
+                <select
+                  class="form-control form-select-solid fw-bolder"
+                  name="year"
+                  placeholder="Filtrar por Año"
+                  [(ngModel)]="year"
+                >
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                    <option value="2025">2025</option>
+                    <option value="2026">2026</option>
+                </select>
+                <small class="form-text text-muted"><b>Filtrar</b> por Año</small>
+            </div>
+            <div class="col-3">
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="month"
+                    placeholder="Filtrar por Mes"
+                    [(ngModel)]="month"
+                >
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+                <small class="form-text text-muted"><b>Filtrar</b> por Mes</small>
+            </div>
+
+            <div class="col-2 d-flex">
+                <button class="btn btn-primary btn-sm mx-1" (click)="getCommisionAsesores()">
+                    <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+                <button class="btn btn-dark btn-sm"  (click)="reset()">
+                    <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
+                </button>
+            </div>
+        </div>
+        <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+            <div id="" class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5">
+                    <thead>
+                        <tr class="text-start text-dark fw-bold fs-7 text-uppercase gs-0">
+                            <th rowspan="3">Asesor</th>
+                            <th rowspan="3">Posición</th>
+                            <th rowspan="2">Venta Total</th>
+                            <th colspan="2" rowspan="2">Comisión</th>
+
+                            <th [attr.colspan]="3*categories.length">Categoría</th>
+                            <th [attr.colspan]="3*segment_clients.length">Segmento de cliente</th>
+                            <th colspan="12">Semana</th>
+
+                            <th colspan="3" rowspan="2">V. Fecha de verificación</th>
+                            <th rowspan="3">Comisión Total</th>
+                        </tr>
+                        <tr class="text-start text-dark fw-bold fs-7 text-uppercase gs-0">
+                            <ng-container *ngFor="let categorie of categories">
+                                <th colspan="3">{{ categorie.name }}</th>
+                            </ng-container>
+                            <!-- <th colspan="3">Categoría B</th> -->
+                            <ng-container *ngFor="let segment_client of segment_clients">
+                                <th colspan="3">{{ segment_client.name }}</th>
+                            </ng-container>
+                            <!-- <th colspan="3">Segmento B</th> -->
+
+                            <th colspan="3">Semana 1</th>
+                            <th colspan="3">Semana 2</th>
+                            <th colspan="3">Semana 3</th>
+                            <th colspan="3">Semana 4</th>
+                        </tr>
+                        <tr class="text-start text-dark fw-bold fs-7 text-uppercase gs-0">
+                            <th>S/.</th>
+                            <!-- <th>%</th> -->
+                            <th>S/.</th>
+                            <th>%</th>
+
+                            <ng-container *ngFor="let categorie of categories">
+                                <th>Monto</th>
+                                <th>%</th>
+                                <th>S/.</th>
+                            </ng-container>
+                            <!-- <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th> -->
+                            <ng-container *ngFor="let segment_client of segment_clients">
+                                <th>Monto</th>
+                                <th>%</th>
+                                <th>S/.</th>
+                            </ng-container>
+                            <!-- <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th> -->
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+
+                            <th>Monto</th>
+                            <th>%</th>
+                            <th>S/.</th>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-semibold text-dark">
+                        <ng-container *ngFor="let COMMISSION of COMMISSIONS">
+                            <tr class="row-table" style="border-bottom: 0.1rem solid !important;">
+                                <td>{{ COMMISSION.full_name }}</td>
+                                <td>{{ COMMISSION.posicion }}</td>
+                                <td class="colum-venta-total">{{ COMMISSION.total_ventas }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_posicion > 0}">{{ COMMISSION.ganancia_posicion }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_posicion > 0}">{{ COMMISSION.percentage_posicion }} %</td>
+                                <!-- <td></td> -->
+                                <ng-container *ngFor="let categorie of COMMISSION.categorie_comission">
+                                    <td [ngClass]="{'colum-comission': categorie.ganancia > 0,'colum-venta-corta': categorie.total_ventas_x_categoria > 0 && categorie.ganancia == 0}">{{ categorie.total_ventas_x_categoria }} PEN</td>
+                                    <td [ngClass]="{'colum-comission': categorie.ganancia > 0}">{{ categorie.percentage }} %</td>
+                                    <td [ngClass]="{'colum-comission': categorie.ganancia > 0}">{{ categorie.ganancia }} PEN</td>
+                                </ng-container>
+                                <!-- <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td> -->
+                                <ng-container *ngFor="let segment_client of COMMISSION.segment_client_comission">
+                                    <td [ngClass]="{'colum-comission': segment_client.ganancia > 0,'colum-venta-corta': segment_client.total_ventas_x_segment_client > 0 && segment_client.ganancia == 0}">{{ segment_client.total_ventas_x_segment_client }} PEN</td>
+                                    <td [ngClass]="{'colum-comission': segment_client.ganancia > 0}">{{ segment_client.percentage }} %</td>
+                                    <td [ngClass]="{'colum-comission': segment_client.ganancia > 0}">{{ segment_client.ganancia }} PEN</td>
+                                </ng-container>
+                                <!-- <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td> -->
+
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_1 > 0,'colum-venta-corta': COMMISSION.total_ventas_semana_1 > 0 && COMMISSION.ganancia_semana_1 == 0}">{{ COMMISSION.total_ventas_semana_1 }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_1 > 0}">{{ COMMISSION.percentage_semana_1 }} %</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_1 > 0}">{{ COMMISSION.ganancia_semana_1 }} PEN</td>
+
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_2 > 0,'colum-venta-corta': COMMISSION.total_ventas_semana_2 > 0 && COMMISSION.ganancia_semana_2 == 0}">{{ COMMISSION.total_ventas_semana_2 }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_2 > 0}">{{ COMMISSION.percentage_semana_2 }} %</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_2 > 0}">{{ COMMISSION.ganancia_semana_2 }} PEN</td>
+
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_3 > 0,'colum-venta-corta': COMMISSION.total_ventas_semana_3 > 0 && COMMISSION.ganancia_semana_3 == 0}">{{ COMMISSION.total_ventas_semana_3 }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_3 > 0}">{{ COMMISSION.percentage_semana_3 }} %</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_3 > 0}">{{ COMMISSION.ganancia_semana_3 }} PEN</td>
+
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_4 > 0,'colum-venta-corta': COMMISSION.total_ventas_semana_4 > 0 && COMMISSION.ganancia_semana_4 == 0}">{{ COMMISSION.total_ventas_semana_4 }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_4 > 0}">{{ COMMISSION.percentage_semana_4 }} %</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_semana_4 > 0}">{{ COMMISSION.ganancia_semana_4 }} PEN</td>
+
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_x_fecha_de_verificacio > 0,'colum-venta-corta': COMMISSION.total_ventas_x_fecha_de_verificacion > 0 && COMMISSION.ganancia_x_fecha_de_verificacio == 0}">{{ COMMISSION.total_ventas_x_fecha_de_verificacion }} PEN</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_x_fecha_de_verificacio > 0}">{{ COMMISSION.percentage_x_fecha_de_verificacio }} %</td>
+                                <td [ngClass]="{'colum-comission': COMMISSION.ganancia_x_fecha_de_verificacio > 0}">{{ COMMISSION.ganancia_x_fecha_de_verificacio }} PEN</td>
+                                <td class="colum-comision-total">{{ COMMISSION.total_ganancia }} PEN</td>
+                            </tr>
+                        </ng-container>
+
+                        <!-- Puedes agregar más filas de datos aquí -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

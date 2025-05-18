@@ -10,6 +10,7 @@ import { ClientSegmentModule } from './client-segment/client-segment.module';
 import { ProductCategoriesModule } from './product-categories/product-categories.module';
 import { ProvidersModule } from './providers/providers.module';
 import { UnitsModule } from './units/units.module';
+import { GComissionsModule } from './g-comissions/g-comissions.module';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { UnitsModule } from './units/units.module';
     ProductCategoriesModule,
     ProvidersModule,
     UnitsModule,
+    GComissionsModule
   ]
 })
 export class ConfigurationModule { }

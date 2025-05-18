@@ -32,6 +32,8 @@ class Proforma extends Model
         "date_pay_complete",
         "description",
         "state_despacho",
+        /* "created_at",
+        "updated_at", */
     ];
 
     public function setCreatedAtAttribute($value) {
@@ -122,6 +124,27 @@ class Proforma extends Model
         }
         if($state_payment){
             $query->where("state_payment",$state_payment);
+        }
+        return $query;
+    }
+
+    public function scopeFilterCronograma($query,$search_client,$categorie_id,$segment_client_id,$status_pay){
+
+        if($search_client){
+            $query->whereHas("client",function($subq) use($search_client){
+                $subq->where("full_name","like","%".$search_client."%");
+            });
+        }
+        if($categorie_id){
+            $query->whereHas("details",function($subq) use($categorie_id){
+                $subq->where("product_categorie_id",$categorie_id);
+            });
+        }
+        if($segment_client_id){
+            $query->where("client_segment_id",$segment_client_id);
+        }
+        if($status_pay){
+            $query->where("state_payment",$status_pay);
         }
         return $query;
     }

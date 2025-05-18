@@ -120,6 +120,17 @@
           </a>
         </div>
 
+        <div class="menu-item">
+          <a class="menu-link without-sub" routerLinkActive="active" routerLink="/configuraciones/configuracion-comisiones">
+            <span
+              class="menu-bullet">
+              <span class="bullet bullet-dot"></span>
+            </span>
+            <span class="menu-title">Comisiones
+            </span>
+          </a>
+        </div>
+
       </div>
     </div>
 
@@ -301,7 +312,7 @@
     </div>
 
     <div class="menu-item" *ngIf="showMenu(['cronograma'])">
-      <a class="menu-link without-sub" routerLink="/builder" routerLinkActive="active">
+      <a class="menu-link without-sub" routerLink="/cronograma-de-envios" routerLinkActive="active">
         <span class="menu-icon">
           <app-keenicon name="calendar" class="fs-2"></app-keenicon>
         </span>
@@ -427,7 +438,7 @@
     </div> -->
 
     <div class="menu-item" *ngIf="showMenu(['comisiones'])">
-      <a class="menu-link without-sub" routerLink="/builder" routerLinkActive="active">
+      <a class="menu-link without-sub" routerLink="/comisiones-asesores" routerLinkActive="active">
         <span class="menu-icon">
           <app-keenicon name="discount" class="fs-2"></app-keenicon>
         </span>

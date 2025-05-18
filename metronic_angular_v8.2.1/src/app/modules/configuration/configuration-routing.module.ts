@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'unidades',
     loadChildren: () => import('./units/units.module').then((m) => m.UnitsModule),
   },
+  {
+    path: 'configuracion-comisiones',
+    loadChildren: () => import('./g-comissions/g-comissions.module').then((m) => m.GComissionsModule),
+  },
 ];
 
 @NgModule({

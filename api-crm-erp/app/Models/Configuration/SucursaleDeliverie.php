@@ -15,6 +15,7 @@ class SucursaleDeliverie extends Model
         "name",
         "address",
         "state",
+        "color",
     ];
 
     public function setCreatedAtAttribute($value) {

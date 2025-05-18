@@ -270,6 +270,9 @@ class CajaSucursaleController extends Controller
             $proforma->update([
                 "state_proforma" => 2,
                 "state_payment" => $state_payment,
+
+                "date_validation" => $proforma->date_validation ? $proforma->date_validation : now(),
+                "date_pay_complete" => $state_payment == 3 ? now() : NULL,
             ]);
             return response()->json([
                 "caja_sucursale" => $caja_sucursale,

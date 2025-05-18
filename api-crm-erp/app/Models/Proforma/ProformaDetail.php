@@ -26,15 +26,17 @@ class ProformaDetail extends Model
         "description",
         "unit_id",
         "impuesto",
+        /* "created_at",
+        "updated_at", */
     ];
 
     public function setCreatedAtAttribute($value) {
-        date_default_timezone_set("America/Lima");
-        $this->attributes["created_at"] = Carbon::now();
+    date_default_timezone_set("America/Lima");
+    $this->attributes["created_at"] = Carbon::now();
     }
     public function setUpdatedAtAttribute($value) {
-        date_default_timezone_set("America/Lima");
-        $this->attributes["updated_at"] = Carbon::now();
+    date_default_timezone_set("America/Lima");
+    $this->attributes["updated_at"] = Carbon::now();
     }
 
     public function proforma(){

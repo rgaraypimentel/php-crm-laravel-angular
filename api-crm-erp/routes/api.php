@@ -7,6 +7,11 @@ use App\Http\Controllers\Caja\CajaEgresoController;
 use App\Http\Controllers\Caja\CajaIngresoController;
 use App\Http\Controllers\Caja\CajaSucursaleController;
 use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Comission\CategorieComissionController;
+use App\Http\Controllers\Comission\ComissionController;
+use App\Http\Controllers\Comission\PositionComissionController;
+use App\Http\Controllers\Comission\SegmentClientComissionController;
+use App\Http\Controllers\Comission\WeekComissionController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\Configuration\UnitController;
@@ -20,6 +25,7 @@ use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductWalletController;
 use App\Http\Controllers\Product\ProductWarehouseController;
+use App\Http\Controllers\Proforma\CalendarProformaController;
 use App\Http\Controllers\Proforma\ProformaController;
 use App\Http\Controllers\Proforma\ProformaDetailController;
 
@@ -91,6 +97,7 @@ Route::group([
     Route::resource("clients",ClientController::class);
 
     Route::post("proformas/index",[ProformaController::class,'index']);
+    Route::post("proformas/cronograma",[CalendarProformaController::class,'cronograma']);
     Route::get("proformas/eval-disponibilidad/{id}", [ProformaController::class, 'eval_disponibilidad']);
     Route::get("proformas/search-clients", [ProformaController::class, 'search_clients']);
     Route::get("proformas/search-products", [ProformaController::class, 'search_products']);
@@ -121,6 +128,13 @@ Route::group([
         Route::resource("ingresos",CajaIngresoController::class);
         Route::resource("egresos",CajaEgresoController::class);
     });
+
+    Route::post("comission",[ComissionController::class,"comission_asesor"]);
+    Route::get("comission/config",[ComissionController::class,"config"]);
+    Route::resource("comission-week",WeekComissionController::class);
+    Route::resource("comission-categorie",CategorieComissionController::class);
+    Route::resource("comission-client-segment",SegmentClientComissionController::class);
+    Route::resource("comission-position",PositionComissionController::class);
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
