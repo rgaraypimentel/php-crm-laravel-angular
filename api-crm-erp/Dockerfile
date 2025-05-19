@@ -5,17 +5,16 @@ RUN apt-get update && apt-get install -y \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
+    libzip-dev \
     zip \
     unzip \
     curl \
     git \
+    && docker-php-ext-install pdo pdo_mysql zip gd mbstring exif pcntl bcmath \
     && apt-get purge -y g++ \
     && apt-get autoremove -y \
     && rm -r /var/lib/apt/lists/* \
     && rm -rf /tmp/*
-
-# Instalar PDO MySQL
-RUN docker-php-ext-install pdo pdo_mysql
 
 # Habilitar mod_rewrite
 RUN a2enmod rewrite
@@ -31,15 +30,7 @@ RUN echo '<Directory /var/www/html/public>\n\
 
 WORKDIR /var/www/html
 
-COPY api-crm-erp/app/ app/
-COPY api-crm-erp/bootstrap/ bootstrap/
-COPY api-crm-erp/config/ config/
-COPY api-crm-erp/database/ database/
-COPY api-crm-erp/public/ public/
-COPY api-crm-erp/resources/ resources/
-COPY api-crm-erp/routes/ routes/
-COPY api-crm-erp/storage/ storage/
-COPY api-crm-erp/artisan .
+COPY api-crm-erp/ ./
 
 COPY api-crm-erp/composer.json composer.json
 COPY api-crm-erp/composer.lock composer.lock
