@@ -31,15 +31,15 @@ RUN echo '<Directory /var/www/html/public>\n\
 
 WORKDIR /var/www/html
 
-COPY app/ app/
-COPY bootstrap/ bootstrap/
-COPY config/ config/
-COPY database/ database/
-COPY public/ public/
-COPY resources/ resources/
-COPY routes/ routes/
-COPY storage/ storage/
-COPY artisan .
+COPY api-crm-erp/app/ app/
+COPY api-crm-erp/bootstrap/ bootstrap/
+COPY api-crm-erp/config/ config/
+COPY api-crm-erp/database/ database/
+COPY api-crm-erp/public/ public/
+COPY api-crm-erp/resources/ resources/
+COPY api-crm-erp/routes/ routes/
+COPY api-crm-erp/storage/ storage/
+COPY api-crm-erp/artisan .
 
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
