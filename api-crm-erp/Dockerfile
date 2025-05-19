@@ -41,6 +41,11 @@ COPY api-crm-erp/routes/ routes/
 COPY api-crm-erp/storage/ storage/
 COPY api-crm-erp/artisan .
 
+COPY api-crm-erp/composer.json composer.json
+COPY api-crm-erp/composer.lock composer.lock
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN composer install --no-dev --optimize-autoloader
+
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
