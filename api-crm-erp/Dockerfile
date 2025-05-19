@@ -40,3 +40,6 @@ RUN composer install --no-dev --optimize-autoloader
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Crear el symlink de storage (esto es lo importante)
+RUN php artisan storage:link
+
