@@ -3,10 +3,14 @@ FROM node:18-alpine as build
 
 WORKDIR /app
 
-COPY package*.json ./
+# Copiamos solo el contenido del proyecto Angular
+COPY metronic_angular_v8.2.1/package*.json ./
+COPY metronic_angular_v8.2.1/angular.json ./
+COPY metronic_angular_v8.2.1/tsconfig*.json ./
+COPY metronic_angular_v8.2.1/src ./src
+
 RUN npm install
 
-COPY . .
 RUN npm run build --prod
 
 # Production stage
