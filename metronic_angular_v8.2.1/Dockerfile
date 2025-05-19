@@ -18,7 +18,8 @@ FROM nginx:stable-alpine
 
 COPY --from=build /app/dist/demo1 /usr/share/nginx/html
 
-# Copia configuración nginx si necesitas (opcional)
+# Copia configuración personalizada de NGINX
+COPY metronic_angular_v8.2.1/nginx.conf /etc/nginx/conf.d/default.conf
 # COPY nginx.conf /etc/nginx/nginx.conf
 
 EXPOSE 80

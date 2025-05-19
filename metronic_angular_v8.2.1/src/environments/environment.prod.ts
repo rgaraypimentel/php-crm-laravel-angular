@@ -157,8 +157,8 @@ export const environment = {
     },
   },
   URL_BACKEND: 'https://php-crm-laravel-angular.onrender.com/',
-  URL_SERVICIOS: 'https://php-crm-laravel-angular.onrender.com//api',
-  URL_FRONTED: 'https://qallpatic-erp.onrender.com/auth/login',
+  URL_SERVICIOS: 'https://php-crm-laravel-angular.onrender.com/api',
+  URL_FRONTED: 'https://qallpatic-erp.onrender.com',
 };
 
 /*
