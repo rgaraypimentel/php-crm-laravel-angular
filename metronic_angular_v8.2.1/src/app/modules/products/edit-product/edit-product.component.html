@@ -33,7 +33,7 @@
                       <div class="card-header">
                           <!--begin::Card title-->
                           <div class="card-title">
-                              <h2>Thumbnail</h2>
+                              <h2>Imagen del producto</h2>
                           </div>
                           <!--end::Card title-->
                       </div>
@@ -80,7 +80,7 @@
                           </div>
                           <!--end::Image input-->
                           <!--begin::Description-->
-                          <div class="text-muted fs-7">Set the product thumbnail image. Only *.png, *.jpg and *.jpeg image files are accepted</div>
+                          <div class="text-muted fs-7">Establezca la imagen en miniatura del producto. Solo se aceptan archivos *.png, *.jpg y *.jpeg.</div>
                           <!--end::Description-->
                       </div>
                       <!--end::Card body-->
@@ -92,7 +92,7 @@
                       <div class="card-header">
                           <!--begin::Card title-->
                           <div class="card-title">
-                              <h2>Status</h2>
+                              <h2>Estado</h2>
                           </div>
                           <!--end::Card title-->
                           <!--begin::Card toolbar-->
@@ -106,12 +106,12 @@
                       <div class="card-body pt-0">
                           <!--begin::Select2-->
                           <select class="form-select mb-2" [(ngModel)]="state" name="state" data-control="select2" data-hide-search="true" data-placeholder="Select an option" id="kt_ecommerce_add_product_status_select">
-                              <option value="1">Published</option>
-                              <option value="2">Inactive</option>
+                              <option value="1">Público</option>
+                              <option value="2">Inactivo</option>
                           </select>
                           <!--end::Select2-->
                           <!--begin::Description-->
-                          <div class="text-muted fs-7">Set the product status.</div>
+                          <div class="text-muted fs-7">Establecer el estado del producto.</div>
                           <!--end::Description-->
                           <!--begin::Datepicker-->
                           <div class="d-none mt-10">
@@ -137,7 +137,7 @@
                       <!--begin::Card body-->
                       <div class="card-body pt-0">
                           <!--begin::Select store template-->
-                          <label for="kt_ecommerce_add_product_store_template" class="form-label">Select a categorie</label>
+                          <label for="kt_ecommerce_add_product_store_template" class="form-label">Selecciona una Categoria</label>
                           <!--end::Select store template-->
                           <!--begin::Select2-->
                           <select class="form-select mb-2" [(ngModel)]="product_categorie_id" name="product_categorie_id">
@@ -147,7 +147,7 @@
                           </select>
                           <!--end::Select2-->
                           <!--begin::Description-->
-                          <div class="text-muted fs-7">Assign a template from your current theme to define how a single product is displayed.</div>
+                          <div class="text-muted fs-7">Asigna una categoria para el producto.</div>
                           <!--end::Description-->
                       </div>
                       <!--end::Card body-->
@@ -190,24 +190,24 @@
                                       <!--begin::Input group-->
                                       <div class="mb-10 fv-row">
                                           <!--begin::Label-->
-                                          <label class="required form-label">Product Name</label>
+                                          <label class="required form-label">Nombre del Proucto</label>
                                           <!--end::Label-->
                                           <!--begin::Input-->
                                           <input type="text" [(ngModel)]="title" name="title" class="form-control mb-2" placeholder="Product name" />
                                           <!--end::Input-->
                                           <!--begin::Description-->
-                                          <div class="text-muted fs-7">A product name is required and recommended to be unique.</div>
+                                          <div class="text-muted fs-7">Se requiere un nombre de producto y se recomienda que sea único.</div>
                                           <!--end::Description-->
                                       </div>
                                       <!--end::Input group-->
                                       <!--begin::Input group-->
                                       <div>
                                           <!--begin::Label-->
-                                          <label class="form-label">Description</label>
+                                          <label class="form-label">Descripción</label>
                                           <!--end::Label-->
                                           <textarea class="form-control form-control-solid" rows="3" [(ngModel)]="description" name="description" placeholder="Type Target Details"></textarea>
 
-                                          <div class="text-muted fs-7">Set a description to the product for better visibility.</div>
+                                          <div class="text-muted fs-7">Establezca una descripción al producto para una mejor visibilidad.</div>
                                           <!--end::Description-->
                                       </div>
 
@@ -224,8 +224,8 @@
                                           <div class="col-8">
                                               <label class="required form-label">Especificaciones: (Opcional)</label>
                                               <div class="d-flex">
-                                                  <input type="text" [(ngModel)]="key_v" name="key_v" class="form-control mb-2" placeholder="Propiedad" />
-                                                  <input type="text" [(ngModel)]="value_v" name="value_v" class="form-control mb-2" placeholder="Valor" />
+                                                  <input type="text" [(ngModel)]="key_v" name="key_v" class="form-control me-2 mb-2" placeholder="Propiedad" />
+                                                  <input type="text" [(ngModel)]="value_v" name="value_v" class="form-control me-2 mb-2" placeholder="Valor" />
                                                   <button class="btn btn-primary btn-sm" (click)="addEspecif()">+</button>
                                               </div>
                                               <div>
@@ -289,13 +289,13 @@
                                       <div class="mb-10 row fv-row">
                                           <div class="col-4">
                                               <!--begin::Label-->
-                                              <label class="required form-label">Base Price</label>
+                                              <label class="required form-label">Precio Base</label>
                                               <!--end::Label-->
                                               <!--begin::Input-->
                                               <input type="number" [(ngModel)]="price_general" name="price_general" class="form-control mb-2" placeholder="Product price" />
                                               <!--end::Input-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Set the product price.</div>
+                                              <div class="text-muted fs-7">Establecer el precio del producto.</div>
                                               <!--end::Description-->
                                           </div>
                                           <div class="col-4">
@@ -315,7 +315,7 @@
                                       <!--begin::Input group-->
                                       <div class="fv-row mb-10">
                                           <!--begin::Label-->
-                                          <label class="fs-6 fw-semibold mb-2">Discount Type
+                                          <label class="fs-6 fw-semibold mb-2">Tipo de Descuento
                                           <span class="ms-1" data-bs-toggle="tooltip" title="Select a discount type that will be applied to this product">
                                               <i class="ki-duotone ki-information-5 text-gray-500 fs-6">
                                                   <span class="path1"></span>
@@ -337,7 +337,7 @@
                                                       <!--end::Radio-->
                                                       <!--begin::Info-->
                                                       <span class="ms-5">
-                                                          <span class="fs-4 fw-bold text-gray-800 d-block">No Discount</span>
+                                                          <span class="fs-4 fw-bold text-gray-800 d-block">No hay Descuento</span>
                                                       </span>
                                                       <!--end::Info-->
                                                   </label>
@@ -355,7 +355,7 @@
                                                       <!--end::Radio-->
                                                       <!--begin::Info-->
                                                       <span class="ms-5">
-                                                          <span class="fs-4 fw-bold text-gray-800 d-block">Percentage %</span>
+                                                          <span class="fs-4 fw-bold text-gray-800 d-block">Porcentaje %</span>
                                                       </span>
                                                       <!--end::Info-->
                                                   </label>
@@ -398,30 +398,30 @@
                                           <!--begin::Input group-->
                                           <div class="fv-row w-100 flex-md-root">
                                               <!--begin::Label-->
-                                              <label class="required form-label">Tax Class</label>
+                                              <label class="required form-label">Tipo de impuesto</label>
                                               <!--end::Label-->
                                               <!--begin::Select2-->
                                               <select class="form-select mb-2" [(ngModel)]="tax_selected" name="tax_selected" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
-                                                  <option value="1">Tax Free</option>
-                                                  <option value="2">Taxable Goods</option>
-                                                  <option value="3">Downloadable Product</option>
+                                                  <option value="1">Libre de impuestos</option>
+                                                  <option value="2">Bienes sujetos a impuestos</option>
+                                                  <option value="3">Exonerado</option>
                                               </select>
                                               <!--end::Select2-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Set the product tax class.</div>
+                                              <div class="text-muted fs-7">Establecer la clase de impuesto del producto.</div>
                                               <!--end::Description-->
                                           </div>
                                           <!--end::Input group-->
                                           <!--begin::Input group-->
                                           <div class="fv-row w-100 flex-md-root">
                                               <!--begin::Label-->
-                                              <label class="form-label">VAT Amount (%)</label>
+                                              <label class="form-label">Importe del IVA (%)</label>
                                               <!--end::Label-->
                                               <!--begin::Input-->
                                               <input type="number" [(ngModel)]="importe_iva" name="importe_iva" class="form-control mb-2" />
                                               <!--end::Input-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Set the product VAT about.</div>
+                                              <div class="text-muted fs-7">Establecer el IVA del producto aproximadamente.</div>
                                               <!--end::Description-->
                                           </div>
                                           <!--end::Input group-->
@@ -458,7 +458,7 @@
                                               <input type="text" [(ngModel)]="sku" name="sku" class="form-control mb-2" placeholder="SKU Number" />
                                               <!--end::Input-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Enter the product SKU.</div>
+                                              <div class="text-muted fs-7">Ingrese el SKU del producto.</div>
                                               <!--end::Description-->
                                           </div>
                                           <div class="col-6">
@@ -480,13 +480,13 @@
                                       <div class="mb-10 fv-row row">
                                           <div class="col-6">
                                               <!--begin::Label-->
-                                              <label class="required form-label">UMBRAL</label>
+                                              <label class="required form-label">Cantidad limite UMBRAL</label>
                                               <!--end::Label-->
                                               <!--begin::Input-->
                                               <input type="text" [(ngModel)]="umbral" name="umbral" class="form-control mb-2" placeholder="SKU Number" />
                                               <!--end::Input-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Enter the product UMBRAL.</div>
+                                              <div class="text-muted fs-7">Introduzca la cantidad limite UMBRAL.</div>
                                               <!--end::Description-->
                                           </div>
                                           <div class="col-6">
@@ -538,7 +538,7 @@
                                           </div>
                                           <div class="col-3">
                                               <!--begin::Label-->
-                                              <label class="required form-label">Quantity</label>
+                                              <label class="required form-label">Cantidad</label>
                                               <!--end::Label-->
                                               <!--begin::Input-->
                                               <div class="d-flex gap-3">
@@ -546,7 +546,7 @@
                                               </div>
                                               <!--end::Input-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Enter the product quantity.</div>
+                                              <div class="text-muted fs-7">Introduzca la cantidad del producto.</div>
                                               <!--end::Description-->
                                           </div>
                                           <div class="col-1">
@@ -622,7 +622,7 @@
                                   <!--begin::Card header-->
                                   <div class="card-header">
                                       <div class="card-title">
-                                          <h2>Pricio Multiples</h2>
+                                          <h2>Pricios Multiples</h2>
                                       </div>
                                   </div>
                                   <!--end::Card header-->
@@ -685,7 +685,7 @@
                                               </div>
                                               <!--end::Input-->
                                               <!--begin::Description-->
-                                              <div class="text-muted fs-7">Enter the product price.</div>
+                                              <div class="text-muted fs-7">Introduzca el precio del producto.</div>
                                               <!--end::Description-->
                                           </div>
                                           <div class="col-1">
@@ -779,13 +779,13 @@
                                           <div class="mb-10 fv-row row">
                                               <div class="col-3">
                                                   <!--begin::Label-->
-                                                  <label class="form-label">Weight</label>
+                                                  <label class="form-label">Peso</label>
                                                   <!--end::Label-->
                                                   <!--begin::Editor-->
                                                   <input type="text" [(ngModel)]="weight" name="weight" name="weight" class="form-control mb-2" placeholder="Product weight" />
                                                   <!--end::Editor-->
                                                   <!--begin::Description-->
-                                                  <div class="text-muted fs-7">Set a product weight in kilograms (kg).</div>
+                                                  <div class="text-muted fs-7">Establezca un peso del producto en kilogramos (kg).</div>
                                                   <!--end::Description-->
                                               </div>
                                               <div class="col-3">
@@ -840,8 +840,8 @@
                       <!--end::Button-->
                       <!--begin::Button-->
                       <button type="button" (click)="store()" id="kt_ecommerce_add_product_submit" class="btn btn-primary">
-                          <span class="indicator-label">Save Changes</span>
-                          <span class="indicator-progress">Please wait...
+                          <span class="indicator-label">Guardar Registro</span>
+                          <span class="indicator-progress">Espere por favor...
                           <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                       </button>
                       <!--end::Button-->

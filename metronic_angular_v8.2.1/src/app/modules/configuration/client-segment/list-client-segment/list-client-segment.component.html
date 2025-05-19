@@ -7,7 +7,7 @@
             <div class="d-flex align-items-center position-relative my-1">
                 <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                         class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listClientSegments()" name="search" data-kt-customer-table-filter="search"
-                    class="form-control form-control-solid w-250px ps-12" placeholder="Search Client Segment">
+                    class="form-control form-control-solid w-250px ps-12" placeholder="Buscar Segmento de Cliente">
             </div>
             <!--end::Search-->
         </div>
@@ -19,7 +19,7 @@
             <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                 <!--begin::Add customer-->
                 <button type="button" class="btn btn-primary" (click)="createClientSegment()">
-                    + Agregar Client Segment
+                    + Agregar Segmento de Cliente
                 </button>
                 <!--end::Add customer-->
             </div>
@@ -51,7 +51,7 @@
                     style="width: 1199.5px;">
                     <thead>
                         <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
-                            
+
                             <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
                                 colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
                                     class="dt-column-title" role="button">Segmento de cliente</span><span
@@ -80,29 +80,29 @@
                                 <td>
                                     {{ CLIENTE_SEGMENT.name }}
                                 </td>
-    
+
                                 <td >
                                     <span class="badge badge-light-success" *ngIf="CLIENTE_SEGMENT.state == 1">Activo</span>
                                     <span class="badge badge-light-danger" *ngIf="CLIENTE_SEGMENT.state == 2">Inactivo</span>
                                 </td>
-                                
+
                                 <td>
                                     {{ CLIENTE_SEGMENT.created_at }}
                                 </td>
 
                                 <td class="">
                                     <a href="#" onclick="return false;" (click)="editClientSegment(CLIENTE_SEGMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                        <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i> 
+                                        <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>
                                     </a>
-    
+
                                     <a href="#" onclick="return false;" (click)="deleteClientSegment(CLIENTE_SEGMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                         <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
                                     </a>
                                 </td>
                             </tr>
                         </ng-container>
-                        
-                        
+
+
                     </tbody>
                     <tfoot></tfoot>
                 </table>

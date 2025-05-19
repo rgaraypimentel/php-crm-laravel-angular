@@ -60,9 +60,11 @@
 
               <div class="fv-row my-1">
                   <label class="required fw-bold fs-6 mb-2">Logo Provedor:(Opcional) </label>
-                  <div class="custom-file">
-                      <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)">
-                      <label class="custom-file-label" for="customFile">Choose file</label>
+                  <div class="d-flex flex-column align-items-start gap-2 w-100">
+                    <div class="btn btn-primary btn-sm">
+                      <input type="file" class="custom-file-input" id="customFile"  accept=".jpeg, .bmp, .jpg, .png, .gif, .webp"  (change)="processFile($event)" class="d-none">
+                      <label for="customFile" class="mb-0 cursor-pointer text-white">Subir Imagen</label>
+                    </div>
                   </div>
                   <div *ngIf="IMAGEN_PREVISUALIZA">
                       <img [src]="IMAGEN_PREVISUALIZA" style="height: 100px;" alt="" srcset="">

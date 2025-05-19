@@ -6,11 +6,11 @@
     data-kt-menu-trigger="{default: 'hover'}" data-kt-menu-overflow="false" data-kt-menu-permanent="true"
     data-kt-menu-placement="bottom-end" data-kt-search="true">
     <!--begin::Search toggle-->
-    <div class="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_search_toggle">
+    <!-- <div class="d-flex align-items-center" data-kt-search-element="toggle" id="kt_header_search_toggle">
       <div [ngClass]="btnClass">
         <app-keenicon name="magnifier" [class]="btnIconClass"></app-keenicon>
       </div>
-    </div>
+    </div> -->
     <!--end::Search toggle-->
     <app-search-result-inner data-kt-search-element="content" data-kt-menu="true"
       class="menu menu-sub menu-sub-dropdown p-7 w-325px w-md-375px"></app-search-result-inner>
@@ -22,9 +22,9 @@
 <!--begin::Activities-->
 <div class="app-navbar-item" [ngClass]="itemClass">
   <!--begin::Drawer toggle-->
-  <div [ngClass]="btnClass" id="kt_activities_toggle">
+  <!-- <div [ngClass]="btnClass" id="kt_activities_toggle">
     <app-keenicon name="messages" class="fs-2"></app-keenicon>
-  </div>
+  </div> -->
   <!--end::Drawer toggle-->
 </div>
 <!--end::Activities-->
@@ -32,10 +32,10 @@
 <!--begin::Notifications-->
 <div class="app-navbar-item" [ngClass]="itemClass">
   <!--begin::Menu- wrapper-->
-  <div [ngClass]="btnClass" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
+  <!-- <div [ngClass]="btnClass" data-kt-menu-trigger="{default: 'click', lg: 'hover'}" data-kt-menu-attach="parent"
     data-kt-menu-placement="bottom-end">
     <app-keenicon name="notification-status" class="fs-2"></app-keenicon>
-  </div>
+  </div> -->
   <app-notifications-inner></app-notifications-inner>
   <!--end::Menu wrapper-->
 </div>
@@ -43,22 +43,22 @@
 
 <!--begin::Chat-->
 <div class="app-navbar-item" [ngClass]="itemClass">
-  <div [ngClass]="btnClass" class="position-relative" id="kt_drawer_chat_toggle">
+  <!-- <div [ngClass]="btnClass" class="position-relative" id="kt_drawer_chat_toggle">
     <app-keenicon name="message-text-2" class="fs-2"></app-keenicon>
     <span
       class="bullet bullet-dot bg-success h-6px w-6px position-absolute translate-middle top-0 start-50 animation-blink">
     </span>
-  </div>
+  </div> -->
 </div>
 <!--end::Chat-->
 
 <!--begin::Quick links-->
 <div class="app-navbar-item" [ngClass]="itemClass">
   <!--begin::Menu wrapper-->
-  <div [ngClass]="btnClass" data-kt-menu-trigger="click" data-kt-menu-attach="parent"
+  <!-- <div [ngClass]="btnClass" data-kt-menu-trigger="click" data-kt-menu-attach="parent"
     data-kt-menu-placement="bottom-end">
     <app-keenicon name="element-11" class="fs-2"></app-keenicon>
-  </div>
+  </div> -->
   <!--end::Menu wrapper-->
   <app-quick-links-inner></app-quick-links-inner>
 </div>

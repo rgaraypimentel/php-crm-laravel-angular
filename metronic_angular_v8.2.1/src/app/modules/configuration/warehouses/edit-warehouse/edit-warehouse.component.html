@@ -3,8 +3,8 @@
     <!--begin::Modal header-->
     <div class="modal-header" id="kt_modal_add_user_header">
         <!--begin::Modal title-->
-        <h2 class="fw-bolder">Edit Almacen: {{ WAREHOUSE_SELECTED.name }}</h2>
-        
+        <h2 class="fw-bolder">Editar Almacen: {{ WAREHOUSE_SELECTED.name }}</h2>
+
         <!--end::Modal title-->
         <!--begin::Close-->
         <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
@@ -24,7 +24,7 @@
     <div class="modal-body scroll-y mx-5 my-7">
         <!--begin::Form-->
         <form id="kt_modal_add_user_form" class="form" action="#">
-             <!--begin::Scroll-->
+            <!--begin::Scroll-->
             <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
                 <!--begin::Input group-->
                 <div class="fv-row mb-7">
@@ -39,10 +39,10 @@
                 <div class="fv-row mb-7">
                     <!--begin::Label-->
                     <label class="required fw-bold fs-6 mb-2">Dirección:(Opcional) </label>
-                    <textarea class="form-control form-control-solid" rows="3" 
+                    <textarea class="form-control form-control-solid" rows="3"
                     name="address" [(ngModel)]="address"
                      placeholder="Dirección  del almacen"></textarea>
-                </div>  
+                </div>
 
                 <div class="fv-row mb-7">
 
@@ -57,9 +57,9 @@
                         <ng-container *ngFor="let SUCURSAL of SUCURSALES">
                             <option [value]="SUCURSAL.id">{{ SUCURSAL.name }}</option>
                         </ng-container>
-                        
+
                     </select>
-                </div>  
+                </div>
             </div>
             <!--end::Scroll-->
 
