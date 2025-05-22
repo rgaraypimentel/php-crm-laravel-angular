@@ -30,6 +30,8 @@ use App\Http\Controllers\Product\ProductWarehouseController;
 use App\Http\Controllers\Proforma\CalendarProformaController;
 use App\Http\Controllers\Proforma\ProformaController;
 use App\Http\Controllers\Proforma\ProformaDetailController;
+use App\Http\Controllers\Transport\TransportController;
+use App\Http\Controllers\Transport\TransportDetailController;
 
 /*
 |--------------------------------------------------------------------------
@@ -143,6 +145,11 @@ Route::group([
     Route::resource("purchase",ComprasController::class);
     Route::post("purchase-detail/entrega",[CompraDetalleController::class,'entrega']);
     Route::resource("purchase-detail",CompraDetalleController::class);
+
+    Route::get("transport/config",[TransportController::class,"config"]);
+    Route::post("transport/index",[TransportController::class,'index']);
+    Route::resource("transport",TransportController::class);
+    Route::resource("transport-detail",TransportDetailController::class);
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
