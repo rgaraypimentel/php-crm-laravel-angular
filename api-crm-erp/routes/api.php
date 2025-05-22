@@ -12,6 +12,8 @@ use App\Http\Controllers\Comission\ComissionController;
 use App\Http\Controllers\Comission\PositionComissionController;
 use App\Http\Controllers\Comission\SegmentClientComissionController;
 use App\Http\Controllers\Comission\WeekComissionController;
+use App\Http\Controllers\Compras\CompraDetalleController;
+use App\Http\Controllers\Compras\ComprasController;
 use App\Http\Controllers\RolePermissionController;
 use App\Http\Controllers\UserAccessController;
 use App\Http\Controllers\Configuration\UnitController;
@@ -135,6 +137,12 @@ Route::group([
     Route::resource("comission-categorie",CategorieComissionController::class);
     Route::resource("comission-client-segment",SegmentClientComissionController::class);
     Route::resource("comission-position",PositionComissionController::class);
+
+    Route::get("purchase/config",[ComprasController::class,"config"]);
+    Route::post("purchase/index",[ComprasController::class,'index']);
+    Route::resource("purchase",ComprasController::class);
+    Route::post("purchase-detail/entrega",[CompraDetalleController::class,'entrega']);
+    Route::resource("purchase-detail",CompraDetalleController::class);
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);

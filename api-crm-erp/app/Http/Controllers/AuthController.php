@@ -116,6 +116,7 @@ class AuthController extends Controller
                 "role_name" => auth("api")->user()->role->name,
                 "permissions" => $permissions,
                 "sucursale_id" => auth("api")->user()->sucursale_id,
+                "sucursale_name" => auth('api')->user()->sucursale->name,
             ]
         ]);
     }

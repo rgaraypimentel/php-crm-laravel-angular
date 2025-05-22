@@ -7,7 +7,7 @@ import { AuthService } from '../../auth';
 @Injectable({
   providedIn: 'root'
 })
-export class ProformasService {
+export class PurchaseService {
 
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
@@ -20,23 +20,11 @@ export class ProformasService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-
-
-  searchClients(n_document:string,full_name:string,phone:string){
+  configAll(){
     this.isLoadingSubject.next(true);
-    let LINK = "";
-    if(n_document){
-      LINK += "&n_document="+n_document;
-    }
-    if(full_name){
-      LINK += "&full_name="+full_name;
-    }
-    if(phone){
-      LINK += "&phone="+phone;
-    }
-    let URL = URL_SERVICIOS+"/proformas/search-clients?p=1"+LINK;
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.get(URL,{headers:headers}).pipe(
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
+    let URL = URL_SERVICIOS+"/purchase/config";
+    return this.http.get(URL,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
@@ -54,92 +42,85 @@ export class ProformasService {
     );
   }
 
-  configAll(){
+  createOrderPurchase(data:any){
     this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas/config";
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.get(URL,{headers:headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-
-  listProformas(page:number = 1,data:any = {}){
-    this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas/index?page="+page;
+    let URL = URL_SERVICIOS+"/purchase";
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
     return this.http.post(URL,data,{headers:headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-  showProforma(PROFORMA_ID:string){
+  listOrderPurchase(page:number= 1,data:any){
     this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas/"+PROFORMA_ID;
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.get(URL,{headers:headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-
-  evalDisponibilidad(PRODUCT_ID:string,unit_id:string,quantity:number){
-    this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas/eval-disponibilidad/"+PRODUCT_ID+"?unit_id="+unit_id+"&quantity="+quantity;
-
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.get(URL,{headers:headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-
-  createProforma(data:any){
-    this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas";
+    let URL = URL_SERVICIOS+"/purchase/index?page="+page;
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
     return this.http.post(URL,data,{headers:headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-  editProforma(PROFORMA_ID:any,data:any){
+  showPurchase(ID_PURCHASE:String){
     this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas/"+PROFORMA_ID;
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.post(URL,data,{headers:headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-
-  }
-  deleteProforma(PROFORMA_ID:string){
-    this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proformas/"+PROFORMA_ID;
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.delete(URL,{headers:headers}).pipe(
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
+    let URL = URL_SERVICIOS+"/purchase/"+ID_PURCHASE;
+    return this.http.get(URL,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
 
-  // GESTION DE DETALLADO
-  addDetailProforma(data:any){
+  editOrderPurchase(ID_PURCHASE:string,data:any){
     this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proforma-details";
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
-    return this.http.post(URL,data,{headers:headers}).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
-  }
-  editDetailProforma(DETAIL_ID:string,data:any){
-    this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proforma-details/"+DETAIL_ID;
+    let URL = URL_SERVICIOS+"/purchase/"+ID_PURCHASE;
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
     return this.http.put(URL,data,{headers:headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }
-  deleteDetailProforma(DETAIL_ID:string){
+
+  deleteOrderPurchase(ID_PURCHASE:string){
     this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS+"/proforma-details/"+DETAIL_ID;
+    let URL = URL_SERVICIOS+"/purchase/"+ID_PURCHASE;
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
     return this.http.delete(URL,{headers:headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  procesoEntrega(data:any){
+    this.isLoadingSubject.next(true);
+    let URL = URL_SERVICIOS+"/purchase-detail/entrega";
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    return this.http.post(URL,data,{headers:headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  // NUEVAS FUNCIONES PARA EL DETALLADO DE UNA ORDEN DE COMPRA
+
+  addPurchaseDetail(data:any){
+    this.isLoadingSubject.next(true);
+    let URL = URL_SERVICIOS+"/purchase-detail";
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    return this.http.post(URL,data,{headers:headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  editPurchaseDetail(ID_DETAIL:string,data:any){
+    this.isLoadingSubject.next(true);
+    let URL = URL_SERVICIOS+"/purchase-detail/"+ID_DETAIL;
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    return this.http.put(URL,data,{headers:headers}).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  deletePurchaseDetail(ID_DETAIL:String,total:number = 0,importe:number = 0,igv:number = 0,purchase_id:string = ''){
+    this.isLoadingSubject.next(true);
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+ this.authservice.token});
+    let URL = URL_SERVICIOS+"/purchase-detail/"+ID_DETAIL+"?total="+total+"&importe="+importe+"&igv="+igv+"&purchase_id="+purchase_id;
+    return this.http.delete(URL,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );
   }

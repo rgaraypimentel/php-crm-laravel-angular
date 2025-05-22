@@ -85,6 +85,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/comissions/comissions.module').then((m) => m.ComissionsModule),
   },
   {
+    path: 'compras',
+    loadChildren: () => import('../modules/purchase/purchase.module').then((m) => m.PurchaseModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
