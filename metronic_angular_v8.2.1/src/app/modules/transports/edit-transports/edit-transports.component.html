@@ -1,0 +1,199 @@
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+
+            <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Responsable: (*) </label>
+                <input type="text" disabled name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Usuario de la compral" [(ngModel)]="full_name_user" />
+            </div>
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Sucursal: (*) </label>
+                <input type="text" disabled name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: Lima" [(ngModel)]="sucursal_user" />
+            </div>
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Almacen de Atención: (*) </label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="warehouse_start_id"
+                    [(ngModel)]="warehouse_start_id"
+                    placeholder="Selec. Almacen"
+                    (change)="updatedUnit()"
+                    [disabled]="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state >= 3 ? true : false"
+                >
+                <option value="">Ninguno</option>
+                <ng-container *ngFor="let warehouse of warehouses_start">
+                    <option [value]="warehouse.id">{{ warehouse.name }}</option>
+                </ng-container>
+
+                </select>
+            </div>
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Almacen de llegada: (*) </label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="warehouse_end_id"
+                    [(ngModel)]="warehouse_end_id"
+                    placeholder="Selec. Almacen"
+                    [disabled]="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state >= 3 ? true : false"
+                >
+                <option value="">Ninguno</option>
+                <ng-container *ngFor="let warehouse of warehouses_end">
+                    <option [value]="warehouse.id">{{ warehouse.name }}</option>
+                </ng-container>
+                </select>
+            </div>
+        </div>
+        <div class="row py-5 align-items-center">
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Fecha de Emisión: (*) </label>
+                <div class="input-group input-group-solid">
+                    <input type="date"
+                    name="date_emision"
+                    class="form-control form-control-lg form-control-solid"
+                    [(ngModel)]="date_emision"
+                    [disabled]="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state >= 3 ? true : false"
+                    />
+                </div>
+            </div>
+            <div class="col-3">
+                <label class="fs-6 fw-semibold mb-2">Nota Final:</label>
+                <textarea class="form-control form-control-solid" rows="3" [disabled]="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state >= 3 ? true : false" name="description" [(ngModel)]="description" placeholder=""></textarea>
+            </div>
+            <div class="col-3">
+                <button class="btn btn-primary" *ngIf="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state != 6" (click)="editOrderTransport()">Editar Solicitud de Transporte</button>
+            </div>
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">State: (*) </label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="state"
+                    [(ngModel)]="state"
+                    placeholder="Selec. Tipo"
+                >
+                    <ng-container *ngIf="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state < 3">
+                        <option value="1">SOLICITUD</option>
+                        <option value="2">REVISIÓN SALIDA</option>
+                        <option value="3">SALIDA</option>
+                    </ng-container>
+
+                    <ng-container *ngIf="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state >= 3">
+                        <option value="3">SALIDA</option>
+                        <option value="4">LLEGADA</option>
+                        <option value="5">REVISION LLEGADA</option>
+                        <option value="6">ENTREGA</option>
+                    </ng-container>
+
+                </select>
+            </div>
+        </div>
+
+        <div class="row py-5" *ngIf="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state < 3">
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Buscar Producto: (*) </label>
+                <div class="d-flex align-items-center position-relative my-1">
+                    <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                            class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listProducts()" name="search" data-kt-customer-table-filter="search"
+                        class="form-control form-control-solid ps-12" placeholder="Search Products">
+                </div>
+            </div>
+            <div class="col-3">
+                <label class="required fw-bold fs-6 mb-2">Unidades: (*) </label>
+                <select
+                    class="form-control form-select-solid fw-bolder"
+                    name="unit_id"
+                    [(ngModel)]="unit_id"
+                    placeholder="Selec. Unidad"
+                >
+                <option value="">Ninguno</option>
+                <ng-container *ngFor="let unit of units">
+                    <option [value]="unit.unit.id">{{ unit.unit.name }}</option>
+                </ng-container>
+                </select>
+            </div>
+            <div class="col-2">
+                <label class="required fw-bold fs-6 mb-2">Precio Unitario: (*) </label>
+                <input type="number" name="price_unit" [(ngModel)]="price_unit" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: 49.50" />
+            </div>
+            <div class="col-2">
+                <label class="required fw-bold fs-6 mb-2">Cantidad Solic.: (*) </label>
+                <input type="number" name="quantity" [(ngModel)]="quantity" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: 49.50" />
+            </div>
+            <div class="col-2">
+                <button class="btn btn-sm btn-primary" (click)="addDetail()">+</button>
+            </div>
+        </div>
+
+        <div class="row py-5">
+            <div class="col-12">
+                <div class="table-responsive">
+                    <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                       <thead>
+                          <tr class="fw-bold text-muted">
+                             <th class="min-w-140px">Producto</th>
+                             <th class="min-w-120px">Unidad</th>
+                             <th class="min-w-120px">Precio Unitario</th>
+                             <th class="min-w-120px">Cantidad</th>
+                             <th class="min-w-120px">Total</th>
+                             <th class="min-w-100px text-end">Actions</th>
+                          </tr>
+                       </thead>
+                       <tbody>
+                            <ng-container *ngFor="let TRANSPORT_DETAIL of TRANSPORTS_DETAILS;let i=index">
+                                <tr>
+
+                                  <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                      {{ TRANSPORT_DETAIL.product.title }}
+                                   </td>
+                                   <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                    {{ TRANSPORT_DETAIL.unit.name }}
+                                   </td>
+                                   <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                      {{ TRANSPORT_DETAIL.price_unit }}  PEN
+                                   </td>
+                                   <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                    {{ TRANSPORT_DETAIL.quantity }}
+                                   </td>
+                                   <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                    {{ TRANSPORT_DETAIL.total }} PEN
+                                   </td>
+
+                                   <td class="text-end">
+
+                                      <a href="#" *ngIf="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state < 3" onclick="return false" (click)="editItemTransport(i,TRANSPORT_DETAIL)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                      <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a>
+
+                                      <a href="#" *ngIf="TRANSPORT_SELECTED && TRANSPORT_SELECTED.state < 3" onclick="return false" (click)="deleteItemTransport(i,TRANSPORT_DETAIL)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                      <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
+
+                                   </td>
+                                </tr>
+                            </ng-container>
+
+
+
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <input type="number" disabled name="importe" [(ngModel)]="importe" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: 49.50" />
+                                <small>Importe:</small>
+                            </td>
+                            <td>
+                                <input type="number" disabled name="igv" [(ngModel)]="igv" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: 49.50" />
+                                <small>Igv:</small>
+                            </td>
+                            <td>
+                                <input type="number" disabled name="total" [(ngModel)]="total" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: 49.50" />
+                                <small>Total:</small>
+                            </td>
+                          </tr>
+                      </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

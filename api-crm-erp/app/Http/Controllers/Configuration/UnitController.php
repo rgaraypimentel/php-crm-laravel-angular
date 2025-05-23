@@ -16,7 +16,7 @@ class UnitController extends Controller
     {
         $search = $request->get("search");
 
-        $units = Unit::with(['transforms.unit_to'])->where("name","like","%".$search."%")->orderBy("id","desc")->paginate(25);
+        $units = Unit::where("name","like","%".$search."%")->orderBy("id","desc")->paginate(25);
 
         return response()->json([
             "total" => $units->total(),
