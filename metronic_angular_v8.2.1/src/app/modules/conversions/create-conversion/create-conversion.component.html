@@ -1,0 +1,143 @@
+<!--begin::Modal content CREATE-->
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="kt_modal_add_user_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bolder">Agregar Conversión</h2>
+
+        <!--end::Modal title-->
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close" (click)="modal.dismiss()">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 my-7">
+        <!--begin::Form-->
+        <form id="kt_modal_add_user_form" class="form" action="#">
+            <!--begin::Scroll-->
+            <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_user_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_user_header" data-kt-scroll-wrappers="#kt_modal_add_user_scroll" data-kt-scroll-offset="300px">
+                <!--begin::Input group-->
+                <div class="fv-row row justify-content-center mb-7">
+                    <div class="col-7">
+                        <label class="required fw-bold fs-6 mb-2">Buscar Producto: (*) </label>
+                        <div class="d-flex align-items-center position-relative my-1">
+                            <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                                    class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listProducts()" name="search" data-kt-customer-table-filter="search"
+                                class="form-control form-control-solid ps-12" placeholder="Buscar Productos">
+                        </div>
+                    </div>
+                    <div class="col-5">
+                        <label class="required fw-bold fs-6 mb-2">Almacenes: (*) </label>
+                        <select
+                            class="form-control form-select-solid fw-bolder"
+                            name="warehouse_id"
+                            [(ngModel)]="warehouse_id"
+                            placeholder="Selec. Unidad"
+                            (change)="selectedWarehouse()"
+                        >
+                            <option value="">Ninguno</option>
+                            <ng-container *ngFor="let warehouse of warehouses">
+                                <option [value]="warehouse.id">{{ warehouse.name }}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="col-9 my-4">
+                        <div class="table-responsive">
+                            <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                               <thead>
+                                  <tr class="fw-bold text-muted">
+                                     <th class="min-w-140px">Unidad</th>
+                                     <th class="min-w-120px">Cantidad</th>
+                                     <th class="min-w-100px">Actions</th>
+                                  </tr>
+                               </thead>
+                               <tbody>
+                                  <tr class="row-table" style="border-bottom: 0.1rem solid !important;"
+                                    *ngFor="let WAREHOUSE_UNIT of WAREHOUSE_UNITS">
+                                    <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                        {{ WAREHOUSE_UNIT.unit.name }}
+                                     </td>
+
+                                     <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                        {{ WAREHOUSE_UNIT.quantity }}
+                                     </td>
+
+                                     <td class="">
+                                        <button class="btn btn-primary btn-sm" (click)="selectedUnit(WAREHOUSE_UNIT)">+</button>
+                                     </td>
+                                  </tr>
+
+                               </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="fv-row row justify-content-center mb-7">
+                    <div class="col-3">
+                        <label class="required fw-bold fs-6 mb-2">Unidad selec.: (*) </label>
+                        <input type="text" disabled name="unit_name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" [(ngModel)]="unit_name" />
+                    </div>
+                    <div class="col-3">
+                        <label class="required fw-bold fs-6 mb-2">Unidades: (*) </label>
+                        <select
+                            class="form-control form-select-solid fw-bolder"
+                            name="unit_end_id"
+                            [(ngModel)]="unit_end_id"
+                            placeholder="Selec. Unidad"
+                        >
+                            <option value="">Ninguno</option>
+                            <ng-container *ngFor="let unit_transform of unit_transforms">
+                                <option [value]="unit_transform.id">{{ unit_transform.name }}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                    <div class="col-3">
+                        <label class="required fw-bold fs-6 mb-2">Cantidad Inicial: (*) </label>
+                        <input type="number" name="quantity_start" (keyup)="calcTotal()" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" [(ngModel)]="quantity_start" />
+                    </div>
+                    <div class="col-3">
+                        <label class="required fw-bold fs-6 mb-2">Cantidad Final: (*) </label>
+                        <input type="number" name="quantity_end" (keyup)="calcTotal()" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" [(ngModel)]="quantity_end" />
+                    </div>
+                </div>
+                <div class="fv-row row justify-content-center mb-7">
+                    <div class="col-3">
+                        <label class="required fw-bold fs-6 mb-2">Cantidad Total: (*) </label>
+                        <input type="number" disabled name="quantity" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" [(ngModel)]="quantity" />
+                    </div>
+                    <div class="col-6">
+                        <label class="fs-6 fw-semibold mb-2">Descripción:</label>
+                        <textarea class="form-control form-control-solid" rows="3" name="description" [(ngModel)]="description" placeholder=""></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--end::Scroll-->
+
+            <!--begin::Actions-->
+            <div class="text-center pt-15">
+                <button type="reset" class="btn btn-light me-3" (click)="modal.dismiss()">Cerrar</button>
+                <button type="button" (click)="store()" class="btn btn-primary" data-kt-users-modal-action="submit">
+                    <span class="indicator-label">Registrar</span>
+
+                    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading | async"></span>
+                    <!-- <span class="indicator-progress">Please wait...
+                    <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span> -->
+                </button>
+            </div>
+            <!--end::Actions-->
+        </form>
+        <!--end::Form-->
+    </div>
+    <!--end::Modal body-->
+</div>
+<!--end::Modal content CREATE-->

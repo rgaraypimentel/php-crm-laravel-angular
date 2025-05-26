@@ -93,6 +93,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/transports/transports.module').then((m) => m.TransportsModule),
   },
   {
+    path: 'conversiones',
+    loadChildren: () => import('../modules/conversions/conversions.module').then((m) => m.ConversionsModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

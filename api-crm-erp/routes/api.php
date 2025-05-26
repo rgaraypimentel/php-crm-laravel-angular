@@ -24,6 +24,8 @@ use App\Http\Controllers\Configuration\MethodPaymentController;
 use App\Http\Controllers\Configuration\ProductCategorieController;
 use App\Http\Controllers\Configuration\ProviderController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
+use App\Http\Controllers\Despacho\DespachoController;
+use App\Http\Controllers\Product\ConversionController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductWalletController;
 use App\Http\Controllers\Product\ProductWarehouseController;
@@ -150,6 +152,13 @@ Route::group([
     Route::post("transport/index",[TransportController::class,'index']);
     Route::resource("transport",TransportController::class);
     Route::resource("transport-detail",TransportDetailController::class);
+
+    Route::get("conversions/config",[ConversionController::class,"config"]);
+    Route::post("conversions/index",[ConversionController::class,'index']);
+    Route::resource("conversions",ConversionController::class);
+
+    Route::post("despacho/index",[DespachoController::class,'index']);
+    Route::resource("despacho",DespachoController::class);
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
