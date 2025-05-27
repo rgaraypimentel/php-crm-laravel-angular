@@ -52,6 +52,8 @@ class ProformaResource extends JsonResource
             "igv" => round($this->resource->igv,2),
             "state_proforma" => $this->resource->state_proforma,
             "state_payment" => $this->resource->state_payment,
+            "state_despacho" => $this->resource->state_despacho,
+            "date_entrega" => $this->resource->date_entrega ? Carbon::parse($this->resource->date_entrega)->format("Y-m-d h:i:A") : null,
             "debt" => round($this->resource->debt,2),
             "paid_out" => round($this->resource->paid_out,2),
             "date_validation" => $this->resource->date_validation,
@@ -114,6 +116,15 @@ class ProformaResource extends JsonResource
                         "name" => $detail->unit->name,
                     ],
                     "impuesto" => round($detail->impuesto,2),
+                    "date_entrega" => $detail->date_entrega ? Carbon::parse($detail->date_entrega)->format("Y-m-d h:i:A") : null,
+                    "user_despacho" => $detail->user_despacho ? [
+                        "id" => $detail->user_despacho->id,
+                        "full_name" => $detail->user_despacho->name.' '.$detail->user_despacho->surname,
+                    ] : null,
+                    "warehouse" => $detail->warehouse ? [
+                        "id" => $detail->warehouse->id,
+                        "name" => $detail->warehouse->name,
+                    ] : null,
                 ];
             }),
             "proforma_deliverie" => [

@@ -113,6 +113,7 @@ class ProformaController extends Controller
         date_default_timezone_set("America/Lima");
         $today = now()->format("Y/m/d");
         $product_categories = ProductCategorie::where("state",1)->get();
+        $warehouses = Warehouse::where("state",1)->orderBy("id","desc")->get();
         return response()->json([
             "client_segments" => $client_segments,
             "product_categories" => $product_categories,
@@ -122,6 +123,7 @@ class ProformaController extends Controller
                     "full_name" => $user->name.' '.$user->surname,
                 ];
             }),
+            "warehouses" => $warehouses,
             "sucursale_deliveries" => $sucursale_deliveries->map(function($sucursale_del) {
                 return [
                     "id" => $sucursale_del->id,

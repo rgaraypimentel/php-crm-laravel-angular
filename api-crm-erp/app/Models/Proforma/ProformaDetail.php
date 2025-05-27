@@ -4,7 +4,9 @@ namespace App\Models\Proforma;
 
 use App\Models\Configuration\ProductCategorie;
 use App\Models\configuration\Unit;
+use App\Models\configuration\Warehouse;
 use App\Models\Product\Product;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +30,10 @@ class ProformaDetail extends Model
         "impuesto",
         /* "created_at",
         "updated_at", */
+
+        "date_entrega",
+        "user_entrega",
+        "warehouse_id",
     ];
 
     public function setCreatedAtAttribute($value) {
@@ -49,6 +55,14 @@ class ProformaDetail extends Model
 
     public function product(){
         return $this->belongsTo(Product::class,"product_id");
+    }
+
+    public function user_despacho(){
+        return $this->belongsTo(User::class,"user_entrega");
+    }
+
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class,"warehouse_id");
     }
 
     public function product_categorie(){

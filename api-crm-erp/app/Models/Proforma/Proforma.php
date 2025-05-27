@@ -32,6 +32,9 @@ class Proforma extends Model
         "date_pay_complete",
         "description",
         "state_despacho",
+
+        "state_despacho",
+        "date_entrega",
         /* "created_at",
         "updated_at", */
     ];
@@ -63,6 +66,10 @@ class Proforma extends Model
 
     public function details(){
         return $this->hasMany(ProformaDetail::class,"proforma_id");
+    }
+
+    public function entregados(){
+        return $this->hasMany(ProformaDetail::class,"proforma_id")->where("date_entrega","<>",NULL);
     }
 
     public function proforma_deliverie() {
