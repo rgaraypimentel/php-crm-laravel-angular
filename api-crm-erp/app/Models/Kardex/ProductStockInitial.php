@@ -1,23 +1,26 @@
 <?php
 
-namespace App\Models\configuration;
+namespace App\Models\Kardex;
 
-use App\Models\COnfiguration\UnitTransform;
+use App\Models\configuration\Unit;
+use App\Models\configuration\Warehouse;
+use App\Models\Product\Product;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Unit extends Model
+class ProductStockInitial extends Model
 {
     use HasFactory;
     use SoftDeletes;
     protected $fillable = [
-        "name",
-        "description",
-        "state",
+        "product_id",
+        "price_unit_avg",
+        "unit_id",
+        "warehouse_id",
+        "stock"
     ];
-
     public function setCreatedAtAttribute($value) {
         date_default_timezone_set("America/Lima");
         $this->attributes["created_at"] = Carbon::now();
@@ -27,7 +30,15 @@ class Unit extends Model
         $this->attributes["updated_at"] = Carbon::now();
     }
 
-    public function transforms() {
-        return $this->hasMany(UnitTransform::class);
+    public function product(){
+        return $this->belongsTo(Product::class,"product_id");
+    }
+
+    public function unit(){
+        return $this->belongsTo(Unit::class,"unit_id");
+    }
+
+    public function warehouse(){
+        return $this->belongsTo(Warehouse::class,"warehouse_id");
     }
 }

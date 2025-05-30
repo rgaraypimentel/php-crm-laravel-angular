@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('product:state-stocks')->hourly();
+        $schedule->command('app:process-stock-initial-of-products')->monthly();
     }
 
     /**

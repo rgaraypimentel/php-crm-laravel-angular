@@ -25,6 +25,7 @@ use App\Http\Controllers\Configuration\ProductCategorieController;
 use App\Http\Controllers\Configuration\ProviderController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 use App\Http\Controllers\Despacho\DespachoController;
+use App\Http\Controllers\Kardex\KardexController;
 use App\Http\Controllers\Product\ConversionController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductWalletController;
@@ -159,6 +160,10 @@ Route::group([
 
     Route::post("despacho/index",[DespachoController::class,'index']);
     Route::resource("despacho",DespachoController::class);
+
+    Route::get("kardex/config",[KardexController::class,"config"]);
+    Route::post("kardex/index",[KardexController::class,'index']);
+    Route::resource("kardex",KardexController::class);
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
@@ -167,3 +172,4 @@ Route::get("excel/export-proforma-details",[ProformaController::class,"export_pr
 Route::get("excel/export-products",[ProductController::class,"export_products"]);
 Route::get("excel/export-clients",[ClientController::class,"export_clients"]);
 Route::get("excel/export-contract-processs",[CajaSucursaleController::class,"export_report_caja"]);
+Route::get("excel/export-kardex",[KardexController::class,"export_kardex"]);
