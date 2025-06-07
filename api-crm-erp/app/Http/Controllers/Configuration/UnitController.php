@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\configuration;
 
 use App\Http\Controllers\Controller;
-use App\Models\configuration\Unit;
+use App\Models\Configuration\Unit;
 use App\Models\COnfiguration\UnitTransform;
 use Illuminate\Http\Request;
 

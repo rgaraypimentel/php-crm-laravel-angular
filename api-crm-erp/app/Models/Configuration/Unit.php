@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\configuration;
+namespace App\Models\Configuration;
 
 use App\Models\COnfiguration\UnitTransform;
 use Carbon\Carbon;

@@ -48,40 +48,40 @@
         <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
             <div id="" class="table-responsive">
                 <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
-                    style="width: 1199.5px;">
-                    <thead>
-                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
+                    style="width: 1199.5px;border-bottom: 2px solid #edeaea;">
+                    <thead style="font-weight: 900;border-right: 2px solid #edeaea; background-color: #eeeeee;">
+                        <tr class="text-start text-gray-700 fw-bold fs-7 text-uppercase gs-0" role="row" style="font-weight: 900;border-bottom: 2px solid #edeaea;">
 
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
-                                colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                                colspan="1" aria-label="Customer Name: Activate to sort" style="border-top: 2px solid #edeaea; border-left: 1px solid #edeaea;" tabindex="0"><span
                                     class="dt-column-title" role="button">Metodo de pago</span><span
                                     class="dt-column-order"></span></th>
 
                             <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
-                                colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                colspan="1" aria-label="Email: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
                                     class="dt-column-title" role="button">Relación/Padre</span><span
                                     class="dt-column-order"></span></th>
 
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
-                                colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="2" rowspan="1"
+                                colspan="1" aria-label="Email: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
                                     class="dt-column-title" role="button">Estado</span><span
                                     class="dt-column-order"></span></th>
 
 
-                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1"
-                                colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="5" rowspan="1"
+                                colspan="1" aria-label="Created Date: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
                                     class="dt-column-title" role="button">Fecha de registro</span><span
                                     class="dt-column-order"></span></th>
 
-                            <th class="text-end min-w-70px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1"
-                                aria-label="Actions"><span class="dt-column-title">Actions</span><span
+                            <th class="text-end min-w-70px dt-orderable-none text-center" data-dt-column="6" rowspan="1" colspan="1"
+                                aria-label="Actions" style="border-top: 2px solid #edeaea;"><span class="dt-column-title">Acciones</span><span
                                     class="dt-column-order"></span></th>
                         </tr>
                     </thead>
-                    <tbody class="fw-semibold text-gray-600">
+                    <tbody class="fw-semibold text-gray-500">
                         <ng-container *ngFor="let METHOD_PAYMENT of METHOD_PAYMENTS">
-                            <tr>
-                                <td>
+                            <tr style="border-bottom: 2px solid #edeaea;border-right: 1px solid #edeaea;border-left: 1px solid #edeaea;">
+                                <td class="text-center">
                                     {{ METHOD_PAYMENT.name }}
                                 </td>
 
@@ -90,7 +90,7 @@
                                     display: block;">{{ METHOD_PAYMENT.method_payment ? METHOD_PAYMENT.method_payment.name : '---' }}</span>
                                 </td>
 
-                                <td >
+                                <td class="text-center">
                                     <span class="badge badge-light-success" *ngIf="METHOD_PAYMENT.state == 1">Activo</span>
                                     <span class="badge badge-light-danger" *ngIf="METHOD_PAYMENT.state == 2">Inactivo</span>
                                 </td>
@@ -100,12 +100,12 @@
                                 </td>
 
                                 <td class="">
-                                    <a href="#" onclick="return false;" (click)="editMethodPayment(METHOD_PAYMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                        <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                    <a href="#" onclick="return false;" (click)="editMethodPayment(METHOD_PAYMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-pencil fs-2" style="color: #007bff;"><span class="path1"></span><span class="path2"></span></i>
                                     </a>
 
-                                    <a href="#" onclick="return false;" (click)="deleteMethodPayment(METHOD_PAYMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                        <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                    <a href="#" onclick="return false;" (click)="deleteMethodPayment(METHOD_PAYMENT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-trash fs-2" style="color: #dc3545;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
                                     </a>
                                 </td>
                             </tr>

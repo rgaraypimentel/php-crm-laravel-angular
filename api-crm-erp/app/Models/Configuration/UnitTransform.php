@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\COnfiguration;
+namespace App\Models\Configuration;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

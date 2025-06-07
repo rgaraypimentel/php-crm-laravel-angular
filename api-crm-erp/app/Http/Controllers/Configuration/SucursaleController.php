@@ -9,7 +9,7 @@ use App\Models\Configuration\Sucursale;
 class SucursaleController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource-------------------------COPIA.
      */
     public function index(Request $request)
     {

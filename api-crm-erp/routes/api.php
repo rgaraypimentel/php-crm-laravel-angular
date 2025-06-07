@@ -26,6 +26,7 @@ use App\Http\Controllers\Configuration\ProviderController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
 use App\Http\Controllers\Despacho\DespachoController;
 use App\Http\Controllers\Kardex\KardexController;
+use App\Http\Controllers\Kpi\KpiController;
 use App\Http\Controllers\Product\ConversionController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Product\ProductWalletController;
@@ -164,6 +165,17 @@ Route::group([
     Route::get("kardex/config",[KardexController::class,"config"]);
     Route::post("kardex/index",[KardexController::class,'index']);
     Route::resource("kardex",KardexController::class);
+
+    Route::group(["prefix" => "kpi"],function($router) {
+        Route::get("config_all",[KpiController::class,"config_all"]);
+        Route::post("information_general",[KpiController::class,"information_general"]);
+        Route::post("sale_x_sucursales",[KpiController::class,"sale_x_sucursales"]);
+        Route::post("sale_x_day_of_month",[KpiController::class,"sale_x_day_of_month"]);
+        Route::post("sale_x_month_of_year",[KpiController::class,"sale_x_month_of_year"]);
+        Route::post("sale_x_segment_client",[KpiController::class,"sale_x_segment_client"]);
+        Route::post("asesor_most_sales",[KpiController::class,"asesor_most_sales"]);
+        Route::post("categories_most_sales",[KpiController::class,"categories_most_sales"]);
+    });
 });
 
 Route::get("pdf/proforma/{id}",[ProformaController::class,"proforma_pdf"]);
