@@ -3,8 +3,8 @@
 namespace App\Models\Proforma;
 
 use App\Models\Configuration\ProductCategorie;
-use App\Models\configuration\Unit;
-use App\Models\configuration\Warehouse;
+use App\Models\Configuration\Unit;
+use App\Models\Configuration\Warehouse;
 use App\Models\Product\Product;
 use App\Models\User;
 use Carbon\Carbon;

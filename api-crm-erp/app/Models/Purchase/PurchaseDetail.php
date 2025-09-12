@@ -2,7 +2,7 @@
 
 namespace App\Models\Purchase;
 
-use App\Models\configuration\Unit;
+use App\Models\Configuration\Unit;
 use App\Models\Product\Product;
 use App\Models\User;
 use Carbon\Carbon;

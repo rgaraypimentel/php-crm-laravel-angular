@@ -2,8 +2,8 @@
 
 namespace App\Models\Product;
 
-use App\Models\configuration\Unit;
-use App\Models\configuration\Warehouse;
+use App\Models\Configuration\Unit;
+use App\Models\Configuration\Warehouse;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

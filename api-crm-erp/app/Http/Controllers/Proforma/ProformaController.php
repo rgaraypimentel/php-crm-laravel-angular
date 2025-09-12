@@ -14,7 +14,7 @@ use App\Models\Configuration\ClientSegment;
 use App\Models\Configuration\MethodPayment;
 use App\Models\Configuration\ProductCategorie;
 use App\Models\Configuration\SucursaleDeliverie;
-use App\Models\configuration\Warehouse;
+use App\Models\Configuration\Warehouse;
 use App\Models\Product\Product;
 use App\Models\Product\ProductWarehouse;
 use App\Models\Proforma\Proforma;

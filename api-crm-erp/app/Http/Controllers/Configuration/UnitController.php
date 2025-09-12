@@ -4,7 +4,7 @@ namespace App\Http\Controllers\configuration;
 
 use App\Http\Controllers\Controller;
 use App\Models\Configuration\Unit;
-use App\Models\COnfiguration\UnitTransform;
+use App\Models\Configuration\UnitTransform;
 use Illuminate\Http\Request;
 
 class UnitController extends Controller

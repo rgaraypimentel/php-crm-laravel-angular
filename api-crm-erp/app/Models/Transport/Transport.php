@@ -2,7 +2,7 @@
 
 namespace App\Models\Transport;
 
-use App\Models\configuration\Warehouse;
+use App\Models\Configuration\Warehouse;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

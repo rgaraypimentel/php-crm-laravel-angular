@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Kardex;
 
 use App\Exports\Kardex\ExportKardex;
 use App\Http\Controllers\Controller;
-use App\Models\configuration\Unit;
-use App\Models\configuration\Warehouse;
+use App\Models\Configuration\Unit;
+use App\Models\Configuration\Warehouse;
 use App\Models\Kardex\ProductStockInitial;
 use App\Models\Product\Product;
 use Carbon\Carbon;

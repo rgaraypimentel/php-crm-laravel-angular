@@ -3,7 +3,7 @@
 namespace App\Models\Purchase;
 
 use App\Models\Configuration\Provider;
-use App\Models\configuration\Warehouse;
+use App\Models\Configuration\Warehouse;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

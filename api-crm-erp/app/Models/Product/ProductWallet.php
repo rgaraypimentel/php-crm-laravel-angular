@@ -4,7 +4,7 @@ namespace App\Models\Product;
 
 use App\Models\Configuration\ClientSegment;
 use App\Models\Configuration\Sucursale;
-use App\Models\configuration\Unit;
+use App\Models\Configuration\Unit;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

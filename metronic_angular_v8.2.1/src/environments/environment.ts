@@ -163,9 +163,9 @@ export const environment = {
   URL_SERVICIOS: 'http://127.0.0.1:8000/api',
   URL_FRONTED: 'http://localhost:4200',
 
-  // URL_BACKEND: 'http://localhost:8000/',
-  // URL_SERVICIOS: 'http://localhost:8000/api',
-  // URL_FRONTED: 'http://localhost:4200'
+  //URL_BACKEND: 'http://localhost:8000/',
+  //URL_SERVICIOS: 'http://localhost:8000/api',
+  //URL_FRONTED: 'http://localhost:4200'
 };
 
 /*

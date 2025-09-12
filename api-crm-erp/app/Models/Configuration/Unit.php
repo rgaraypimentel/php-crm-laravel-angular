@@ -2,7 +2,7 @@
 
 namespace App\Models\Configuration;
 
-use App\Models\COnfiguration\UnitTransform;
+use App\Models\Configuration\UnitTransform;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
