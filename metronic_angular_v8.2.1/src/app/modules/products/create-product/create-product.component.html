@@ -250,6 +250,7 @@
                                           <div class="col-4">
                                               <label class="required form-label">Tiempo de abastecimiento</label>
                                               <input type="number" [(ngModel)]="tiempo_de_abastecimiento" name="tiempo_de_abastecimiento" class="form-control mb-2" placeholder="Product price" />
+                                              <div class="text-muted fs-7">Tiempo en Meses.</div>
                                           </div>
                                       </div>
                                       <!--end::Input group-->
@@ -519,12 +520,12 @@
                                                                 </td>-->
 
                                                                 <td>
-                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WAREHOUSES_PROD.unit.name }}</a>
+                                                                    <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WAREHOUSES_PROD.unit.name }}</a>
                                                                     <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Code: PH</span> -->
                                                                 </td>
 
                                                                 <!--<td>
-                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Intertico</a>
+                                                                    <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Intertico</a>
                                                                     <span class="text-muted fw-semibold text-muted d-block fs-7">Web, UI/UX Design</span>
                                                                 </td>-->
 
@@ -537,10 +538,10 @@
                                                                 </td>
                                                                 <td class="">
 
-                                                                    <!-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                    <!-- <a  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                                     <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a> -->
 
-                                                                    <a href="#" onclick="return false" (click)="removeWarehouse(WAREHOUSES_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                    <a  onclick="return false" (click)="removeWarehouse(WAREHOUSES_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                                     <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
 
                                                                 </td>
@@ -656,12 +657,12 @@
                                                                 </td>-->
 
                                                                 <td>
-                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WALLETS_PROD.unit.name }}</a>
+                                                                    <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WALLETS_PROD.unit.name }}</a>
                                                                     <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Code: PH</span> -->
                                                                 </td>
 
                                                                 <!--<td>
-                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Intertico</a>
+                                                                    <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Intertico</a>
                                                                     <span class="text-muted fw-semibold text-muted d-block fs-7">Web, UI/UX Design</span>
                                                                 </td>-->
 
@@ -670,7 +671,7 @@
                                                                 </td>
 
                                                                 <td>
-                                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WALLETS_PROD.client_segment ? WALLETS_PROD.client_segment.name : '---' }}   </a>
+                                                                    <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ WALLETS_PROD.client_segment ? WALLETS_PROD.client_segment.name : '---' }}   </a>
 
                                                                 </td>
 
@@ -680,10 +681,10 @@
                                                                 </td>
                                                                 <td class="">
 
-                                                                    <!-- <a href="#" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                    <!-- <a  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                                     <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a> -->
 
-                                                                    <a href="#" onclick="return false;" (click)="removePriceMultiple(WALLETS_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                    <a  onclick="return false;" (click)="removePriceMultiple(WALLETS_PROD)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                                                     <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
 
                                                                 </td>

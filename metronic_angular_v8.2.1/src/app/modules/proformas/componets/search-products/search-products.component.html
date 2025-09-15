@@ -56,7 +56,7 @@
                                                 </div>
 
                                                 <div class="d-flex justify-content-start flex-column">
-                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">{{ PRODUCT.title }}</a>
+                                                    <a  class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">{{ PRODUCT.title }}</a>
                                                     <span class="text-muted fw-semibold text-muted d-block fs-7">Peso: {{ PRODUCT.weight }}</span>
                                                     <span class="badge badge-light-primary" *ngIf="PRODUCT.state_stock == 1">Disponible</span>
                                                     <span class="badge badge-light-warning" *ngIf="PRODUCT.state_stock == 2">Por agotar</span>
@@ -85,7 +85,7 @@
                                             {{ getTaxSelected(PRODUCT.tax_selected) }} </td>
 
                                         <td class="text-center">
-                                            <a href="#" onclick="return false;" (click)="selectProduct(PRODUCT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                            <a  onclick="return false;" (click)="selectProduct(PRODUCT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                 <i class="ki-duotone ki-switch fs-2"><span class="path1"></span><span class="path2"></span></i>
                                             </a>
                                         </td>
