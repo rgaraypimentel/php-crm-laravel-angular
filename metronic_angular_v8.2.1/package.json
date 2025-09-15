@@ -27,6 +27,7 @@
     "@fullcalendar/core": "^6.1.17",
     "@fullcalendar/daygrid": "^6.1.17",
     "@fullcalendar/interaction": "^6.1.17",
+    "@n8n/chat": "^0.50.0",
     "@ng-bootstrap/ng-bootstrap": "^15.0.1",
     "@ngx-translate/core": "14.0.0",
     "@ngx-translate/http-loader": "7.0.0",
