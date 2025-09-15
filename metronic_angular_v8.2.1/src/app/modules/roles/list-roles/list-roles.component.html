@@ -93,13 +93,13 @@
                                 {{ ROL.created_format_at }}
                             </td>
                             <td class="">
-                                <a *ngIf="ROL.id > 1" href="#" onclick="return false;" (click)="editRole(ROL)"
+                                <a *ngIf="ROL.id > 1"  onclick="return false;" (click)="editRole(ROL)"
                                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                     <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span
                                             class="path2"></span></i>
                                 </a>
 
-                                <a *ngIf="ROL.id > 1" href="#" onclick="return false;" (click)="deleteRole(ROL)"
+                                <a *ngIf="ROL.id > 1"  onclick="return false;" (click)="deleteRole(ROL)"
                                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
                                     <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span
                                             class="path2"></span><span class="path3"></span><span
