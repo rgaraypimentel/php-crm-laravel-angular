@@ -1,5 +1,8 @@
 services:
   backend:
+    build:
+      context: ./api-crm-erp
+      dockerfile: Dockerfile
     image: php-crm-laravel-angular-backend:latest
     restart: unless-stopped
     container_name: backend
@@ -12,6 +15,9 @@ services:
       - app_network
 
   frontend:
+    build:
+      context: ./metronic_angular_v8.2.1
+      dockerfile: Dockerfile
     image: php-crm-laravel-angular-frontend:latest
     restart: unless-stopped
     container_name: frontend

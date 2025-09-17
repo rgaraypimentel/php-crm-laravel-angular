@@ -9,7 +9,7 @@ use App\Http\Resources\Product\ProductCollection;
 use App\Http\Resources\Proforma\ProformaCollection;
 use App\Http\Resources\Proforma\ProformaResource;
 use App\Models\Client\Client;
-use Barryvdh\DomPDF\Facade\PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Configuration\ClientSegment;
 use App\Models\Configuration\MethodPayment;
 use App\Models\Configuration\ProductCategorie;
@@ -69,7 +69,7 @@ class ProformaController extends Controller
 
         $proforma = Proforma::findOrFail($id);
 
-        $pdf = PDF::loadView("proforma.proforma_pdf",compact("proforma"));
+        $pdf = Pdf::loadView("proforma.proforma_pdf",compact("proforma"));
 
         return $pdf->stream("proforma".$proforma->id.'-'.uniqid().'.pdf');
     }
