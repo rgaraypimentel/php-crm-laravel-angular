@@ -1,0 +1,48 @@
+<div class="modal-header">
+    <h5 class="modal-title">Stock Mínimo de Productos</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="close()"></button>
+</div>
+
+<div class="modal-body">
+    <div class="table-responsive">
+        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+            <thead>
+                <tr class="fw-bold text-muted">
+                    <th>Producto</th>
+                    <th>Categoria</th>
+                    <th>Unidad</th>
+                    <th>Precio Unitario</th>
+                    <th>Descuento</th>
+                    <th>Subtotal</th>
+                    <th>Impuesto</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of PRODUCTOS">
+                    <td>
+                        <div class="d-flex align-items-center">
+                            <div class="symbol symbol-50px me-5">
+                                <img [src]="producto.imagen" alt="">
+                            </div>
+                            <div class="d-flex justify-content-start flex-column">
+                                <a class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">
+                                    {{ producto.title }}
+                                </a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{{ producto.categoria }}</td>
+                    <td>{{ producto.unidad }}</td>
+                    <td>{{ producto.precio }} PEN</td>
+                    <td>{{ producto.descuento }} PEN</td>
+                    <td>{{ producto.subtotal }} PEN</td>
+                    <td>{{ producto.impuesto }} PEN</td>
+                    <td>{{ producto.cantidad }}</td>
+                    <td>{{ producto.total }} PEN</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

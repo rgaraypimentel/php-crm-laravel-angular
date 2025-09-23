@@ -12,35 +12,35 @@ import { PurchaseService } from '../service/purchase.service';
   styleUrls: ['./create-purchase.component.scss']
 })
 export class CreatePurchaseComponent {
-  full_name_user:string = '';
-  sucursal_user:string = '';
-  warehouse_id:string = '';
-  provider_id:string = '';
+  full_name_user: string = '';
+  sucursal_user: string = '';
+  warehouse_id: string = '';
+  provider_id: string = '';
 
-  date_emision:any = null;
-  type_comprobant:string = '';
-  n_comprobant:string = '';
-  description:string = '';
+  date_emision: any = null;
+  type_comprobant: string = '';
+  n_comprobant: string = '';
+  description: string = '';
 
   // DETALLADO DE LA COMPRA
-  search_product:string = '';
-  unit_id:string = '';
-  price_unit:number = 0;
-  quantity:number = 0;
+  search_product: string = '';
+  unit_id: string = '';
+  price_unit: number = 0;
+  quantity: number = 0;
 
-  importe:number = 0;
-  igv:number = 0;
-  total:number = 0;
+  importe: number = 0;
+  igv: number = 0;
+  total: number = 0;
 
-  user:any;
+  user: any;
 
-  warehouses:any = [];
-  providers:any = [];
-  units:any = [];
+  warehouses: any = [];
+  providers: any = [];
+  units: any = [];
 
-  isLoading$:any;
-  PRODUCT_SELECTED:any;
-  PURCHASE_DETAILS:any = [];
+  isLoading$: any;
+  PRODUCT_SELECTED: any;
+  PURCHASE_DETAILS: any = [];
   constructor(
     public purchaseService: PurchaseService,
     public toast: ToastrService,
@@ -59,8 +59,8 @@ export class CreatePurchaseComponent {
     this.isLoading$ = this.purchaseService.isLoading$;
   }
 
-  configAll(){
-    this.purchaseService.configAll().subscribe((resp:any) => {
+  configAll() {
+    this.purchaseService.configAll().subscribe((resp: any) => {
       this.warehouses = resp.warehouses;
       this.providers = resp.providers;
       this.units = resp.units;
@@ -68,76 +68,76 @@ export class CreatePurchaseComponent {
     })
   }
 
-  isLoadingProcess(){
+  isLoadingProcess() {
     this.purchaseService.isLoadingSubject.next(true);
     setTimeout(() => {
       this.purchaseService.isLoadingSubject.next(false);
     }, 50);
   }
 
-  listProducts(){
-    if(!this.search_product){
-      this.toast.error("Validación","Necesitas ingresar al menos uno de los campos");
+  listProducts() {
+    if (!this.search_product) {
+      this.toast.error("Validación", "Necesitas ingresar al menos uno de los campos");
       return;
     }
-    this.purchaseService.searchProducts(this.search_product).subscribe((resp:any) => {
+    this.purchaseService.searchProducts(this.search_product).subscribe((resp: any) => {
       console.log(resp);
-      if(resp.products.data.length > 1){
+      if (resp.products.data.length > 1) {
         this.openSelectedProduct(resp.products.data);
-      }else{
-        if(resp.products.data.length == 1){
+      } else {
+        if (resp.products.data.length == 1) {
           this.PRODUCT_SELECTED = resp.products.data[0];
           this.search_product = this.PRODUCT_SELECTED.title;
-          this.toast.success("Exito","Se selecciono el producto ");
+          this.toast.success("Exito", "Se selecciono el producto ");
           this.isLoadingProcess();
-        }else{
-          this.toast.error("Validación","No hay coincidencia en la busqueda");
+        } else {
+          this.toast.error("Validación", "No hay coincidencia en la busqueda");
         }
       }
     })
   }
 
-  openSelectedProduct(products:any = []){
-    const modalRef = this.modalService.open(SearchProductsComponent,{size:'lg',centered: true});
+  openSelectedProduct(products: any = []) {
+    const modalRef = this.modalService.open(SearchProductsComponent, { size: 'lg', centered: true });
     modalRef.componentInstance.products = products
 
-    modalRef.componentInstance.ProductSelected.subscribe((product:any) => {
+    modalRef.componentInstance.ProductSelected.subscribe((product: any) => {
       this.PRODUCT_SELECTED = product;
       this.search_product = this.PRODUCT_SELECTED.title;
       this.isLoadingProcess();
-      this.toast.success("Exito","Se selecciono el producto");
+      this.toast.success("Exito", "Se selecciono el producto");
     })
   }
 
-  addDetail(){
+  addDetail() {
 
-    if(!this.PRODUCT_SELECTED){
-      this.toast.error("Validacion","Se necesita seleccionar un producto");
+    if (!this.PRODUCT_SELECTED) {
+      this.toast.error("Validacion", "Se necesita seleccionar un producto");
       return;
     }
-    if(!this.unit_id){
-      this.toast.error("Validacion","Se necesita seleccionar una unidad");
-      return;
-    }
-
-    if(!this.price_unit){
-      this.toast.error("Validacion","Se necesita digitar un precio");
+    if (!this.unit_id) {
+      this.toast.error("Validacion", "Se necesita seleccionar una unidad");
       return;
     }
 
-    if(!this.quantity){
-      this.toast.error("Validacion","Se necesita digitar una cantidad");
+    if (!this.price_unit) {
+      this.toast.error("Validacion", "Se necesita digitar un precio");
       return;
     }
 
-    let UNIDAD_SELECTED = this.units.find((unit:any) => unit.id == this.unit_id)
+    if (!this.quantity) {
+      this.toast.error("Validacion", "Se necesita digitar una cantidad");
+      return;
+    }
+
+    let UNIDAD_SELECTED = this.units.find((unit: any) => unit.id == this.unit_id)
 
     this.PURCHASE_DETAILS.push({
       product: this.PRODUCT_SELECTED,
       unit: UNIDAD_SELECTED,
       price_unit: this.price_unit,
       quantity: this.quantity,
-      total: Number((this.price_unit*this.quantity).toFixed(2)),
+      total: Number((this.price_unit * this.quantity).toFixed(2)),
     });
 
     this.PRODUCT_SELECTED = null;
@@ -148,20 +148,20 @@ export class CreatePurchaseComponent {
     this.calcTotalPurchase();
   }
 
-  calcTotalPurchase(){
-    this.importe = Number(this.PURCHASE_DETAILS.reduce((sum:number,item:any) => sum+ item.total,0).toFixed(2));
-    this.igv = Number((this.importe*0.18).toFixed(2));
+  calcTotalPurchase() {
+    this.importe = Number(this.PURCHASE_DETAILS.reduce((sum: number, item: any) => sum + item.total, 0).toFixed(2));
+    this.igv = Number((this.importe * 0.18).toFixed(2));
     this.total = Number((this.importe + this.igv).toFixed(2));
     this.isLoadingProcess();
   }
 
-  editItemPurchase(index:number,detail:any){
-    const modalRef = this.modalService.open(EditItemPurchaseComponent,{centered: true,size:'md'});
+  editItemPurchase(index: number, detail: any) {
+    const modalRef = this.modalService.open(EditItemPurchaseComponent, { centered: true, size: 'md' });
     modalRef.componentInstance.detail_purchase = detail;
     modalRef.componentInstance.units = this.units;
     modalRef.componentInstance.index = index;
 
-    modalRef.componentInstance.EditItemPurchase.subscribe((detail_purchase:any) => {
+    modalRef.componentInstance.EditItemPurchase.subscribe((detail_purchase: any) => {
       this.PURCHASE_DETAILS[index] = detail_purchase;
       this.isLoadingProcess();
       setTimeout(() => {
@@ -170,13 +170,13 @@ export class CreatePurchaseComponent {
     })
   }
 
-  deleteItemPurchase(index:number,detail:any){
-    const modalRef = this.modalService.open(DeleteItemPurchaseComponent,{centered: true,size:'md'});
+  deleteItemPurchase(index: number, detail: any) {
+    const modalRef = this.modalService.open(DeleteItemPurchaseComponent, { centered: true, size: 'md' });
     modalRef.componentInstance.detail_purchase = detail;
     modalRef.componentInstance.index = index;
 
-    modalRef.componentInstance.DeleteItemPurchase.subscribe((detail_purchase:any) => {
-      this.PURCHASE_DETAILS.splice(index,1);
+    modalRef.componentInstance.DeleteItemPurchase.subscribe((detail_purchase: any) => {
+      this.PURCHASE_DETAILS.splice(index, 1);
       this.isLoadingProcess();
       setTimeout(() => {
         this.calcTotalPurchase();
@@ -184,29 +184,29 @@ export class CreatePurchaseComponent {
     })
   }
 
-  createOrderPurchase(){
+  createOrderPurchase() {
 
-    if(!this.warehouse_id){
-      this.toast.error("Validacion","Necesitas seleccionar un almacen");
+    if (!this.warehouse_id) {
+      this.toast.error("Validacion", "Necesitas seleccionar un almacen");
       return;
     }
 
-    if(!this.provider_id){
-      this.toast.error("Validacion","Necesitas seleccionar un proveedor");
+    if (!this.provider_id) {
+      this.toast.error("Validacion", "Necesitas seleccionar un proveedor");
       return;
     }
 
-    if(!this.type_comprobant){
-      this.toast.error("Validacion","Necesitas seleccionar un tipo de comprobante");
+    if (!this.type_comprobant) {
+      this.toast.error("Validacion", "Necesitas seleccionar un tipo de comprobante");
       return;
     }
 
-    if(!this.n_comprobant){
-      this.toast.error("Validacion","Necesitas digitar un n° de comprobante");
+    if (!this.n_comprobant) {
+      this.toast.error("Validacion", "Necesitas digitar un n° de comprobante");
       return;
     }
-    if(this.PURCHASE_DETAILS.length == 0){
-      this.toast.error("Validacion","Necesitas agregar al menos un producto al detallado");
+    if (this.PURCHASE_DETAILS.length == 0) {
+      this.toast.error("Validacion", "Necesitas agregar al menos un producto al detallado");
       return;
     }
     let data = {
@@ -222,9 +222,9 @@ export class CreatePurchaseComponent {
       details: this.PURCHASE_DETAILS,
     }
 
-    this.purchaseService.createOrderPurchase(data).subscribe((resp:any) => {
+    this.purchaseService.createOrderPurchase(data).subscribe((resp: any) => {
       console.log(resp);
-      this.toast.success("Exito","La orden de compra se ha generado correctamente");
+      this.toast.success("Exito", "La orden de compra se ha generado correctamente");
       this.warehouse_id = '';
       this.provider_id = '';
       this.type_comprobant = '';
@@ -235,9 +235,49 @@ export class CreatePurchaseComponent {
       this.total = 0;
       this.PURCHASE_DETAILS = [];
       this.calcTotalPurchase();
-    },error => {
+    }, error => {
       console.log(error);
-      this.toast.error("ERROR","Hubo un problema en el servidor con tu orden, comunicate con soporte");
+      this.toast.error("ERROR", "Hubo un problema en el servidor con tu orden, comunicate con soporte");
     })
   }
+
+  importarData(): void {
+    console.log('Importar data desde archivo');
+    // Abrir file picker o modal para importar
+  }
+
+  descargarPlantilla(): void {
+    // Definir las columnas
+    const headers = ['Productos', 'Unidades', 'Precio Unitario', 'Cantidad Solicitada'];
+
+    // Datos de ejemplo
+    const sampleData = [
+      ['TUBO CUADRADO LAC ASIN GR. A 100 MM X 4', 'UNIDAD', '90.50', '30'],
+      ['TUBO RECTANGULAR LAC ASIN GR. A 100 MM X', 'METRO', '81.30', '24'],
+      ['PLANCHA DE ACERO LAC A-36 6MM', 'PIEZA', '245.50', '15']
+    ];
+
+    // Usar ; como separador (más compatible con Excel en español)
+    const separator = ';';
+    let csvContent = headers.join(separator) + '\n';
+
+    sampleData.forEach(row => {
+      csvContent += row.join(separator) + '\n';
+    });
+
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    if (link.download !== undefined) {
+      const url = URL.createObjectURL(blob);
+      link.setAttribute('href', url);
+      link.setAttribute('download', `Plantilla_Productos_Compra_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    console.log('Plantilla CSV descargada (abrir con Excel y cada cabecera queda en su celda)');
+  }
+
 }

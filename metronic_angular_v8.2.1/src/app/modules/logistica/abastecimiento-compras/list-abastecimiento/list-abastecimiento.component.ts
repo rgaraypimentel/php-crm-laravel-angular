@@ -1,8 +1,4 @@
 import { Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DeletePurchaseComponent } from '../delete-purchase/delete-purchase.component';
-import { PurchaseService } from '../service/purchase.service';
-import { DetailStockMinimoComponent } from '../detail-stock-minimo/detail-stock-minimo.component';
 import { Router } from '@angular/router';
 
 interface PurchaseProduct {
@@ -31,11 +27,11 @@ interface ProductDetail {
 }
 
 @Component({
-  selector: 'app-lists-purchases',
-  templateUrl: './lists-purchases.component.html',
-  styleUrls: ['./lists-purchases.component.scss']
+  selector: 'app-list-abastecimiento',
+  templateUrl: './list-abastecimiento.component.html',
+  styleUrls: ['./list-abastecimiento.component.scss']
 })
-export class ListsPurchasesComponent {
+export class ListAbastecimientoComponent {
   purchaseProducts: PurchaseProduct[] = [
     {
       id: 1,
@@ -137,121 +133,34 @@ export class ListsPurchasesComponent {
     }
   ];
 
-  PURCHASES:any = [];
-  isLoading$:any;
+  search: string = '';
+  isLoading = false;
 
-  totalPages:number = 0;
-  currentPage:number = 1;
-
-  warehouses:any = [];
-  providers:any = [];
-
-  search:string = '';
-  warehouse_id:string = '';
-  n_comprobant:string = '';
-  provider_id:string = '';
-  search_product:string = '';
-  start_date:any = null;
-  end_date:any = null;
-  constructor(
-    public modalService: NgbModal,
-    public purchaseService: PurchaseService,
-    public router: Router,
-  ) {
-
-  }
+  constructor(private router: Router) { }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.isLoading$ = this.purchaseService.isLoading$;
-    this.listOrderPurchase();
-    this.configAll();
   }
 
-  listOrderPurchase(page = 1){
-    let data = {
-      warehouse_id: this.warehouse_id,
-      n_orden: this.search,
-      provider_id: this.provider_id,
-      n_comprobant: this.n_comprobant,
-      start_date: this.start_date,
-      end_date: this.end_date,
-      search_product: this.search_product,
-    }
-    this.purchaseService.listOrderPurchase(page,data).subscribe((resp:any) => {
-      console.log(resp);
-      this.PURCHASES = resp.purchases.data;
-      this.totalPages = resp.total;
-      this.currentPage = page;
-    })
+  buscarProductos(): void {
+    console.log('Buscando productos:', this.search);
+    // Implementar lógica de búsqueda
   }
-  resetlistOrderPurchase(){
+
+  resetBusqueda(): void {
     this.search = '';
-    this.warehouse_id = '';
-    this.start_date = null;
-    this.end_date = null;
-    this.search_product = '';
-    this.n_comprobant = '';
-    this.provider_id = '';
-    this.listOrderPurchase();
-  }
-  configAll(){
-    this.purchaseService.configAll().subscribe((resp:any) => {
-      console.log(resp);
-      this.warehouses = resp.warehouses;
-      this.providers = resp.providers;
-    })
-  }
-  loadPage($event:any){
-    this.listOrderPurchase($event);
+    console.log('Reseteando búsqueda');
   }
 
-  deletePurchase(PURCHASE:any){
-    const modalRef = this.modalService.open(DeletePurchaseComponent,{centered:true, size: 'md'});
-    modalRef.componentInstance.purchase = PURCHASE;
-
-    modalRef.componentInstance.DeletePurchase.subscribe((resp:any) => {
-      let INDEX = this.PURCHASES.findIndex((purhc_s:any) => purhc_s.id == PURCHASE.id);
-      if(INDEX != -1){
-        this.PURCHASES.splice(INDEX,1);
-      }
-    })
+  editarProforma(product: PurchaseProduct): void {
+    console.log('Editando proforma:', product.numeroProforma);
+    // Navegar a edición
   }
 
-openStockMinimo() {
-    const modalRef = this.modalService.open(DetailStockMinimoComponent, {
-      centered: true,
-      size: 'lg',
-    });
-
-    // le mandamos productos estáticos
-    modalRef.componentInstance.PRODUCTOS = [
-      {
-        title: 'Insecticidas CIPERFUM',
-        categoria: 'Insecticidas',
-        unidad: 'Unidad',
-        precio: 2500,
-        descuento: 0,
-        subtotal: 2500,
-        impuesto: 450,
-        cantidad: 2,
-        total: 2950,
-        imagen: 'assets/media/products/BETAFOX_.webp',
-      },
-      {
-        title: 'Insecticidas BETAFOX',
-        categoria: 'Insecticidas',
-        unidad: 'Unidad',
-        precio: 120,
-        descuento: 20,
-        subtotal: 100,
-        impuesto: 18,
-        cantidad: 5,
-        total: 590,
-        imagen: 'assets/media/products/CIPERFUM.webp',
-      },
-    ];
+  eliminarProforma(product: PurchaseProduct): void {
+    if (confirm('¿Está seguro de eliminar esta proforma?')) {
+      this.purchaseProducts = this.purchaseProducts.filter(p => p.id !== product.id);
+      console.log('Proforma eliminada:', product.numeroProforma);
+    }
   }
 
   verCuadroComparativo(product: PurchaseProduct): void {
@@ -259,4 +168,29 @@ openStockMinimo() {
     this.router.navigate(['/logistica/abastecimiento/list-costos']);
   }
 
+  getEstadoBadgeClass(estado: string): string {
+    switch (estado.toLowerCase()) {
+      case 'cotización':
+        return 'badge-light-warning';
+      case 'aprobado':
+        return 'badge-light-success';
+      case 'rechazado':
+        return 'badge-light-danger';
+      default:
+        return 'badge-light-primary';
+    }
+  }
+
+  getPagoBadgeClass(estado: string): string {
+    switch (estado.toLowerCase()) {
+      case 'total':
+        return 'badge-success';
+      case 'parcial':
+        return 'badge-warning';
+      case 'pendiente':
+        return 'badge-light-danger';
+      default:
+        return 'badge-secondary';
+    }
+  }
 }

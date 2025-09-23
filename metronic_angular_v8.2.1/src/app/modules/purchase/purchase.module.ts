@@ -13,6 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule, NgbModalModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { InlineSVGModule } from 'ng-inline-svg-2';
+import { DetailStockMinimoComponent } from './detail-stock-minimo/detail-stock-minimo.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { InlineSVGModule } from 'ng-inline-svg-2';
     DeletePurchaseComponent,
     CreatePurchaseComponent,
     EditItemPurchaseComponent,
-    DeleteItemPurchaseComponent
+    DeleteItemPurchaseComponent,
+    DetailStockMinimoComponent
   ],
   imports: [
     CommonModule,

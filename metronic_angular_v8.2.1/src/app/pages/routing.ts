@@ -105,6 +105,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/kardex/kardex.module').then((m) => m.KardexModule),
   },
   {
+    path: 'logistica',
+    loadChildren: () => import('../modules/logistica/logistica.module').then((m) => m.LogisticaModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

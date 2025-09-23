@@ -1,0 +1,202 @@
+<!-- comparative-costs.component.html -->
+<div class="card">
+    <!-- Header con breadcrumb -->
+    <div class="card-header border-0 pt-6">
+        <div class="card-title">
+            <div class="d-flex align-items-center">
+                <!-- Breadcrumb steps -->
+                <div class="d-flex align-items-center mb-3">
+                    <span class="badge badge-light-primary me-2">1. Elegir Productos</span>
+                    <span class="badge badge-light-primary me-2">2. Cargar Costos a Prov</span>
+                    <span class="badge badge-light-primary me-2">3. Editar costos Adm</span>
+                    <span class="badge badge-primary">4. Validar Costos</span>
+                </div>
+            </div>
+        </div>
+        <div class="card-toolbar">
+            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                <button type="button" class="btn btn-secondary me-3" (click)="regresar()">
+                    <i class="ki-duotone ki-arrow-left fs-2"></i>
+                    Regresar
+                </button>
+                <button type="button" class="btn btn-success" (click)="descargar()">
+                    <i class="ki-duotone ki-folder-down fs-2"></i>
+                    Descargar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Card body -->
+    <div class="card-body pt-0">
+        <!-- Título y fecha -->
+        <div class="row mb-6">
+            <div class="col-12">
+                <h3 class="text-primary">Cuadro Comparativo de costos 2025-09-1052</h3>
+                <button class="btn btn-sm btn-light-info">Crear Copia</button>
+            </div>
+        </div>
+
+        <!-- Datos adicionales -->
+        <div class="row mb-6">
+            <div class="col-12">
+                <h5 class="text-info mb-4">Datos adicionales :</h5>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-4"><strong>Cliente:</strong></div>
+                            <div class="col-8">{{ comparativeData.cliente }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4"><strong>T.C (US):</strong></div>
+                            <div class="col-8">{{ comparativeData.tcUsd }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row mb-3">
+                            <div class="col-4"><strong>Fecha:</strong></div>
+                            <div class="col-8">{{ comparativeData.fecha }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4"><strong>Vendedor:</strong></div>
+                            <div class="col-8">{{ comparativeData.vendedor }}</div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4"><strong>Estado:</strong></div>
+                            <div class="col-8">
+                                <span class="badge badge-success">{{ comparativeData.estado }}</span>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4"><strong>Usuario:</strong></div>
+                            <div class="col-8">{{ comparativeData.usuario }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Productos y costos -->
+        <div class="row mb-6">
+            <div class="col-12">
+                <h5 class="text-info mb-4">Productos y costos :</h5>
+
+                <!-- Table responsive wrapper -->
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped align-middle fs-7">
+                        <thead class="bg-light">
+                            <tr class="fw-bold text-muted text-uppercase">
+                                <th class="text-center">N°</th>
+                                <th class="text-center">PRODUCTO</th>
+                                <th class="text-center">OBSERV</th>
+                                <th class="text-center">PESO</th>
+                                <th class="text-center">CANT</th>
+                                <th class="text-center bg-warning text-dark">PROVEEDOR 1</th>
+                                <th class="text-center">PROVEEDOR 2</th>
+                                <th class="text-center bg-warning text-dark">PROVEEDOR 3</th>
+                                <th class="text-center">FLETE</th>
+                                <th class="text-center">PESO TRANSP</th>
+                                <th class="text-center">GANANCIA</th>
+                                <th class="text-center">VAL VENTA APROBADO</th>
+                                <th class="text-center">Val Compra USD/KG</th>
+                                <th class="text-center">Val Venta USD/KG</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let product of comparativeData.products; let i = index">
+                                <td class="text-center fw-bold">{{ i + 1 }}</td>
+                                <td>
+                                    <div class="d-flex flex-column">
+                                        <span class="text-gray-500">{{ product.codigo }}</span>
+                                        <span class="fw-bold text-gray-800 text-muted fs-8">{{ product.producto }}</span>
+                                    </div>
+                                </td>
+                                <td class="text-center">{{ product.observ }}</td>
+                                <td class="text-end">{{ product.peso | number:'1.2-2' }}</td>
+                                <td class="text-center">{{ product.cant }}</td>
+                                <td class="text-end bg-warning bg-opacity-25">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <input type="checkbox" class="form-check-input me-2" 
+                                            style="border: 2px solid #b6b1b1;"
+                                            [id]="'check_proveedor1_' + i" 
+                                            >
+                                        <span class="me-2">{{ product.porella | number:'1.2-2' }}</span>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <input type="checkbox" class="form-check-input me-2" 
+                                            style="border: 2px solid #b6b1b1;"
+                                            [id]="'check_proveedor2_' + i" 
+                                            >
+                                        <span class="me-2">{{ product.trach | number:'1.2-2' }}</span>
+                                    </div>
+                                </td>
+                                <td class="text-end bg-warning bg-opacity-25">
+                                    <div class="d-flex align-items-center justify-content-end">
+                                        <input type="checkbox" class="form-check-input me-2" 
+                                            style="border: 2px solid #b6b1b1;"
+                                            [id]="'check_proveedor3_' + i" 
+                                            [disabled]="!product.tubica">
+                                        <span class="me-2" *ngIf="product.tubica">{{ product.tubica | number:'1.2-2' }}</span>
+                                        <span class="me-2 text-muted" *ngIf="!product.tubica">-</span>                      
+                                    </div>
+                                </td>
+                                <td class="text-end">{{ product.flete | number:'1.2-2' }}</td>
+                                <td class="text-end">{{ product.pesoTransp | number:'1.2-2' }}</td>
+                                <td class="text-end">{{ product.ganancia | number:'1.2-2' }}</td>
+                                <td class="text-end fw-bold text-primary">{{ product.valVentaAprobado | number:'1.2-2'
+                                    }}</td>
+                                <td class="text-end">{{ product.valCompraUsdKg | number:'1.2-2' }}</td>
+                                <td class="text-end">{{ product.valVentaUsdKg | number:'1.2-2' }}</td>
+                            </tr>
+
+                            <!-- Fila de totales -->
+                            <tr class="bg-light fw-bold">
+                                <td colspan="5" class="text-end">Sub total monetario por proveedor</td>
+                                <td class="text-end">{{ comparativeData.subTotalMonetario | number:'1.2-2' }}</td>
+                                <td colspan="2" class="text-end">{{ (comparativeData.subTotalMonetario * 0.7) |
+                                    number:'1.2-2' }}</td>
+                                <td colspan="6"></td>
+                            </tr>
+
+                            <tr class="bg-light fw-bold">
+                                <td colspan="5" class="text-end">Peso total por proveedor</td>
+                                <td class="text-end">{{ comparativeData.pesoTotalProveedor | number:'1.2-2' }}</td>
+                                <td colspan="2" class="text-end">{{ (comparativeData.pesoTotalProveedor * 0.9) |
+                                    number:'1.2-2' }}</td>
+                                <td colspan="6"></td>
+                            </tr>
+
+                            <tr class="bg-light fw-bold">
+                                <td colspan="5" class="text-end">Flete por proveedor</td>
+                                <td class="text-end">{{ comparativeData.fletePorProveedor | number:'1.2-2' }}</td>
+                                <td colspan="2" class="text-end">0.00</td>
+                                <td colspan="6"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Opciones -->
+        <div class="row">
+            <div class="col-12">
+                <h5 class="text-info mb-4">Opciones :</h5>
+
+                <div class="d-flex justify-content-start">
+                    <button class="btn btn-info btn-sm me-3">
+                        <i class="ki-duotone ki-message-programming fs-2"></i>
+                        Negociar
+                    </button>
+                    <button class="btn btn-success btn-sm">
+                        <i class="ki-duotone ki-check fs-2"></i>
+                        Descargar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

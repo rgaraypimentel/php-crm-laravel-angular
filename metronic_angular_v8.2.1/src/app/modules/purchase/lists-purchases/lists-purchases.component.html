@@ -6,7 +6,7 @@
             <!--begin::Search-->
             <div class="row align-items-center">
                 <div class="col-3">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listOrderPurchase()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Buscar N° Orden">
@@ -30,7 +30,7 @@
                     <div class="text-muted fs-7">Almacen.</div>
                 </div>
                 <div class="col-2">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="n_comprobant" (keyup.enter)="listOrderPurchase()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Buscar N° Comprobante">
@@ -52,7 +52,7 @@
                     <div class="text-muted fs-7">Proveedores.</div>
                 </div>
                 <div class="col-3">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listOrderPurchase()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Buscar Producto">
@@ -76,7 +76,7 @@
                       </div>
                       <div class="text-muted fs-7">Fecha fin(Emisión).</div>
                 </div>
-                <div class="col-1 d-flex">
+                <div class="col-1 d-flex mb-7">
                     <button class="btn btn-primary btn-sm mx-1" (click)="listOrderPurchase()">
                         <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
                     </button>
@@ -84,9 +84,12 @@
                         <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
                     </button>
                 </div>
-                <div class="col-2 ms-2">
+                <div class="col-3 d-flex ms-2 mb-7 gap-2">
                     <a routerLink="/compras/registro" class="btn btn-primary">
-                        + Agregar Compra
+                        + Registro solicitud
+                    </a>
+                    <a (click)="openStockMinimo()" class="btn btn-warning">
+                        Ver stock minimo
                     </a>
                 </div>
             </div>
@@ -198,6 +201,17 @@
                                     {{ PURCHASE.provider.full_name }} </td>
 
                                 <td class="">
+                                    <a (click)="verCuadroComparativo(PURCHASE)"
+                                        class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
+                                        style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;"
+                                        title="Ver Cuadro Comparativo">
+                                        <i class="ki-duotone ki-chart-simple fs-2" style="color: #17a2b8;">
+                                            <span class="path1"></span>
+                                            <span class="path2"></span>
+                                            <span class="path3"></span>
+                                            <span class="path4"></span>
+                                        </i>
+                                    </a>
                                     <a [routerLink]="'/compras/listado/editar/'+PURCHASE.id" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm " style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
                                         <i class="ki-duotone ki-pencil fs-2" style="color: #007bff;"><span class="path1"></span><span class="path2"></span></i>
                                     </a>
