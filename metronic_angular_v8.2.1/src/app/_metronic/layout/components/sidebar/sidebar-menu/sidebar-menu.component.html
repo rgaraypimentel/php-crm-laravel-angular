@@ -287,14 +287,14 @@
         </div>
 
 
-        <div class="menu-item" *ngIf="showMenu(['valid_payments','reports_caja'])">
+        <!-- <div class="menu-item" *ngIf="showMenu(['valid_payments','reports_caja'])">
           <a class="menu-link without-sub" routerLink="/caja/gestion" routerLinkActive="active">
             <span class="menu-icon">
               <app-keenicon name="save-deposit" class="fs-2"></app-keenicon>
             </span>
             <span class="menu-title">Caja</span>
           </a>
-        </div>
+        </div> -->
 
 
         <div class="menu-item menu-accordion" *ngIf="showMenu(['register_proforma']) || showMenu(['list_proforma'])"
@@ -587,6 +587,15 @@
         </div> -->
       </div>
       <!--end::Menu-->
+    </div>
+
+    <div class="menu-item" *ngIf="showMenu(['valid_payments','reports_caja'])">
+      <a class="menu-link without-sub" routerLink="/caja/gestion" routerLinkActive="active">
+        <span class="menu-icon">
+          <app-keenicon name="save-deposit" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">Tesoreria</span>
+      </a>
     </div>
 
     <div class="menu-item menu-accordion" *ngIf="
