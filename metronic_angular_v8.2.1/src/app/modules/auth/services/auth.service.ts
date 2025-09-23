@@ -33,8 +33,8 @@ export class AuthService implements OnDestroy {
     this.currentUserSubject.next(user);
   }
 
-  token:any;
-  user:any;
+  token: any;
+  user: any;
 
   constructor(
     private authHttpService: AuthHTTPService,
@@ -52,12 +52,22 @@ export class AuthService implements OnDestroy {
   // public methods
   login(email: string, password: string): Observable<any> {
     this.isLoadingSubject.next(true);
-    return this.http.post(URL_SERVICIOS + "/auth/login",{email,password}).pipe(
-      map((auth: any) => {
-        const result = this.setAuthFromLocalStorage(auth);
-        return result;
+    return this.http.post(URL_SERVICIOS + "/auth/login", { email, password }).pipe(
+      map((resp: any) => {
+        // Caso A: login normal (hay token + user)
+        if (resp?.access_token && resp?.user) {
+          this.setAuthFromLocalStorage(resp); // guarda token+user y hace next al currentUserSubject
+          return resp; // <-- retornamos el objeto completo
+        }
+
+        // Caso B: MFA requerido (no hay token aún)
+        if (resp?.mfa_required === true && resp?.mfa_token) {
+          return resp; // <-- retornamos el objeto MFA para que el componente muestre el modal
+        }
+
+        // Respuesta inesperada
+        return undefined;
       }),
-      //switchMap(() => this.getUserByToken()),
       catchError((err) => {
         console.error('err', err);
         return of(undefined);
@@ -72,6 +82,36 @@ export class AuthService implements OnDestroy {
     this.router.navigate(['/auth/login'], {
       queryParams: {},
     });
+  }
+
+  mfaVerify(mfa_token: string, otp: string): Observable<any> {
+    this.isLoadingSubject.next(true);
+    return this.http.post(URL_SERVICIOS + '/auth/mfa/verify', { mfa_token, otp }).pipe(
+      map((auth: any) => {
+        // auth aquí debería traer { access_token, token_type, expires_in, user }
+        const ok = this.setAuthFromLocalStorage(auth);
+        return ok ? auth : undefined;
+      }),
+      catchError((err) => {
+        return of({ error: true, message: err?.error?.message || 'OTP inválido o expirado' });
+      }),
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
+  sendMfaSms(mfa_token: string) {
+    // No uso isLoadingSubject para no bloquear el botón "Verificar";
+    // manejamos un loading local en el componente.
+    return this.http.post<{ success?: boolean }>(
+      `${URL_SERVICIOS}/auth/sms/send`,
+      { mfa_token }
+    ).pipe(
+      map(() => true),                       // si 200 => true
+      catchError((err) => {
+        // devolveremos false y un mensaje si lo deseas
+        return of(false);
+      })
+    );
   }
 
   getUserByToken(): Observable<any> {
@@ -121,8 +161,8 @@ export class AuthService implements OnDestroy {
   private setAuthFromLocalStorage(auth: any): boolean {
     // store auth authToken/refreshToken/epiresIn in local storage to keep user logged in between page refreshes
     if (auth && auth.access_token) {
-      localStorage.setItem('token',auth.access_token);
-      localStorage.setItem('user',JSON.stringify(auth.user));
+      localStorage.setItem('token', auth.access_token);
+      localStorage.setItem('user', JSON.stringify(auth.user));
       return true;
     }
     return false;

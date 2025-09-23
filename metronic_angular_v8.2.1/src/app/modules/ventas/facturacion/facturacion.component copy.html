@@ -1,0 +1,201 @@
+<div class="card">
+    <!--begin::Card header-->
+    <div class="card-header border-0 pt-6">
+        <!--begin::Card title-->
+        <div class="card-title">
+            <!--begin::Search-->
+            <div class="d-flex align-items-center position-relative my-1">
+                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                        class="path2"></span></i> <input type="text" name="search" data-kt-customer-table-filter="search"
+                    class="form-control form-control-solid w-250px ps-12" placeholder="Buscar Lotes">
+            </div>
+            <!--end::Search-->
+        </div>
+        <!--begin::Card title-->
+        <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+        <!--begin::Card toolbar-->
+        <div class="card-toolbar">
+            <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                <!--begin::Add customer-->
+                <button type="button" class="btn btn-primary">
+                    + Agregar Lote
+                </button>
+                <!--end::Add customer-->
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Group actions-->
+            <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
+                <div class="fw-bold me-5">
+                    <span class="me-2" data-kt-customer-table-select="selected_count"></span> Selected
+                </div>
+
+                <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">
+                    Delete Selected
+                </button>
+            </div>
+            <!--end::Group actions-->
+        </div>
+        <!--end::Card toolbar-->
+    </div>
+    <!--end::Card header-->
+
+    <!--begin::Card body-->
+    <div class="card-body pt-0">
+
+        <!--begin::Table-->
+        <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+            <div id="" class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
+                    style="width: 1199.5px;border-bottom: 2px solid #edeaea;">
+                    <thead style="font-weight: 900;border-right: 2px solid #edeaea; background-color: #eeeeee;">
+                        <tr class="text-start text-gray-700 fs-7 text-uppercase gs-0" role="row" style="font-weight: 900;border-bottom: 2px solid #edeaea;">
+
+                            <th class="min-w-60px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                                colspan="1" aria-label="Customer Name: Activate to sort" style="border-top: 2px solid #edeaea; border-left: 1px solid #edeaea;" tabindex="0"><span
+                                    class="dt-column-title" role="button">N° Lote</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-60px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="2" rowspan="1"
+                                colspan="1" aria-label="Email: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
+                                    class="dt-column-title" role="button">Nombre del Producto</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="2" rowspan="1"
+                                colspan="1" aria-label="Email: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
+                                    class="dt-column-title" role="button">Autorizado por:</span><span
+                                    class="dt-column-order"></span></th>
+
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="5" rowspan="1"
+                                colspan="1" aria-label="Created Date: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
+                                    class="dt-column-title" role="button">Fecha de registro</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="5" rowspan="1"
+                                colspan="1" aria-label="Created Date: Activate to sort" style="border-top: 2px solid #edeaea;" tabindex="0"><span
+                                    class="dt-column-title" role="button">Fecha de Vencimiento</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="text-end min-w-70px dt-orderable-none text-center" data-dt-column="6" rowspan="1" colspan="1" style="border-top: 2px solid #edeaea;"
+                                aria-label="Actions"><span class="dt-column-title">Acciones</span><span
+                                    class="dt-column-order"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody class=" text-gray-500">
+                        
+                            <tr style="border-bottom: 2px solid #edeaea;border-right: 1px solid #edeaea;border-left: 1px solid #edeaea;">
+                                <td class="text-center">
+                                    001
+                                </td>
+
+                                <td>
+                                    <span style="width: 150px !important;
+                                    display: block;">PRODUCTO 1</span>
+                                </td>
+
+                                <td>
+                                    <span style="width: 150px !important;
+                                    display: block;">Super Admin</span>
+                                </td>
+
+                                <td>
+                                    2024-04-23 12:38 AM	
+                                </td>
+
+                                <td>
+                                    FV 2026-04-23
+                                </td>
+
+                                <td class="">
+                                    <a  onclick="return false;"class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-pencil fs-2" style="color: #007bff;"><span class="path1"></span><span class="path2"></span></i>
+                                    </a>
+
+                                    <a  onclick="return false;" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                        style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-trash fs-2" style="color: #dc3545;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr style="border-bottom: 2px solid #edeaea;border-right: 1px solid #edeaea;border-left: 1px solid #edeaea;">
+                                <td class="text-center">
+                                    001
+                                </td>
+
+                                <td>
+                                    <span style="width: 150px !important;
+                                    display: block;">PRODUCTO 2</span>
+                                </td>
+
+                                <td>
+                                    <span style="width: 150px !important;
+                                    display: block;">Juan Cayo</span>
+                                </td>
+
+                                <td>
+                                    2024-04-23 12:38 AM	
+                                </td>
+
+                                <td>
+                                    FV 2026-04-23
+                                </td>
+
+                                <td class="">
+                                    <a  onclick="return false;"class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-pencil fs-2" style="color: #007bff;"><span class="path1"></span><span class="path2"></span></i>
+                                    </a>
+
+                                    <a  onclick="return false;" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                        style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-trash fs-2" style="color: #dc3545;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                            <tr style="border-bottom: 2px solid #edeaea;border-right: 1px solid #edeaea;border-left: 1px solid #edeaea;">
+                                <td class="text-center">
+                                    001
+                                </td>
+
+                                <td>
+                                    <span style="width: 150px !important;
+                                    display: block;">PRODUCTO 3</span>
+                                </td>
+
+                                <td>
+                                    <span style="width: 150px !important;
+                                    display: block;">Juan Cayo</span>
+                                </td>
+
+                                <td>
+                                    2024-04-23 12:38 AM	
+                                </td>
+
+                                <td>
+                                    FV 2026-04-23
+                                </td>
+
+                                <td class="">
+                                    <a  onclick="return false;"class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-pencil fs-2" style="color: #007bff;"><span class="path1"></span><span class="path2"></span></i>
+                                    </a>
+
+                                    <a  onclick="return false;" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
+                                        style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                        <i class="ki-duotone ki-trash fs-2" style="color: #dc3545;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+        </div>
+        <!--end::Table-->
+    </div>
+    <!--end::Card body-->
+</div>

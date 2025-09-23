@@ -53,6 +53,14 @@
                                   <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Razon social" [(ngModel)]="full_name" />
                                   <!--end::Input-->
                               </div>
+                              <div class="col-6">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Nombre Comercial: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nombre Comercial"/>
+                                  <!--end::Input-->
+                              </div>
                               <div class="col-4">
                                   <!--begin::Label-->
                                   <label class="required fw-bold fs-6 mb-2">Segmento de Cliente: (*) </label>
@@ -70,6 +78,24 @@
 
                                   </select>
 
+                              </div>
+                          </div>
+                          <div class="fv-row row mb-7">
+                              <div class="col-6">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Resp. Pago: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nombre Completo"/>
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-6">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Repr. Legal: (*) </label>
+                                  <!--end::Label-->
+                                  <!--begin::Input-->
+                                  <input type="text" name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Nombre Completo"/>
+                                  <!--end::Input-->
                               </div>
                           </div>
                           <div class="fv-row row mb-7">
@@ -132,16 +158,6 @@
                                       />
                                   </div>
                               </div>
-
-                              <div class="col-4">
-                                  <!--begin::Label-->
-                                  <label class="required fw-bold fs-6 mb-2">Telefono: (*) </label>
-
-                                  <!--begin::Input-->
-                                  <input type="number" name="phone" [(ngModel)]="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="000-000-000" />
-                                  <!--end::Input-->
-                              </div>
-
                               <div class="col-4">
                                   <!--begin::Label-->
                                   <label class="required fw-bold fs-6 mb-2">Correo electronico: (Opcional) </label>
@@ -151,6 +167,25 @@
                                   <!--end::Input-->
                               </div>
 
+                          </div>
+                          <div class="fv-row row mb-7">
+                            <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Telefono 1: (*) </label>
+
+                                  <!--begin::Input-->
+                                  <input type="number" name="phone" [(ngModel)]="phone"  placeholder="000-000-000"  class="form-control form-control-solid mb-3 mb-lg-0"  />
+                                  <!--end::Input-->
+                              </div>
+
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Telefono 2: (*) </label>
+
+                                  <!--begin::Input-->
+                                  <input type="number" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="000-000-000" />
+                                  <!--end::Input-->
+                              </div>
                           </div>
                       </div>
                   </div>

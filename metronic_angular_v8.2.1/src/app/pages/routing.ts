@@ -105,6 +105,10 @@ const Routing: Routes = [
     loadChildren: () => import('../modules/kardex/kardex.module').then((m) => m.KardexModule),
   },
   {
+    path: 'ventas',
+    loadChildren: () => import('../modules/ventas/ventas.module').then((m) => m.VentasModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',

@@ -596,5 +596,68 @@
       </div>
       <!--end::Menu-->
     </div>
+
+    <div class="menu-item menu-accordion" *ngIf="
+    showMenu(['list_venta']) ||
+    showMenu(['register_venta']) ||
+    showMenu(['facturacion']) ||
+    showMenu(['register_venta'])
+    "
+    data-kt-menu-trigger="click"
+    routerLinkActive="here show">
+      <span class="menu-link">
+        <span class="menu-icon">
+          <app-keenicon name="file" class="fs-2"></app-keenicon>
+        </span>
+        <span class="menu-title">Ventas</span>
+        <span class="menu-arrow"></span>
+      </span>
+
+      <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+
+        <div class="menu-item menu-accordion" *ngIf="showMenu(['register_venta']) || showMenu(['list_compra'])" data-kt-menu-trigger="click" routerLinkActive="here show">
+          <span class="menu-link">
+            <span class="menu-icon">
+              <app-keenicon name="delivery-3" class="fs-2"></app-keenicon>
+            </span>
+            <span class="menu-title" data-link="/ventas">Ventas
+            </span>
+            <span class="menu-arrow"></span>
+          </span>
+          <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+            <div class="menu-item" *ngIf="showMenu(['list_venta'])">
+              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/ventas/listar-ventas">
+                <span
+                  class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Listado
+                </span>
+              </a>
+            </div>
+            <div class="menu-item" *ngIf="showMenu(['register_venta'])">
+              <a class="menu-link without-sub" routerLinkActive="active" routerLink="/ventas/registro">
+                <span
+                  class="menu-bullet">
+                  <span class="bullet bullet-dot"></span>
+                </span>
+                <span class="menu-title">Registro
+                </span>
+              </a>
+            </div>    
+          </div>
+        </div>
+
+        <div class="menu-item" *ngIf="showMenu(['facturacion'])">
+          <a class="menu-link without-sub" routerLink="/ventas/facturacion" routerLinkActive="active">
+            <span class="menu-icon">
+              <app-keenicon name="delivery-3" class="fs-2"></app-keenicon>
+            </span>
+            <span class="menu-title">Listado de Facturas</span>
+          </a>
+        </div>       
+      </div>
+      <!--end::Menu-->
+    </div>
 </div>
 <!--end::Menu wrapper-->

@@ -31,4 +31,10 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'textbee' => [
+        'api_key'   => env('TEXTBEE_API_KEY'),
+        'device_id' => env('TEXTBEE_DEVICE_ID'),
+        'base_url'  => env('TEXTBEE_BASE_URL', 'http://161.132.40.57:3000'),
+    ],
+
 ];

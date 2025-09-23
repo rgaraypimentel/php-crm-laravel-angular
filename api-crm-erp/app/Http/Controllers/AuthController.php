@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Controller;
-use App\Models\User;
 use Validator;
+use App\Models\User;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
+use Tymon\JWTAuth\Facades\JWTFactory;
 
 class AuthController extends Controller
 {
@@ -24,7 +27,8 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function register() {
+    public function register()
+    {
         // $this -> authorize ("create",User::class);
         $validator = Validator::make(request()->all(), [
             'name' => 'required',
@@ -32,7 +36,7 @@ class AuthController extends Controller
             'password' => 'required|min:8',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json($validator->errors()->toJson(), 400);
         }
 
@@ -54,10 +58,43 @@ class AuthController extends Controller
     {
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth('api')->attempt($credentials)) {
+        if (!$token = auth('api')->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
 
+        $user = auth('api')->user();
+
+        // Si el usuario tiene 2FA habilitado, pedir OTP (no devolvemos el token pleno)
+        if (!empty($user->google2fa_secret)) {
+
+            // Invalidar el token pleno que acabamos de generar
+            auth('api')->logout();
+
+            // Crear un mfa_token de vida corta (5-10 min), SIN "sub"
+            $claims  = JWTFactory::customClaims([
+                'purpose' => 'mfa',
+                'uid'     => $user->id,
+                'amr'     => ['pwd'],   // authentication methods reference
+                'exp'     => now()->addMinutes(10)->timestamp,
+                'iat'     => now()->timestamp,
+            ])->make();
+
+            $mfaToken = JWTAuth::encode($claims)->get();
+
+            // Guarda el contexto para reenvíos y verificación
+            Cache::put("mfa:ctx:{$mfaToken}", [
+                'user_id' => $user->id,
+                'phone'   => $user->phone,   // <- ¡importante!
+            ], now()->addMinutes(10));
+
+            return response()->json([
+                'mfa_required' => true,
+                'mfa_token'    => $mfaToken,
+                'user_hint'    => substr($user->email, 0, 2) . '***@***' . substr(strrchr($user->email, "@"), 1), // opcional
+            ], 200);
+        }
+
+        // Caso normal: devolver el token pleno
         return $this->respondWithToken($token);
     }
 
@@ -100,9 +137,9 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respondWithToken($token)
+    public static function respondWithToken($token)
     {
-        $permissions = auth("api")->user()->getAllPermissions()->map(function($perm) {
+        $permissions = auth("api")->user()->getAllPermissions()->map(function ($perm) {
             return $perm->name;
         });
         return response()->json([
@@ -110,13 +147,14 @@ class AuthController extends Controller
             'token_type' => 'bearer',
             'expires_in' => auth('api')->factory()->getTTL() * 60,
             'user' => [
-                "full_name" => auth ("api")-> user()->name.' '.auth("api")-> user()->username,
-                "email" => auth ("api")-> user()->email,
-                "avatar" => auth('api')->user()->avatar ? env("APP_URL")."storage/".auth('api')->user()->avatar : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
+                "full_name" => auth("api")->user()->name . ' ' . auth("api")->user()->username,
+                "email" => auth("api")->user()->email,
+                "avatar" => auth('api')->user()->avatar ? env("APP_URL") . "storage/" . auth('api')->user()->avatar : 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
                 "role_name" => auth("api")->user()->role->name,
                 "permissions" => $permissions,
                 "sucursale_id" => auth("api")->user()->sucursale_id,
                 "sucursale_name" => auth('api')->user()->sucursale->name,
+                'two_factor_enabled' => !empty((auth('api')->user())->google2fa_secret),
             ]
         ]);
     }
