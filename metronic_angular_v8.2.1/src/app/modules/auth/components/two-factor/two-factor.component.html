@@ -1,0 +1,133 @@
+<div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <h3 class="card-title">Autenticación en dos pasos (2FA)</h3>
+        <button class="btn btn-light" (click)="backToDashboard()">
+            Volver al dashboard
+        </button>
+    </div>
+
+    <div class="card-body">
+
+        <!-- Mensajes -->
+        <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
+        <div *ngIf="successMsg" class="alert alert-success">{{ successMsg }}</div>
+
+        <!-- Loading -->
+        <div *ngIf="mfa.loading$ | async" class="mb-4">
+            <span class="indicator-progress" style="display:block">
+                Procesando...
+                <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+            </span>
+        </div>
+
+        <!-- Estado -->
+        <ng-container *ngIf="state === 'status'">
+            <div *ngIf="status; else loadingStatus">
+                <p class="mb-1">
+                    Estado actual:
+                    <strong class="ms-1" [ngClass]="status.two_factor_enabled ? 'text-success' : 'text-muted'">
+                        {{ status.two_factor_enabled ? 'Habilitado' : 'Deshabilitado' }}
+                    </strong>
+                </p>
+
+                <div class="mt-4 d-flex gap-2">
+                    <button *ngIf="!status.two_factor_enabled" class="btn btn-primary" (click)="startEnable()">
+                        Habilitar 2FA
+                    </button>
+                    <button *ngIf="status.two_factor_enabled" class="btn btn-danger" (click)="startDisable()">
+                        Deshabilitar 2FA
+                    </button>
+                </div>
+            </div>
+
+            <ng-template #loadingStatus>
+                <p class="text-muted">Obteniendo estado...</p>
+            </ng-template>
+        </ng-container>
+
+        <!-- Habilitar -->
+        <ng-container *ngIf="state === 'enable'">
+            <div class="mb-4">
+                <h5 class="mb-2">Habilitar 2FA</h5>
+
+                <ol class="mb-3 text-muted">
+                    <li>Escanea el código QR con tu app de autenticación (Google Authenticator, Authy, etc.).</li>
+                    <li>Ingresa el código de 6 dígitos para confirmar.</li>
+                </ol>
+
+                <div class="border rounded p-3 mb-3">
+                    <!-- QR como data URL de un SVG -->
+                    <!-- <img *ngIf="setupData?.qr_img_dataurl" [src]="setupData.qr_img_dataurl" alt="QR 2FA" /> -->
+                    <div *ngIf="setupData?.secret_masked" class="small text-muted mt-2">
+                        <ng-container *ngIf="setupData as sd">
+                            <!-- QR como data URL de un SVG -->
+                            <img *ngIf="sd.qr_img_dataurl" [src]="sd.qr_img_dataurl" alt="QR 2FA" />
+                            <div *ngIf="sd.secret_masked" class="small text-muted mt-2">
+                                Secreto: {{ sd.secret_masked }}
+                            </div>
+                        </ng-container>
+
+                        <!-- Secreto (enmascarado): {{ setupData.secret_masked }} -->
+                    </div>
+
+                    <div *ngIf="setupData?.otpauth_url" class="mt-2">
+                        <a class="btn btn-light btn-sm" (click)="openOtpauth()">Abrir otpauth URL</a>
+                    </div>
+                </div>
+
+                <form [formGroup]="enableForm" (ngSubmit)="confirmEnable()">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <input formControlName="otp" class="form-control" type="text" maxlength="6"
+                                placeholder="••••••" inputmode="numeric" autocomplete="one-time-code" />
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-primary"
+                                [disabled]="(mfa.loading$ | async) || enableForm.invalid">
+                                Confirmar habilitación
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-light" (click)="loadStatus()">Cancelar</button>
+                        </div>
+                    </div>
+                    <div *ngIf="enableForm.get('otp')?.invalid && enableForm.get('otp')?.touched"
+                        class="text-danger small mt-2">
+                        Ingrese un OTP válido (6 dígitos).
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+
+        <!-- Deshabilitar -->
+        <ng-container *ngIf="state === 'disable'">
+            <div class="mb-4">
+                <h5 class="mb-2">Deshabilitar 2FA</h5>
+                <p class="text-muted mb-2">Ingrese el código OTP actual para confirmar:</p>
+
+                <form [formGroup]="disableForm" (ngSubmit)="confirmDisable()">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-auto">
+                            <input formControlName="otp" class="form-control" type="text" maxlength="6"
+                                placeholder="••••••" inputmode="numeric" autocomplete="one-time-code" />
+                        </div>
+                        <div class="col-auto">
+                            <button type="submit" class="btn btn-danger"
+                                [disabled]="(mfa.loading$ | async) || disableForm.invalid">
+                                Confirmar deshabilitación
+                            </button>
+                        </div>
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-light" (click)="loadStatus()">Cancelar</button>
+                        </div>
+                    </div>
+                    <div *ngIf="disableForm.get('otp')?.invalid && disableForm.get('otp')?.touched"
+                        class="text-danger small mt-2">
+                        Ingrese un OTP válido (6 dígitos).
+                    </div>
+                </form>
+            </div>
+        </ng-container>
+
+    </div>
+</div>

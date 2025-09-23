@@ -107,6 +107,10 @@ const Routing: Routes = [
   {
     path: 'logistica',
     loadChildren: () => import('../modules/logistica/logistica.module').then((m) => m.LogisticaModule),
+  },  
+  {
+    path: 'ventas',
+    loadChildren: () => import('../modules/ventas/ventas.module').then((m) => m.VentasModule),
   },
   {
     path: '',

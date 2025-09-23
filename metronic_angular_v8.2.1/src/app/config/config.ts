@@ -231,4 +231,13 @@ export const SIDEBAR: any = [
             },
         ]
     },
+    {
+        'name': 'Facturacion',
+        'permisos': [
+            {
+                name: 'Facturacion',
+                permiso: 'facturacion',
+            },
+        ]
+    },
 ];

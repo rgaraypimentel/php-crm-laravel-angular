@@ -167,6 +167,77 @@
     </button>
   </div>
 
+  <!-- Modal 2FA -->
+  <div *ngIf="showMfaModal" class="modal fade show d-block" tabindex="-1" role="dialog"
+    style="background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content" [formGroup]="mfaForm">
+
+        <div class="modal-header">
+          <h5 class="modal-title">Verificación en dos pasos</h5>
+          <button type="button" class="btn btn-sm btn-icon" (click)="showMfaModal=false">
+            <i class="bi bi-x-lg"></i>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <p class="mb-3">
+            Ingresa el código de 6 dígitos generado por tu app autenticadora.<br>
+          </p>
+
+          <div class="mb-3">
+            <label class="form-label">Código OTP</label>
+            <input type="text" class="form-control" maxlength="6" formControlName="otp" autocomplete="one-time-code"
+              placeholder="••••••" inputmode="numeric">
+          </div>
+
+          <div *ngIf="mfaError" class="alert alert-danger py-2">
+            {{ mfaError }}
+          </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-between">
+          <!-- Botón SMS a la izquierda -->
+          <div class="d-flex align-items-center">
+            <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onSendOtpSms()"
+              [disabled]="smsSending || smsCooldown > 0">
+              <ng-container *ngIf="smsSending; else smsLabel">
+                <span class="spinner-border spinner-border-sm me-2"></span> Enviando...
+              </ng-container>
+              <ng-template #smsLabel>
+                Enviar código por SMS
+                <span *ngIf="smsCooldown > 0"> ({{ smsCooldown }}s)</span>
+              </ng-template>
+            </button>
+
+            <!-- Mensaje de estado del SMS -->
+            <div *ngIf="smsMsg" class="alert alert-info py-2 ms-2 mb-0">
+              {{ smsMsg }}
+            </div>
+          </div>
+
+          <!-- Botones Cancelar y Verificar a la derecha -->
+          <div>
+            <button class="btn btn-light me-2" (click)="showMfaModal=false">Cancelar</button>
+            <button class="btn btn-primary" (click)="onSubmitOtp()"
+              [disabled]="(isLoading$ | async) || mfaForm.invalid">
+              <ng-container *ngIf="isLoading$ | async; else btnLabel">
+                <span class="indicator-progress" style="display:block">
+                  Verificando...
+                  <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                </span>
+              </ng-container>
+              <ng-template #btnLabel>Verificar</ng-template>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
   <!-- <div class="text-gray-500 text-center fw-semibold fs-6">
     Not a Member yet?
 

@@ -155,7 +155,7 @@
 
                               <div class="col-4">
                                   <!--begin::Label-->
-                                  <label class="required fw-bold fs-6 mb-2">Cumpleaño: (*) </label>
+                                  <label class="required fw-bold fs-6 mb-2">Fecha de Nacimiento: (*) </label>
                                   <!--end::Label-->
                                   <div class="input-group input-group-solid">
                                       <input type="date"
@@ -165,16 +165,7 @@
                                       />
                                   </div>
                               </div>
-
-                              <div class="col-4">
-                                  <!--begin::Label-->
-                                  <label class="required fw-bold fs-6 mb-2">Telefono: (*) </label>
-
-                                  <!--begin::Input-->
-                                  <input type="number" name="phone" [(ngModel)]="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="000-000-000" />
-                                  <!--end::Input-->
-                              </div>
-
+                              
                               <div class="col-4">
                                   <!--begin::Label-->
                                   <label class="required fw-bold fs-6 mb-2">Correo electronico: (Opcional) </label>
@@ -184,6 +175,24 @@
                                   <!--end::Input-->
                               </div>
 
+                          </div>
+                          <div class="fv-row row mb-7">
+                            <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Telefono 1: (*) </label>
+
+                                  <!--begin::Input-->
+                                  <input type="number" name="phone" [(ngModel)]="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="000-000-000" />
+                                  <!--end::Input-->
+                              </div>
+                              <div class="col-4">
+                                  <!--begin::Label-->
+                                  <label class="required fw-bold fs-6 mb-2">Telefono 2: (*) </label>
+
+                                  <!--begin::Input-->
+                                  <input type="number" name="phone" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="000-000-000" />
+                                  <!--end::Input-->
+                              </div>
                           </div>
                       </div>
                   </div>

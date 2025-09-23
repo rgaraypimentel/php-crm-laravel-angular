@@ -58,6 +58,7 @@ class User extends Authenticatable implements JWTSubject
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'google2fa_secret'  => 'encrypted',
     ];
 
     //roles

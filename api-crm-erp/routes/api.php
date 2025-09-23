@@ -3,39 +3,41 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\Caja\CajaEgresoController;
-use App\Http\Controllers\Caja\CajaIngresoController;
-use App\Http\Controllers\Caja\CajaSucursaleController;
-use App\Http\Controllers\Client\ClientController;
-use App\Http\Controllers\Comission\CategorieComissionController;
-use App\Http\Controllers\Comission\ComissionController;
-use App\Http\Controllers\Comission\PositionComissionController;
-use App\Http\Controllers\Comission\SegmentClientComissionController;
-use App\Http\Controllers\Comission\WeekComissionController;
-use App\Http\Controllers\Compras\CompraDetalleController;
-use App\Http\Controllers\Compras\ComprasController;
-use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\Kpi\KpiController;
 use App\Http\Controllers\UserAccessController;
+use App\Http\Controllers\Client\ClientController;
+use App\Http\Controllers\Kardex\KardexController;
+use App\Http\Controllers\RolePermissionController;
+use App\Http\Controllers\Caja\CajaEgresoController;
+use App\Http\Controllers\Compras\ComprasController;
+use App\Http\Controllers\Product\ProductController;
+use App\Http\Controllers\Caja\CajaIngresoController;
+use App\Http\Controllers\Despacho\DespachoController;
+use App\Http\Controllers\Proforma\ProformaController;
+use App\Http\Controllers\Caja\CajaSucursaleController;
 use App\Http\Controllers\Configuration\UnitController;
+use App\Http\Controllers\Product\ConversionController;
+use App\Http\Controllers\Comission\ComissionController;
+use App\Http\Controllers\Transport\TransportController;
+use App\Http\Controllers\Compras\CompraDetalleController;
+use App\Http\Controllers\Product\ProductWalletController;
+use App\Http\Controllers\Configuration\ProviderController;
+use App\Http\Controllers\Comission\WeekComissionController;
 use App\Http\Controllers\Configuration\SucursaleController;
 use App\Http\Controllers\Configuration\WerehouseController;
-use App\Http\Controllers\Configuration\ClientSegmentController;
-use App\Http\Controllers\Configuration\MethodPaymentController;
-use App\Http\Controllers\Configuration\ProductCategorieController;
-use App\Http\Controllers\Configuration\ProviderController;
-use App\Http\Controllers\Configuration\SucursaleDeliverieController;
-use App\Http\Controllers\Despacho\DespachoController;
-use App\Http\Controllers\Kardex\KardexController;
-use App\Http\Controllers\Kpi\KpiController;
-use App\Http\Controllers\Product\ConversionController;
-use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\Product\ProductWalletController;
+use App\Http\Controllers\Proforma\ProformaDetailController;
 use App\Http\Controllers\Product\ProductWarehouseController;
 use App\Http\Controllers\Proforma\CalendarProformaController;
-use App\Http\Controllers\Proforma\ProformaController;
-use App\Http\Controllers\Proforma\ProformaDetailController;
-use App\Http\Controllers\Transport\TransportController;
 use App\Http\Controllers\Transport\TransportDetailController;
+use App\Http\Controllers\Comission\PositionComissionController;
+use App\Http\Controllers\Configuration\ClientSegmentController;
+use App\Http\Controllers\Configuration\MethodPaymentController;
+use App\Http\Controllers\Comission\CategorieComissionController;
+use App\Http\Controllers\Configuration\ProductCategorieController;
+use App\Http\Controllers\Comission\SegmentClientComissionController;
+use App\Http\Controllers\Configuration\SucursaleDeliverieController;
+
+use App\Http\Controllers\Auth\MfaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,11 +66,27 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/refresh', [AuthController::class, 'refresh'])->name('refresh');
     Route::post('/me', [AuthController::class, 'me'])->name('me');
+    // Verificación MFA (usa mfa_token propio, no auth:api)
+    Route::post('/mfa/verify', [MfaController::class, 'verify']);
+    Route::post('/sms/send',   [MfaController::class, 'sendLoginOtpSms']);   
+    
+    
 });
 
 Route::group([
     'middleware' => 'auth:api',
 ], function ($router) {
+    // Gestión de 2FA (perfil)
+    Route::post('/mfa/setup',   [MfaController::class, 'setup']);
+    Route::post('/mfa/enable',  [MfaController::class, 'enable']);
+    Route::post('/mfa/disable', [MfaController::class, 'disable']);
+    Route::get('/mfa/status',   [MfaController::class, 'status']);
+
+    Route::post('/setup/sms/send',   [MfaController::class, 'sendSetupOtpSms']);
+    Route::post('/setup/sms/resend', [MfaController::class, 'sendSetupOtpSms']);
+
+    
+
     Route::resource("roles",RolePermissionController::class);
     Route::post('/users/{id}', [UserAccessController::class, 'update']);
     Route::get('/users/config', [UserAccessController::class, 'config']);
