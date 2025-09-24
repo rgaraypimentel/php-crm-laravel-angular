@@ -1,8 +1,9 @@
 <div class="card">
     <div class="card-body">
+        <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
         <div class="row">
 
-            <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+            
             <div class="col-3">
                 <label class="required fw-bold fs-6 mb-2">Responsable: (*) </label>
                 <input type="text" disabled name="name" class="form-control form-control-solid mb-3 mb-lg-0"
@@ -129,7 +130,8 @@
                     class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Por ejemplo: 49.50" />
             </div>
             <div class="col-2">
-                <button class="btn btn-sm btn-primary" (click)="addDetail()">+</button>
+                <label class="fw-bold fs-6 mb-3">&nbsp;</label>
+                <button class="btn btn-sm btn-primary d-block" (click)="addDetail()">+</button>
             </div>
         </div>
 

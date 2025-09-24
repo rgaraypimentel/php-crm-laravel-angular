@@ -1,8 +1,7 @@
 <div class="card">
     <div class="card-body">
+        <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
         <div class="row">
-
-            <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
             <div class="col-3">
                 <label class="required fw-bold fs-6 mb-2">Responsable: (*) </label>
                 <input type="text" disabled name="name" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Usuario de la compral" [(ngModel)]="full_name_user" />

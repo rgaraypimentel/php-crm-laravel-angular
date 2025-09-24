@@ -6,7 +6,7 @@
             <!--begin::Search-->
             <div class="row align-items-center">
                 <div class="col-2">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listContracts()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="(N°) Contrato ">
@@ -47,7 +47,7 @@
                     <div class="text-muted fs-7">Categoria de producto.</div>
                 </div>
                 <div class="col-3">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search_client" (keyup.enter)="listContracts()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Cliente">
@@ -87,13 +87,13 @@
                       <div class="text-muted fs-7">Fecha fin.</div>
                 </div>
                 <div class="col-3">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listContracts()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Producto">
                     </div>
                 </div>
-                <div class="col-3 d-flex">
+                <div class="col-3 d-flex mb-7">
                     <button class="btn btn-primary btn-sm mx-1" placement="top-start" ngbTooltip="Buscar" (click)="listContracts()">
                         <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
                     </button>

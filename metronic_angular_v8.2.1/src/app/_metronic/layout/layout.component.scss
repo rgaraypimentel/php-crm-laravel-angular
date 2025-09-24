@@ -1,11 +1,13 @@
 :host {
   height: 100%;
+  background-color: #eeeeee;
   margin: 0;
 
   .flex-root {
     height: 100%;
   }
 }
+
 #kt_app_sidebar{
   background-color: #021d34;
 }
@@ -17,5 +19,9 @@
 }
 
 #kt_app_root{
+  background-color: #eeeeee;
+}
+
+.app-main, .app-content {
   background-color: #eeeeee;
 }

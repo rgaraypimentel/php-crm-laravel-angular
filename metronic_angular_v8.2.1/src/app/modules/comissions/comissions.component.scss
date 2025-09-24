@@ -2,27 +2,39 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-th, td {
+
+th,
+td {
     border: 1px solid black !important;
     text-align: center;
     padding: 5px;
 }
+
 th {
     background-color: #f2f2f2;
 }
-.row-table td{
+
+.row-table td {
     text-wrap: nowrap;
 }
 
-.colum-comission{
+.colum-comission {
     background-color: #c4ffdc;
 }
-.colum-venta-total{
+
+.colum-venta-total {
     background-color: #c4e4ff;
 }
-.colum-comision-total{
+
+.colum-comision-total {
     background-color: #ffeac4;
 }
-.colum-venta-corta{
+
+.colum-venta-corta {
     background-color: #d1c4ff;
+}
+
+.form-control.form-control-solid {
+    background-color: #eeeeee !important;
+    border-color: #eeeeee !important;
 }

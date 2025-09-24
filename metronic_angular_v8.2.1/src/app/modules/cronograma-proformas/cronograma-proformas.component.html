@@ -3,20 +3,17 @@
         <div class="row align-items-center">
             <!-- los campos de filtro -->
             <div class="col-3">
-                <div class="d-flex align-items-center position-relative my-1">
+                <div class="d-flex align-items-center position-relative my-1 mb-7">
                     <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
-                            class="path2"></span></i> <input type="text" [(ngModel)]="search_client" (keyup.enter)="cronograma()" name="search" data-kt-customer-table-filter="search"
+                            class="path2"></span></i> <input type="text" [(ngModel)]="search_client"
+                        (keyup.enter)="cronograma()" name="search" data-kt-customer-table-filter="search"
                         class="form-control form-control-solid ps-12" placeholder="Cliente">
                 </div>
             </div>
             <div class="col-2">
-                <select
-                    class="form-control"
-                    name="product_categorie_id"
-                    [(ngModel)]="product_categorie_id"
-                    placeholder="Selec. Categoria"
-                >
-                <option value="">Ninguno</option>
+                <select class="form-control" name="product_categorie_id" [(ngModel)]="product_categorie_id"
+                    placeholder="Selec. Categoria">
+                    <option value="">Ninguno</option>
                     <ng-container *ngFor="let product_categorie of product_categories">
                         <option [value]="product_categorie.id">{{ product_categorie.name }}</option>
                     </ng-container>
@@ -24,13 +21,9 @@
                 <div class="text-muted fs-7">Categoria de producto.</div>
             </div>
             <div class="col-3">
-                <select
-                    class="form-control"
-                    name="client_segment_id"
-                    [(ngModel)]="client_segment_id"
-                    placeholder="Selec. Segment"
-                >
-                <option value="">Ninguno</option>
+                <select class="form-control" name="client_segment_id" [(ngModel)]="client_segment_id"
+                    placeholder="Selec. Segment">
+                    <option value="">Ninguno</option>
                     <ng-container *ngFor="let client_segment of client_segments">
                         <option [value]="client_segment.id">{{ client_segment.name }}</option>
                     </ng-container>
@@ -38,12 +31,7 @@
                 <div class="text-muted fs-7">Segmento de cliente.</div>
             </div>
             <div class="col-2">
-                <select
-                    class="form-control"
-                    name="status_pay"
-                    [(ngModel)]="status_pay"
-                    placeholder="Selec. Status"
-                >
+                <select class="form-control" name="status_pay" [(ngModel)]="status_pay" placeholder="Selec. Status">
                     <option value="">Ninguno</option>
                     <option value="1">Pendiente</option>
                     <option value="2">Parcial</option>
@@ -51,11 +39,13 @@
                 </select>
                 <div class="text-muted fs-7">Estado de Pago.</div>
             </div>
-            <div class="col-2 d-flex">
-                <button class="btn btn-primary btn-sm mx-1" placement="top-start" ngbTooltip="Buscar" (click)="cronograma()">
+            <div class="col-2 d-flex mb-7">
+                <button class="btn btn-primary btn-sm mx-1" placement="top-start" ngbTooltip="Buscar"
+                    (click)="cronograma()">
                     <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
                 </button>
-                <button class="btn btn-dark btn-sm mx-1" placement="top-start" ngbTooltip="Limpiar"  (click)="resetcronograma()">
+                <button class="btn btn-dark btn-sm mx-1" placement="top-start" ngbTooltip="Limpiar"
+                    (click)="resetcronograma()">
                     <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
                 </button>
             </div>
@@ -66,11 +56,14 @@
                 <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
                 <full-calendar [options]="calendarOptions">
                     <ng-template #eventContent let-arg>
-                      <!-- <b class="mx-1">{{arg.timeText}}</b> -->
-                        <a  onclick="return false" class="mx-2" (click)="openDetail(arg)">
-                          <i class="ki-duotone ki-cheque text-gray-900" style="font-size: x-large;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span><span class="path6"></span><span class="path7"></span></i>
+                        <!-- <b class="mx-1">{{arg.timeText}}</b> -->
+                        <a onclick="return false" class="mx-2" (click)="openDetail(arg)">
+                            <i class="ki-duotone ki-cheque text-gray-900" style="font-size: x-large;"><span
+                                    class="path1"></span><span class="path2"></span><span class="path3"></span><span
+                                    class="path4"></span><span class="path5"></span><span class="path6"></span><span
+                                    class="path7"></span></i>
                         </a>
-                      <i>{{arg.event.title}}</i>
+                        <i>{{arg.event.title}}</i>
                     </ng-template>
                 </full-calendar>
             </div>

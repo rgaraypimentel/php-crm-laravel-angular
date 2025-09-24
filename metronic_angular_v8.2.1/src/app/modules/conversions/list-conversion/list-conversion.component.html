@@ -5,7 +5,7 @@
         <div class="card-title">
             <div class="row align-items-center">
                 <div class="col-3">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listConversions()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Buscar N° Orden">
@@ -55,7 +55,7 @@
                     <div class="text-muted fs-7">Unidad Final.</div>
                 </div>
                 <div class="col-3">
-                    <div class="d-flex align-items-center position-relative my-1">
+                    <div class="d-flex align-items-center position-relative my-1 mb-7">
                         <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
                                 class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listConversions()" name="search" data-kt-customer-table-filter="search"
                             class="form-control form-control-solid ps-12" placeholder="Buscar Producto">
@@ -81,7 +81,7 @@
                       </div>
                       <div class="text-muted fs-7">Fecha fin(Registro).</div>
                 </div>
-                <div class="col-1 d-flex">
+                <div class="col-1 d-flex mb-7">
                     <button class="btn btn-primary btn-sm mx-1" (click)="listConversions()">
                         <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
                     </button>
@@ -89,7 +89,7 @@
                         <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
                     </button>
                 </div>
-                <div class="col-2">
+                <div class="col-2 mb-7">
                     <button type="button" class="btn btn-primary" (click)="createConversion()">
                         + Agregar Conversion
                     </button>

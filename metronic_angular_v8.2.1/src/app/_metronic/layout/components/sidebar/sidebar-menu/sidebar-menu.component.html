@@ -106,7 +106,7 @@
               </a>
             </div> -->
 
-            <div class="menu-item">
+            <!-- <div class="menu-item">
               <a class="menu-link without-sub" routerLinkActive="active" routerLink="/configuraciones/proveedores/list">
                 <span class="menu-bullet">
                   <span class="bullet bullet-dot"></span>
@@ -114,7 +114,7 @@
                 <span class="menu-title">Proveedores
                 </span>
               </a>
-            </div>
+            </div> -->
             <div class="menu-item">
               <a class="menu-link without-sub" routerLinkActive="active" routerLink="/configuraciones/unidades/list">
                 <span class="menu-bullet">
@@ -709,6 +709,15 @@
               <span class="menu-arrow"></span>
             </span>
             <div class="menu-sub menu-sub-accordion" routerLinkActive="menu-active-bg">
+              <div class="menu-item">
+                <a class="menu-link without-sub" routerLinkActive="active" routerLink="/configuraciones/proveedores/list">
+                  <span class="menu-bullet">
+                    <span class="bullet bullet-dot"></span>
+                  </span>
+                  <span class="menu-title">Proveedores
+                  </span>
+                </a>
+              </div>
               <div class="menu-item" *ngIf="showMenu(['list_compra_abastecimiento'])">
                 <a class="menu-link without-sub" routerLinkActive="active" routerLink="/compras/listado">
                   <span class="menu-bullet">
@@ -769,22 +778,22 @@
 
                   <div class="menu-item" *ngIf="showMenu(['list_product'])">
                     <a class="menu-link without-sub" routerLinkActive="active" routerLink="/productos/list">
-                      <span class="menu-bullet">
-                        <span class="bullet bullet-dot"></span>
+                      <span class="menu-icon">
+                        <app-keenicon name="update-file" class="fs-2"></app-keenicon>
                       </span>
                       <span class="menu-title">Actualizacion de stock
                       </span>
                     </a>
                   </div>
 
-                  <div class="menu-item" *ngIf="showMenu(['register_product'])">
+                  <!-- <div class="menu-item" *ngIf="showMenu(['register_product'])">
                     <a class="menu-link without-sub" routerLinkActive="active" routerLink="/productos/registro">
                       <span class="menu-bullet">
                         <span class="bullet bullet-dot"></span>
                       </span>
                       <span class="menu-title">Valorizacion de Inventario</span>
                     </a>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -815,14 +824,14 @@
             </div>
           </div>
 
-          <div class="menu-item" *ngIf="showMenu(['distribucion'])">
+          <!-- <div class="menu-item" *ngIf="showMenu(['distribucion'])">
             <a class="menu-link without-sub" routerLink="/conversiones/listado" routerLinkActive="active">
               <span class="menu-icon">
                 <app-keenicon name="delivery-2" class="fs-2"></app-keenicon>
               </span>
               <span class="menu-title">Distribucion y Despacho</span>
             </a>
-          </div>
+          </div> -->
         </div>
 
         <div class="menu-item menu-accordion" *ngIf="
