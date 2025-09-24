@@ -22,7 +22,7 @@ export class DashboardService {
 
   configAll(){
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/config_all";
     return this.http.get(URL,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -31,7 +31,7 @@ export class DashboardService {
 
   informationGeneral(data:any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/information_general";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -40,7 +40,7 @@ export class DashboardService {
 
   salesXSucursales(data:any) {
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/sale_x_sucursales";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -49,7 +49,7 @@ export class DashboardService {
 
   salesXDayMonth(data:any){
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/sale_x_day_of_month";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -58,7 +58,7 @@ export class DashboardService {
 
   salesXMonthOfYear(data:any){
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/sale_x_month_of_year";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -67,7 +67,7 @@ export class DashboardService {
 
   salesXSegmentClient(data:any){
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/sale_x_segment_client";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -76,7 +76,7 @@ export class DashboardService {
 
   salesXAsesor(data:any){
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/asesor_most_sales";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
@@ -85,7 +85,7 @@ export class DashboardService {
 
   salesXCategorias(data:any){
     this.isLoadingSubject.next(true);
-    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token, 'X-Bypass-Number-Format': '1'});
     let URL = URL_SERVICIOS+"/kpi/categories_most_sales";
     return this.http.post(URL,data,{headers: headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))

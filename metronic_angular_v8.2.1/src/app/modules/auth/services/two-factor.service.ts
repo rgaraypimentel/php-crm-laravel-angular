@@ -102,4 +102,15 @@ export class TwoFactorService {
       })
     );
   }
+
+  sendSetupOtpSms() {
+    const token = localStorage.getItem('token') || '';
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    });
+
+    // Mantengo el patrón de rutas que ya usas: `${URL_SERVICIOS}/mfa/...`
+    return this.http.post<any>(`${URL_SERVICIOS}/auth/setup/sms/send`, {}, { headers });
+  }
 }

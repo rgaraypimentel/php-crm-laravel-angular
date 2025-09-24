@@ -198,23 +198,21 @@
 
         <div class="modal-footer d-flex justify-content-between">
           <!-- Botón SMS a la izquierda -->
+          <!-- Botón SMS + mensajes (reemplaza tu bloque actual por este) -->
           <div class="d-flex align-items-center">
+
             <button type="button" class="btn btn-outline-secondary btn-sm" (click)="onSendOtpSms()"
-              [disabled]="smsSending || smsCooldown > 0">
-              <ng-container *ngIf="smsSending; else smsLabel">
-                <span class="spinner-border spinner-border-sm me-2"></span> Enviando...
-              </ng-container>
-              <ng-template #smsLabel>
-                Enviar código por SMS
-                <span *ngIf="smsCooldown > 0"> ({{ smsCooldown }}s)</span>
-              </ng-template>
+              [attr.aria-disabled]="smsSending || smsCooldown > 0 ? true : null">
+              <span *ngIf="smsSending" class="spinner-border spinner-border-sm me-2"></span>
+              <span>{{ smsSending ? 'Enviando...' : 'Enviar código por SMS' }}</span>
+              <span *ngIf="!smsSending && smsCooldown > 0"> ({{ smsCooldown }}s)</span>
             </button>
 
-            <!-- Mensaje de estado del SMS -->
-            <div *ngIf="smsMsg" class="alert alert-info py-2 ms-2 mb-0">
-              {{ smsMsg }}
-            </div>
+            <!-- Mensajes cortos que se auto-ocultan -->
+            <div *ngIf="smsMsg" class="alert alert-success py-2 ms-2 mb-0">{{ smsMsg }}</div>
+            <div *ngIf="smsError" class="alert alert-danger py-2 ms-2 mb-0">{{ smsError }}</div>
           </div>
+
 
           <!-- Botones Cancelar y Verificar a la derecha -->
           <div>

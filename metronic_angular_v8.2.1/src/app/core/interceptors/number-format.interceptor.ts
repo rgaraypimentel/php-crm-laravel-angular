@@ -10,7 +10,9 @@ export class NumberFormatInterceptor implements HttpInterceptor {
     if (this.isUrlWithId(req.url)) {
       return next.handle(req);
     }
-
+    if (req.headers.has('X-Bypass-Number-Format')) {
+      return next.handle(req); // no formatear esta respuesta
+    }
     return next.handle(req).pipe(
       map(event => {
         if (event instanceof HttpResponse && event.body) {
@@ -34,7 +36,7 @@ export class NumberFormatInterceptor implements HttpInterceptor {
       for (const key in obj) {
         if (obj.hasOwnProperty(key)) {
           const value = obj[key];
-          
+
           // Excluir campos que son IDs o contienen 'id' en el nombre
           if (typeof value === 'number' && !this.isIdField(key)) {
             // Formatear números directamente en el objeto
@@ -55,11 +57,12 @@ export class NumberFormatInterceptor implements HttpInterceptor {
   private isIdField(fieldName: string): boolean {
     // Excluir campos que son IDs
     const lowerFieldName = fieldName.toLowerCase();
-    return lowerFieldName === 'id' || 
-           lowerFieldName.endsWith('_id') || 
-           lowerFieldName.endsWith('id') ||
-           lowerFieldName.includes('_id_') ||
-           lowerFieldName === 'uuid' ||
-           lowerFieldName === 'code';
+    return lowerFieldName === 'id' ||
+      lowerFieldName.endsWith('_id') ||
+      lowerFieldName.endsWith('id') ||
+      lowerFieldName.includes('_id_') ||
+      lowerFieldName === 'uuid' ||
+      lowerFieldName === 'code';
   }
+
 }

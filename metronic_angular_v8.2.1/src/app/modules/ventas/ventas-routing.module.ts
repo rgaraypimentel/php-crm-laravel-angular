@@ -13,7 +13,7 @@ const routes: Routes = [
     component: VentasComponent,
     children: [
       {
-        path:'facturacion',
+        path:'listar-facturas',
         component: FacturacionComponent
       },
       {

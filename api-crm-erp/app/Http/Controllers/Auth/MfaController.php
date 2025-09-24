@@ -208,8 +208,8 @@ class MfaController extends Controller
             $lastKey  = "{$rlPrefix}:lastSent";
 
             $count = (int) Cache::get($cntKey, 0);
-            if ($count >= 3) {
-                return response()->json(['error' => 'too_many_requests', 'message' => 'Has superado el límite (3 SMS en 5 min)'], 429);
+            if ($count >= 5) {
+                return response()->json(['error' => 'too_many_requests', 'message' => 'Has superado el límite (5 SMS en 5 min)'], 429);
             }
 
             $last = Cache::get($lastKey);
@@ -286,10 +286,10 @@ class MfaController extends Controller
         $lastKey  = "{$rlPrefix}:lastSent";
 
         $count = (int) Cache::get($cntKey, 0);
-        if ($count >= 3) {
+        if ($count >= 5) {
             return response()->json([
                 'error' => 'too_many_requests',
-                'message' => 'Has superado el límite (3 SMS en 5 min)'
+                'message' => 'Has superado el límite (5 SMS en 5 min)'
             ], 429);
         }
         $last = Cache::get($lastKey);

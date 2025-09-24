@@ -13,7 +13,7 @@
                 data-select2-id="select2-data-kt_ecommerce_edit_order_form">
                 <!--begin::Aside column-->
                 <!--end::Aside column-->
-                
+
                 <!--begin::Main column-->
                 <div class="d-flex flex-column flex-lg-row-fluid gap-7 gap-lg-10">
                     <!--begin::Order details-->
@@ -27,6 +27,21 @@
                                             <span class="path1"></span><span class="path2"></span>
                                         </i> Datos Generales :
                                     </h2>
+                                </div>
+                                <div class="col-5">
+                                    <button class="btn btn-sm mx-1 btn-primary" placement="top-start"
+                                        ngbTooltip="Buscar">
+                                        <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span
+                                                class="path2"></span></i>
+                                    </button>
+                                    <button class="btn btn-sm mx-1 btn-dark" placement="top-start" ngbTooltip="Limpiar">
+                                        <i class="ki-duotone ki-arrows-circle fs-2"><span class="path1"></span><span
+                                                class="path2"></span></i>
+                                    </button>
+                                    <button class="btn btn-sm mx-1 btn-info" placement="top-start" ngbTooltip="Agregar">
+                                        <i class="ki-duotone ki-add-folder fs-2"><span class="path1"></span><span
+                                                class="path2"></span></i>Importar Datos de Venta
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -50,20 +65,20 @@
 
                                 <div class="col-3">
                                     <label class="form-label">N° de Venta/Cotización:</label>
-                                    <input type="text" class="form-control" value="00001051">
+                                    <input type="text" class="form-control" placeholder="Ingrese el N° Venta a Emitir">
                                 </div>
 
                                 <div class="col-3">
                                     <label class="form-label">Fecha de Emisión:</label>
-                                    <input type="date" class="form-control" value="2025-05-20">
+                                    <input type="date" class="form-control" value="23/09/2025">
                                 </div>
 
                                 <div class="col-4">
                                     <label class="form-label">Clientes:</label>
                                     <select class="form-select">
-                                        <option selected>Lalwest Sac.</option>
-                                        <option>Cliente Persona</option>
-                                        <option>Cliente Empresa</option>
+                                        <option selected>Fuminsumos</option>
+                                        <option>Business Max</option>
+                                        <option>Qallpa Tic</option>
                                     </select>
                                 </div>
                             </div>
@@ -104,10 +119,13 @@
                                 <div class="col-2">
                                     <label class="form-label">Tipo:</label>
                                     <select class="form-select">
-                                        <option selected>F001</option>
-                                        <option>F002</option>
-                                        <option>B001</option>
+                                        <option selected>Factura</option>
+                                        <option>Boleta</option>
                                     </select>
+                                </div>
+                                <div class="col-2">
+                                    <label class="form-label">N° y Serie:</label>
+                                    <input type="text" class="form-control" value="E001-125" disabled>
                                 </div>
                             </div>
                         </div>
@@ -116,133 +134,85 @@
 
                     <!--end::Order details-->
                     <!--begin::Order details-->
+
                     <div class="card card-flush py-4">
-                        <!--begin::Card header-->
                         <div class="card-header" style="display: block;">
-                            <!-- <div class="card-title"> -->
                             <div class="row justify-content-between">
                                 <div class="col-5">
-                                    <h2 class="d-flex align-items-center"> <i
+                                    <h2 class="d-flex align-items-center"><i
                                             class="ki-duotone ki-questionnaire-tablet text-gray-900 fs-2tx"><span
-                                                class="path1"></span><span class="path2"></span></i>
-                                        Detallado de la Factura a Emitir : </h2>
+                                                class="path1"></span><span class="path2"></span></i> Detallado de la
+                                        Factura a Emitir :</h2>
                                 </div>
-                                <div class="col-3">
-
-                                </div>
+                                <div class="col-3"></div>
                             </div>
-                            <!-- </div> -->
                         </div>
-                        <!--end::Card header-->
-
-                        <!--begin::Card body-->
                         <div class="card-body pt-0">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="table-responsive">
-                                        <!--begin::Table-->
                                         <table
                                             class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
-                                            <!--begin::Table head-->
                                             <thead>
                                                 <tr class="fw-bold text-muted">
                                                     <th class="min-w-150px">Producto</th>
                                                     <th class="min-w-140px">Unidad</th>
-                                                    <th class="min-w-120px">Precio Unitario</th>
+                                                    <th class="min-w-120px">Precio Unitario
+                                                    </th>
                                                     <th class="min-w-120px">Cantidad</th>
                                                     <th class="min-w-120px">SubTotal</th>
                                                     <th class="min-w-120px">Total</th>
-                                                    <th class="min-w-100px text-end">Actions</th>
+                                                    <th class="min-w-100px text-end">
+                                                        Actions</th>
                                                 </tr>
                                             </thead>
-                                            <!--end::Table head-->
-
-                                            <!--begin::Table body-->
                                             <tbody>
-                                                <ng-container>
-                                                    <tr>
-
-                                                        <td>
-                                                            <a onclick="return false;"
-                                                                class="text-gray-900 fw-bold text-hover-primary fs-6">
-
-                                                            </a>
-                                                        </td>
-
-                                                        <td>
-                                                            <!-- <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Brasil</a> -->
-                                                            <span
-                                                                class="text-muted fw-semibold text-muted d-block fs-7">Unidad:
-                                                            </span>
-                                                        </td>
-
-                                                        <td>
-                                                            <a onclick="return false;"
-                                                                class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
-                                                                style="text-wrap: nowrap;"> PEN</a>
-                                                            <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Code: Paid</span> -->
-                                                        </td>
-
-                                                        <td>
-                                                            <a onclick="return false;"
-                                                                class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"></a>
-                                                            <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Web, UI/UX Design</span> -->
-                                                        </td>
-
-                                                        <td class="text-gray-900 fw-bold text-hover-primary fs-6">
-                                                            <a onclick="return false;"
-                                                                class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
-                                                                style="text-wrap: nowrap;"> PEN</a>
-
-                                                        <td>
-                                                            <a onclick="return false;"
-                                                                class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
-                                                                style="text-wrap: nowrap;"> PEN</a>
-                                                        </td>
-
-                                                        <td class="text-end">
-                                                            <!-- <a  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                                <i class="ki-duotone ki-switch fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a>
-                                                            -->
-                                                            <a onclick="return false;"
-                                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
-                                                                <i class="ki-duotone ki-pencil fs-2"><span
-                                                                        class="path1"></span><span
-                                                                        class="path2"></span></i> </a>
-
-                                                            <a onclick="return false"
-                                                                class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
-                                                                <i class="ki-duotone ki-trash fs-2"><span
-                                                                        class="path1"></span><span
-                                                                        class="path2"></span><span
-                                                                        class="path3"></span><span
-                                                                        class="path4"></span><span
-                                                                        class="path5"></span></i> </a>
-                                                        </td>
-                                                    </tr>
-                                                </ng-container>
-
+                                                <tr class="ng-star-inserted">
+                                                    <td> <a onclick="return false;"
+                                                            class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                            Elemento de Limpieza </a></td>
+                                                    <td> <span
+                                                            class="text-muted fw-semibold text-muted d-block fs-7">Cajas</span>
+                                                    </td>
+                                                    <td> <a onclick="return false;"
+                                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
+                                                            style="text-wrap: nowrap;">175.00 PEN</a></td>
+                                                    <td><a onclick="return false;"
+                                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">
+                                                            2</a>
+                                                    </td>
+                                                    <td class="text-gray-900 fw-bold text-hover-primary fs-6"><a
+                                                            onclick="return false;"
+                                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
+                                                            style="text-wrap: nowrap;">175 PEN</a></td>
+                                                    <td><a onclick="return false;"
+                                                            class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
+                                                            style="text-wrap: nowrap;">399 PEN</a></td>
+                                                    <td class="text-end"><a onclick="return false;"
+                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"><i
+                                                                class="ki-duotone ki-pencil fs-2"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span></i></a><a
+                                                            onclick="return false"
+                                                            class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"><i
+                                                                class="ki-duotone ki-trash fs-2"><span
+                                                                    class="path1"></span><span
+                                                                    class="path2"></span><span
+                                                                    class="path3"></span><span
+                                                                    class="path4"></span><span
+                                                                    class="path5"></span></i></a></td>
+                                                </tr><!--ng-container--><!--bindings={
+  "ng-reflect-ng-for-of": ""
+}-->
                                             </tbody>
-                                            <!--end::Table body-->
                                         </table>
-                                        <!--end::Table-->
                                     </div>
                                 </div>
                             </div>
                             <div class="separator"></div>
-
                             <div>
-                                <div class="fw-bold fs-4">
-                                    Total:
-                                    <span id="kt_ecommerce_edit_order_total_price">
-
-                                    </span> PEN
-                                    <br>
-                                    Impuesto: PEN
-                                    <br>
-                                    Deuda: PEN
-                                    <br>
-                                    Pagado: PEN
+                                <div class="fw-bold fs-4"> Total: <span id="kt_ecommerce_edit_order_total_price"> 399
+                                    </span> PEN <br> Impuesto: 24.54 PEN <br>
                                 </div>
                             </div>
                         </div>
@@ -315,26 +285,38 @@
                             </div>
 
                             <!-- Tabla de pagos -->
-                            <div class="table-responsive mt-5">
-                                <table class="table align-middle table-row-dashed">
+                            <div class="table-responsive">
+                                <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
                                     <thead>
-                                        <tr>
-                                            <th style="width:60px;">Id</th>
-                                            <th>Método de Pago</th>
-                                            <th style="width:160px;">Monto</th>
-                                            <th style="width:120px;">Acción</th>
+                                        <tr class="fw-bold text-muted">
+                                            <th class="min-w-150px">N°</th>
+                                            <th class="min-w-140px">Método de Pago</th>
+                                            <th class="min-w-120px">Monto</th>
+                                            <th class="min-w-100px text-end">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Efectivo</td>
-                                            <td>S/. 2.36</td>
-                                            <td>
-                                                <i class="ki-duotone ki-trash fs-2" style="color: #dc3545;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                        <tr class="ng-star-inserted">
+                                            <td> <a onclick="return false;"
+                                                    class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                    1 </a></td>
+                                            <td> <span
+                                                    class="text-muted fw-semibold text-muted d-block fs-7">Efectivo</span>
                                             </td>
+                                            <td><a onclick="return false;"
+                                                    class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6"
+                                                    style="text-wrap: nowrap;">399 PEN</a></td>
+                                            <td class="text-end"><a onclick="return false;"
+                                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"><i
+                                                        class="ki-duotone ki-pencil fs-2"><span
+                                                            class="path1"></span><span class="path2"></span></i></a><a
+                                                    onclick="return false"
+                                                    class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"><i
+                                                        class="ki-duotone ki-trash fs-2" style="color: red;"><span
+                                                            class="path1"></span><span class="path2"></span><span
+                                                            class="path3"></span><span class="path4"></span><span
+                                                            class="path5"></span></i></a></td>
                                         </tr>
-                                        <!-- más filas aquí si lo necesitas -->
                                     </tbody>
                                 </table>
                             </div>

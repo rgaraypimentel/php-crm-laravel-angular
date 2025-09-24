@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, NgZone } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription, Observable } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
@@ -27,7 +27,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   smsSending = false;
   smsMsg = '';           // mensaje de éxito o error
   smsCooldown = 0;       // segundos de espera para reintentar
-  private smsTimerRef: any;
+  smsTimerRef: any = null;
+  smsError = '';
+
 
 
   showMfaModal = false;
@@ -41,7 +43,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private ngZone: NgZone,
+    private cdr: ChangeDetectorRef
   ) {
     this.isLoading$ = this.authService.isLoading$;
     // redirect to home if already logged in
@@ -121,6 +125,74 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     this.unsubscribe.push(sub);
   }
+
+  onSendOtpSms() {
+    // limpio mensajes previos (éxito/error)
+    this.smsMsg = '';
+    this.smsError = '';
+
+    if (!this.mfa?.token) {
+      this.smsError = 'No se encontró el mfa_token. Intente loguearse otra vez.';
+      this.autoClearMsg();
+      return;
+    }
+
+    // evita spam (yo controlo re-click sin deshabilitar el botón)
+    if (this.smsSending || this.smsCooldown > 0) return;
+
+    // feedback inmediato: spinner + cooldown ya
+    this.smsSending = true;
+    this.smsCooldown = 30;            // contador inmediato para que el usuario vea acción
+    this.startSmsTimer();
+
+    const sub = this.authService.sendMfaSms(this.mfa.token)
+      .pipe(
+        first(),
+        finalize(() => { this.smsSending = false; })
+      )
+      .subscribe((ok: boolean | { ok: boolean; message?: string }) => {
+
+        // Soporta tu versión original (boolean) o la mejorada ({ok,message})
+        const success = typeof ok === 'boolean' ? ok : ok.ok;
+        const msg = typeof ok === 'boolean'
+          ? (ok ? 'Código enviado por SMS.' : 'No se pudo enviar el SMS. Intente nuevamente.')
+          : (ok.message || (success ? 'Código enviado por SMS.' : 'No se pudo enviar el SMS. Intente nuevamente.'));
+
+        if (success) {
+          this.smsMsg = msg;
+        } else {
+          this.smsError = msg;
+          // si falló, no castigo con 30s; dejo un cooldown corto de cortesía
+          if (this.smsCooldown > 5) this.smsCooldown = 5;
+        }
+
+        this.autoClearMsg();
+      });
+
+    this.unsubscribe.push(sub);
+  }
+
+
+  startSmsTimer() {
+    this.clearSmsTimer();
+
+    // corremos el setInterval fuera de Angular para no recalcular todo
+    this.ngZone.runOutsideAngular(() => {
+      this.smsTimerRef = setInterval(() => {
+        // y sólo el cambio de estado lo regresamos a Angular
+        this.ngZone.run(() => {
+          this.smsCooldown--;
+          if (this.smsCooldown <= 0) {
+            this.clearSmsTimer();
+          }
+          // asegura que la vista se actualice incluso con OnPush o zone noop
+          this.cdr.markForCheck();
+        });
+      }, 1000);
+    });
+  }
+
+
   clearSmsTimer() {
     if (this.smsTimerRef) {
       clearInterval(this.smsTimerRef);
@@ -128,39 +200,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSendOtpSms() {
-    this.smsMsg = '';
-
-    if (!this.mfa?.token) {
-      this.smsMsg = 'No se encontró el mfa_token. Intente loguearse otra vez.';
-      return;
-    }
-
-    // evita spam si hay cooldown
-    if (this.smsCooldown > 0 || this.smsSending) return;
-
-    this.smsSending = true;
-
-    const sub = this.authService.sendMfaSms(this.mfa.token)
-      .pipe(first(), finalize(() => { this.smsSending = false; }))
-      .subscribe((ok: boolean) => {
-        if (ok) {
-          this.smsMsg = 'Código enviado por SMS.';
-          this.smsCooldown = 5;
-          this.clearSmsTimer();
-          this.smsTimerRef = setInterval(() => {
-            this.smsCooldown--;
-            if (this.smsCooldown <= 0) {
-              this.clearSmsTimer();
-            }
-          }, 1000);
-        } else {
-          this.smsMsg = 'No se pudo enviar el SMS. Intente nuevamente.';
-        }
-      });
-
-    this.unsubscribe.push(sub);
+  autoClearMsg() {
+    this.ngZone.runOutsideAngular(() => {
+      setTimeout(() => {
+        this.ngZone.run(() => {
+          this.smsMsg = '';
+          this.smsError = '';
+          this.cdr.markForCheck();
+        });
+      }, 4000);
+    });
   }
+
+
+
 
 
   onSubmitOtp() {

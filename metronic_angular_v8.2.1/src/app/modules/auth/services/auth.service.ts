@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Observable, BehaviorSubject, of, Subscription } from 'rxjs';
-import { map, catchError, switchMap, finalize } from 'rxjs/operators';
+import { map, catchError, switchMap, finalize, timeout } from 'rxjs/operators';
 import { UserModel } from '../models/user.model';
 import { AuthModel } from '../models/auth.model';
 import { AuthHTTPService } from './auth-http';
@@ -99,20 +99,25 @@ export class AuthService implements OnDestroy {
     );
   }
 
+  // auth.service.ts
   sendMfaSms(mfa_token: string) {
-    // No uso isLoadingSubject para no bloquear el botón "Verificar";
-    // manejamos un loading local en el componente.
-    return this.http.post<{ success?: boolean }>(
+    return this.http.post<{ sent?: boolean; message?: string; to_masked?: string }>(
       `${URL_SERVICIOS}/auth/sms/send`,
       { mfa_token }
     ).pipe(
-      map(() => true),                       // si 200 => true
+      map((res) => {
+        if (res?.sent) {
+          return { ok: true, message: `Código enviado al número ${res.to_masked || ''}` };
+        }
+        return { ok: false, message: res?.message || 'No se pudo enviar el SMS.' };
+      }),
       catchError((err) => {
-        // devolveremos false y un mensaje si lo deseas
-        return of(false);
-      })
+        return of({ ok: false, message: err?.error?.message || 'Error al enviar SMS' });
+      }),
+      timeout(10000) // abortamos si demora más de 8s
     );
   }
+
 
   getUserByToken(): Observable<any> {
     const auth = this.getAuthFromLocalStorage();

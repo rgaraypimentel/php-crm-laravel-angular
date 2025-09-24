@@ -4,6 +4,7 @@ import { Subscription, first } from 'rxjs';
 import { Router } from '@angular/router';
 import { TwoFactorService, MfaStatus, MfaSetupResponse } from '../../services/two-factor.service';
 import { AuthService } from '../../services/auth.service';
+import { ChangeDetectorRef, NgZone } from '@angular/core';
 
 type ViewState = 'status' | 'enable' | 'disable';
 
@@ -23,6 +24,12 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
   errorMsg = '';
   successMsg = '';
 
+  // --- SMS durante el SETUP ---
+  setupSmsMsg = '';
+  setupSmsCooldown = 0;   // seg. para anti-spam simple
+  setupSmsSending = false;
+  private setupSmsInterval?: any;
+
   private subs: Subscription[] = [];
 
   constructor(
@@ -30,6 +37,8 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
     public mfa: TwoFactorService,
     private auth: AuthService,
     private router: Router,
+    private cdr: ChangeDetectorRef,
+    private ngZone: NgZone
   ) { }
 
   ngOnInit(): void {
@@ -45,6 +54,9 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs.forEach(s => s.unsubscribe());
+    if (this.setupSmsInterval) {
+      clearInterval(this.setupSmsInterval);
+    }
   }
 
   // ====== Estado ======
@@ -115,7 +127,13 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
           // Limpia y redirige a /auth/login
           this.auth.logout();           // tu logout ya limpia localStorage y navega a /auth/login
           // Si tu logout NO navega, podrías forzar:
-          // this.router.navigate(['/auth/login']);
+          this.router.navigate(['/auth/login']);
+          localStorage.clear();
+          sessionStorage.clear();
+          this.router.navigateByUrl('/auth/login');
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
         } else {
           this.errorMsg = 'No se pudo habilitar el 2FA.';
         }
@@ -154,7 +172,15 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
         this.mfa.loading$.next(false);
         if (ok) {
           this.successMsg = '2FA deshabilitado correctamente.';
-          this.loadStatus();
+          this.auth.logout();           // tu logout ya limpia localStorage y navega a /auth/login
+          // Si tu logout NO navega, podrías forzar:
+          this.router.navigate(['/auth/login']);
+          localStorage.clear();
+          sessionStorage.clear();
+          this.router.navigateByUrl('/auth/login');
+          setTimeout(() => {
+            window.location.reload();
+          }, 100);
         } else {
           this.errorMsg = 'No se pudo deshabilitar el 2FA.';
         }
@@ -170,7 +196,62 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
 
   // ====== UI ======
   backToDashboard() {
-    this.router.navigate(['/']); // Ajusta si tu dashboard es otra ruta
+    this.router.navigateByUrl('/');
+    setTimeout(() => {
+            window.location.reload();
+          }, 100);
+  }
+
+  /**
+ * Envía el OTP por SMS usando el secreto TEMPORAL del setup.
+ * Respeta un cooldown simple para evitar spam.
+ */
+  onSendSetupOtpSms() {
+    this.setupSmsMsg = '';
+
+    // Si hay cooldown o ya está enviando, no hagas nada
+    if (this.setupSmsCooldown > 0 || this.setupSmsSending) return;
+
+    this.setupSmsSending = true;
+
+    const sub = this.mfa.sendSetupOtpSms().pipe(first()).subscribe({
+      next: (resp) => {
+        // Backend: { sent, to_masked, approx_expires_in_seconds, sms }
+        // Usamos ~30-60s como ventana típica (depende de tu backend)
+        const ttl = Number(resp?.approx_expires_in_seconds ?? 60);
+        const masked = resp?.to_masked ? ` al ${resp.to_masked}` : '';
+        this.setupSmsMsg = resp?.sent === false
+          ? 'No se pudo enviar el SMS. Intente nuevamente.'
+          : `SMS enviado${masked}. El código expira aprox. en ${ttl}s.`;
+
+        // Inicia cooldown corto (30s anti-spam; ajusta si tu backend impone otro)
+        this.setupSmsCooldown = 30;
+        this.cdr.markForCheck();
+        if (this.setupSmsInterval) clearInterval(this.setupSmsInterval);
+        this.setupSmsInterval = setInterval(() => {
+          this.ngZone.run(() => {           // garantizamos que Angular detecte el tick
+            this.setupSmsCooldown--;
+            if (this.setupSmsCooldown <= 0) {
+              clearInterval(this.setupSmsInterval);
+              this.setupSmsInterval = undefined;
+            }
+            this.cdr.markForCheck();        // fuerza refresco de la vista en OnPush
+          });
+        }, 1000);
+      },
+      error: (e) => {
+        // Mensajes de rate-limit del backend, etc.
+        const msg = e?.error?.message || e?.error?.error || 'No se pudo enviar el SMS.';
+        this.setupSmsMsg = msg;
+        this.cdr.markForCheck();
+      },
+      complete: () => {
+        this.setupSmsSending = false;
+        this.cdr.markForCheck();
+      }
+    });
+
+    this.subs.push(sub);
   }
 
   openOtpauth() {
@@ -178,8 +259,5 @@ export class TwoFactorComponent implements OnInit, OnDestroy {
       window.open(this.setupData.otpauth_url, '_blank');
     }
   }
-}
-function finalize(arg0: () => void): import("rxjs").OperatorFunction<MfaSetupResponse, unknown> {
-  throw new Error('Function not implemented.');
 }
 

@@ -69,6 +69,10 @@ Route::group([
     // Verificación MFA (usa mfa_token propio, no auth:api)
     Route::post('/mfa/verify', [MfaController::class, 'verify']);
     Route::post('/sms/send',   [MfaController::class, 'sendLoginOtpSms']);   
+    Route::post('/setup/sms/send',   [MfaController::class, 'sendSetupOtpSms']);
+    Route::post('/setup/sms/resend', [MfaController::class, 'sendSetupOtpSms']);
+
+    
     
     
 });
@@ -82,12 +86,7 @@ Route::group([
     Route::post('/mfa/disable', [MfaController::class, 'disable']);
     Route::get('/mfa/status',   [MfaController::class, 'status']);
 
-    Route::post('/setup/sms/send',   [MfaController::class, 'sendSetupOtpSms']);
-    Route::post('/setup/sms/resend', [MfaController::class, 'sendSetupOtpSms']);
-
-    
-
-    Route::resource("roles",RolePermissionController::class);
+        Route::resource("roles",RolePermissionController::class);
     Route::post('/users/{id}', [UserAccessController::class, 'update']);
     Route::get('/users/config', [UserAccessController::class, 'config']);
     Route::resource("users",UserAccessController::class);

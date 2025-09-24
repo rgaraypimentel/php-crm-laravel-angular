@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h3 class="card-title">Autenticación en dos pasos (2FA)</h3>
-        <button class="btn btn-light" (click)="backToDashboard()">
-            Volver al dashboard
+        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="backToDashboard()">
+            <small>Volver al dashboard</small>
         </button>
     </div>
 
@@ -73,6 +73,17 @@
                     <div *ngIf="setupData?.otpauth_url" class="mt-2">
                         <a class="btn btn-light btn-sm" (click)="openOtpauth()">Abrir otpauth URL</a>
                     </div>
+                </div>
+
+                <!-- Envío de OTP por SMS (setup) -->
+                <div class="d-flex align-items-center gap-2 mb-3">
+                    <button type="button" class="btn btn-outline-primary btn-sm" (click)="onSendSetupOtpSms()"
+                        [disabled]="setupSmsSending || setupSmsCooldown > 0">
+                        {{ setupSmsCooldown > 0 ? ('Reenviar en ' + setupSmsCooldown + 's') : (setupSmsSending ?
+                        'Enviando...' : 'Enviar código por SMS') }}
+                    </button>
+
+                    <span class="text-muted small" *ngIf="setupSmsMsg">{{ setupSmsMsg }}</span>
                 </div>
 
                 <form [formGroup]="enableForm" (ngSubmit)="confirmEnable()">
