@@ -56,7 +56,7 @@ export class ListProformaComponent {
       search_product:this.search_product,
       start_date: this.start_date,
       end_date: this.end_date,
-      state_proforma: this.type,
+      state_proforma: 1,
     }
     this.proformasService.listProformas(page,data).subscribe((resp:any) => {
       console.log(resp);

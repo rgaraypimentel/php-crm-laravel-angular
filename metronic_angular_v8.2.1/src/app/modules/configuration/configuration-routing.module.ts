@@ -38,6 +38,10 @@ const routes: Routes = [
     path: 'configuracion-comisiones',
     loadChildren: () => import('./g-comissions/g-comissions.module').then((m) => m.GComissionsModule),
   },
+  {
+    path: 'lotes',
+    loadChildren: () => import('./lotes/lotes.module').then((m) => m.LotesModule),
+  },
 ];
 
 @NgModule({

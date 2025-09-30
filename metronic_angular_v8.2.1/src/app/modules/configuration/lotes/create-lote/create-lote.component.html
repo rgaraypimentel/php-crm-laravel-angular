@@ -1,0 +1,159 @@
+<!--begin::Modal content CREATE-->
+<div class="modal-content">
+    <!--begin::Modal header-->
+    <div class="modal-header" id="kt_modal_add_user_header">
+        <!--begin::Modal title-->
+        <h2 class="fw-bolder">Agregar Lote</h2>
+
+        <!--end::Modal title-->
+        <!--begin::Close-->
+        <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-users-modal-action="close"
+            (click)="modal.dismiss()">
+            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+            <span class="svg-icon svg-icon-1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)"
+                        fill="currentColor" />
+                    <rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)"
+                        fill="currentColor" />
+                </svg>
+            </span>
+            <!--end::Svg Icon-->
+        </div>
+        <!--end::Close-->
+    </div>
+    <!--end::Modal header-->
+    <!--begin::Modal body-->
+    <div class="modal-body scroll-y mx-5 my-7">
+        <!--begin::Form-->
+        <!-- lote-form.component.html -->
+        <form [formGroup]="form" class="form" (ngSubmit)="onSubmit()">
+            <div class="d-flex flex-column scroll-y me-n7 pe-7" style="max-height:70vh" data-kt-scroll="true">
+
+                <!-- FILA 1 -->
+                <div class="row g-6">
+                    <div class="col-md-6">
+                        <label class="required fw-bold fs-7 mb-2">CÓDIGO DE LOTE</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="L001-14-01-2027"
+                            formControlName="codigoLote" />
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('codigoLote','required')">Campo obligatorio
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="required fw-bold fs-7 mb-2">PRODUCTO SKU</label>
+                        <input type="text" class="form-control form-control-solid" placeholder=""
+                            formControlName="productoSku" />
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('productoSku','required')">Campo obligatorio
+                        </div>
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('productoSku','pattern')">Solo letras/números .
+                            _ -</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label class="required fw-bold fs-7 mb-2">ALMACÉN</label>
+                        <select class="form-select form-select-solid" formControlName="almacen">
+                            <option value="">Seleccione un almacén</option>
+                            <option *ngFor="let a of almacenes" [value]="a.id">{{ a.nombre }}</option>
+                        </select>
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('almacen','required')">Seleccione un almacén
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILA 2 -->
+                <div class="row g-6 mt-1">
+                    <div class="col-md-6">
+                        <label class="required fw-bold fs-7 mb-2">FECHA FABRICACIÓN</label>
+                        <input type="date" class="form-control form-control-solid" formControlName="fechaFabricacion" />
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('fechaFabricacion','required')">Campo
+                            obligatorio</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="required fw-bold fs-7 mb-2">FECHA CADUCIDAD</label>
+                        <input type="date" class="form-control form-control-solid" formControlName="fechaCaducidad" />
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('fechaCaducidad','required')">Campo obligatorio
+                        </div>
+                        <div class="text-danger fs-8 mt-1" *ngIf="form.errors?.['caducidadInvalida']">La caducidad debe
+                            ser mayor que la fabricación</div>
+                    </div>
+                </div>
+
+                <!-- FILA 3 -->
+                <div class="row g-6 mt-1">
+                    <div class="col-md-4">
+                        <label class="required fw-bold fs-7 mb-2">COSTO UNITARIO</label>
+                        <div class="input-group">
+                            <span class="input-group-text">S/</span>
+                            <input type="number" class="form-control form-control-solid" step="0.01" min="0"
+                                placeholder="" formControlName="costoUnitario" />
+                        </div>
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('costoUnitario','required')">Campo obligatorio
+                        </div>
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('costoUnitario','min')">No puede ser negativo
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="required fw-bold fs-7 mb-2">CANTIDAD INICIAL</label>
+                        <input type="number" class="form-control form-control-solid" min="0" step="1"
+                            placeholder="" formControlName="cantidadInicial" />
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('cantidadInicial','required')">Campo obligatorio
+                        </div>
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('cantidadInicial','pattern')">Debe ser entero
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="required fw-bold fs-7 mb-2">CANTIDAD DISPONIBLE</label>
+                        <input type="number" class="form-control form-control-solid" min="0" step="1"
+                            placeholder="" formControlName="cantidadDisponible" />
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('cantidadDisponible','required')">Campo
+                            obligatorio</div>
+                        <div class="text-danger fs-8 mt-1" *ngIf="error('cantidadDisponible','pattern')">Debe ser entero
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FILA 4 -->
+                <div class="row g-6 mt-1">
+                    <div class="col-md-6">
+                        <label class="fw-bold fs-7 mb-2">PROVEEDOR</label>
+                        <select class="form-select form-select-solid" formControlName="proveedor">
+                            <option value="">Seleccione proveedor (opcional)</option>
+                            <option *ngFor="let p of proveedores" [value]="p.id">{{ p.nombre }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="fw-bold fs-7 mb-2">DOCUMENTO OC</label>
+                        <input type="text" class="form-control form-control-solid" placeholder="OC-2025-001234"
+                            formControlName="documentoOc" />
+                    </div>                   
+                </div>
+                <!-- FILA 5 -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <label class="fw-bold fs-7 mb-2">OBS</label>
+                        <textarea rows="3" class="form-control form-control-solid"
+                            placeholder="Observaciones (opcional)" formControlName="observacion"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Acciones -->
+            <div class="text-center pt-10">
+                <button type="button" class="btn btn-light me-3" (click)="onClose()">Cerrar</button>
+                <button type="submit" class="btn btn-primary" [disabled]="isLoading || form.invalid">
+                    <span class="indicator-label">Registrar</span>
+                    <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading | async"></span>
+                </button>
+            </div>
+        </form>
+
+        <!--end::Form-->
+    </div>
+    <!--end::Modal body-->
+</div>
+<!--end::Modal content CREATE-->

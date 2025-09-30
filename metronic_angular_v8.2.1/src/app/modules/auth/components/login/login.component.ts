@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   mfaForm!: FormGroup;
   // KeenThemes mock, change it to:
   defaultAuth: any = {
-    email: 'CarlosSuperadmin@example.com',
+    email: 'super_admin_crm@example.com',
     password: '12345678',
   };
   loginForm: FormGroup;

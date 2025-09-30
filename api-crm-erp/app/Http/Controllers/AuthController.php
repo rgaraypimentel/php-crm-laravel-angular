@@ -84,13 +84,13 @@ class AuthController extends Controller
             // Guarda el contexto para reenvíos y verificación
             Cache::put("mfa:ctx:{$mfaToken}", [
                 'user_id' => $user->id,
-                'phone'   => $user->phone,   // <- ¡importante!
+                'phone'   => $user->phone,
             ], now()->addMinutes(10));
 
             return response()->json([
                 'mfa_required' => true,
                 'mfa_token'    => $mfaToken,
-                'user_hint'    => substr($user->email, 0, 2) . '***@***' . substr(strrchr($user->email, "@"), 1), // opcional
+                'user_hint'    => substr($user->email, 0, 2) . '***@***' . substr(strrchr($user->email, "@"), 1),
             ], 200);
         }
 

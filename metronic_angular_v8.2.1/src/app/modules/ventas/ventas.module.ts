@@ -7,6 +7,10 @@ import { VentasComponent } from './ventas.component';
 import { CreateFacturaComponent } from './facturacion/create-factura/create-factura.component';
 import { ListVentasComponent } from './list-ventas/list-ventas.component';
 import { CreateVentasComponent } from './create-ventas/create-ventas.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule, NgbModalModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { InlineSVGModule } from 'ng-inline-svg-2';
 
 
 @NgModule({
@@ -19,7 +23,15 @@ import { CreateVentasComponent } from './create-ventas/create-ventas.component';
   ],
   imports: [
     CommonModule,
-    VentasRoutingModule
+    VentasRoutingModule,
+
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule,
+    InlineSVGModule,
+    NgbModalModule,
+    NgbPaginationModule,
   ]
 })
 export class VentasModule { }
