@@ -95,6 +95,7 @@ export class ProformasService {
     this.isLoadingSubject.next(true);
     let URL = URL_SERVICIOS+"/proformas";
     let headers = new HttpHeaders({'Authorization': 'Bearer '+this.authservice.token});
+    console.log(data);
     return this.http.post(URL,data,{headers:headers}).pipe(
       finalize(() => this.isLoadingSubject.next(false))
     );

@@ -635,7 +635,7 @@ export class CreateProformaComponent {
       formData.append("amount_payment",this.amount_payment+"");
       formData.append("payment_file",this.payment_file);
     }
-
+    console.log(formData);
     this.proformaService.createProforma(formData).subscribe((resp:any) => {
       console.log(resp);
       this.toast.success("Exito","LA proforma se creo con exito");
