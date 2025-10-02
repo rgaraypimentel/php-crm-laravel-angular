@@ -2,75 +2,8 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ProformasService } from 'src/app/modules/proformas/service/proformas.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-
-type Operacion = 'GRAVADO' | 'EXONERADO' | 'INAFECTO';
-
-export interface InvoiceRequest {
-  ublVersion: string;
-  tipoDoc: string;           // "01" factura
-  tipoOperacion: string;     // "0101" venta interna
-  serie: string;             // "F001"
-  correlativo: string;       // "1"
-  fechaEmision: string;      // ISO con zona -05:00
-  formaPago: { moneda: string; tipo: string }; // { moneda:"PEN", tipo:"Contado" }
-  tipoMoneda: string;        // "PEN"
-  company: {
-    ruc: number;
-    razonSocial: string;
-    nombreComercial: string;
-    address: {
-      ubigueo: string;
-      departamento: string;
-      provincia: string;
-      distrito: string;
-      urbanizacion: string;
-      direccion: string;
-      codLocal: string;
-    }
-  };
-  client: {
-    tipoDoc: string;
-    numDoc: number;
-    rznSocial: string;
-  };
-  details: Array<{
-    tipAfeIgv: number;
-    codProducto: string;
-    unidad: string;
-    descripcion: string;
-    cantidad: number;
-    mtoValorUnitario: number;
-    mtoValorVenta: number;
-    mtoBaseIgv: number;
-    porcentajeIgv: number;
-    igv: number;
-    totalImpuestos: number;
-    mtoPrecioUnitario: number;
-  }>;
-  legends: Array<{ code: string; value: string }>;
-}
-
-interface Producto {
-  id: number;
-  nombre: string;
-  unidad: string;  // p. ej. "CJ", "UND", "KG"
-  precioBase?: number; // opcional si lo traes precargado
-}
-
-interface ItemVenta {
-  idTemp: number;            // id interno para la tabla
-  productoId: number;
-  productoNombre: string;
-  unidad: string;
-  tipoOperacion: Operacion;
-  cantidad: number;
-  precioUnitario: number;    // precio base (sin IGV)
-  igv: number;               // monto IGV del ítem
-  subtotal: number;          // sin IGV
-  total: number;             // con IGV si corresponde
-}
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { VentasService } from '../../service/ventas.service';
 
 @Component({
   selector: 'app-create-factura',
@@ -79,85 +12,78 @@ interface ItemVenta {
 })
 export class CreateFacturaComponent {
 
+  isBien = true;
+
   TODAY: string = 'Y/m/d';
   isLoading$: any;
   imagen_previzualiza: any = '';
 
-  // Mock de productos (cámbialo por tu servicio)
-  productos: Producto[] = [
-    { id: 1, nombre: 'Arroz Pilado - San José', unidad: 'KG', precioBase: 5.20 },
-    { id: 2, nombre: 'Bolsa de Plástico - Ben', unidad: 'UND', precioBase: 0.35 },
-    { id: 3, nombre: 'Hyundai Tucson 2025', unidad: 'UND', precioBase: 85000 },
-    { id: 4, nombre: 'Johnnie Walker 2024', unidad: 'LT', precioBase: 120.00 },
-    { id: 5, nombre: 'Memoria RAM 16GB 2025', unidad: 'CJ', precioBase: 175.00 },
-  ];
-
-  tiposOperacion: { value: Operacion; label: string; igv: number }[] = [
-    { value: 'GRAVADO', label: 'Gravado (18%)', igv: 0.18 },
-    { value: 'EXONERADO', label: 'Exonerado (0%)', igv: 0.00 },
-    { value: 'INAFECTO', label: 'Inafecto (0%)', igv: 0.00 },
-  ];
-
-  formItem!: FormGroup;
-  items: ItemVenta[] = [];
-  private rowSeq = 1;
-
-  // Totales
-  get subTotalGlobal(): number {
-    return this.items.reduce((acc, it) => acc + it.subtotal, 0);
-  }
-  get igvGlobal(): number {
-    return this.items.reduce((acc, it) => acc + it.igv, 0);
-  }
-  get totalGlobal(): number {
-    return this.items.reduce((acc, it) => acc + it.total, 0);
-  }
+  facturaForm: FormGroup;
+  productForm: FormGroup;
+  isLoading = false;
 
   @ViewChild("discount") something: ElementRef;
+  @ViewChild('productModal') productModal: any;
   payment_file: any;
+
   constructor(
     public modalService: NgbModal,
     public proformaService: ProformasService,
+    public ventasService: VentasService,
     public toast: ToastrService,
     private fb: FormBuilder
   ) {
-    this.formItem = this.fb.group({
-      productoId: [null, Validators.required],
-      tipoOperacion: ['GRAVADO' as Operacion, Validators.required],
-      precioBase: [0, [Validators.required, Validators.min(0.0)]],
-      cantidad: [1, [Validators.required, Validators.min(1)]],
+    this.facturaForm = this.fb.group({
+      tipoDoc: ['01', [Validators.required]],
+      tipoOperacion: ['0101', [Validators.required]],
+      serie: ['F001', [Validators.required]],
+      correlativo: ['1', [Validators.required]],
+      fechaEmision: ['2023-07-25T00:00:00-05:00', [Validators.required]],
+      moneda: ['PEN', [Validators.required]],
+      tipoPago: ['Contado', [Validators.required]],
+      clientTipoDoc: ['6', [Validators.required]],
+      clientNumDoc: ['', [Validators.required]],
+      clientRznSocial: ['', [Validators.required]],
+      details: this.fb.array([])
     });
-
-    // Si el usuario cambia de producto, precarga precio y unidad
-    this.formItem.get('productoId')!.valueChanges.subscribe((pid: number) => {
-      const p = this.productos.find(x => x.id === +pid);
-      if (p?.precioBase != null) {
-        this.formItem.patchValue({ precioBase: p.precioBase }, { emitEvent: false });
-      }
+    // Formulario para el modal de agregar productos
+    this.productForm = this.fb.group({
+      productoTipo: ['bien', Validators.required],
+      codProducto: ['', [Validators.required]],
+      unidad: ['NIU', [Validators.required]], // Valor predeterminado
+      descripcion: ['', [Validators.required]],
+      cantidad: [1, [Validators.required, Validators.min(1)]],
+      mtoValorUnitario: [0, [Validators.required]],
+      porcentajeIgv: [18, [Validators.required]] // Porcentaje de IGV, predeterminado a 18%
     });
   }
 
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     this.isLoading$ = this.proformaService.isLoading$;
     this.proformaService.configAll().subscribe((resp: any) => {
       console.log(resp);
       this.TODAY = resp.today;
       this.isLoadingProcess();
-    })
+    });
+    this.facturaForm.get('tipoDoc')?.valueChanges.subscribe(value => {
+      // Si tipoDoc es '03' (Boleta), cambiamos la serie a 'B001'
+      if (value === '03') {
+        this.facturaForm.patchValue({
+          serie: 'B001'
+        });
+      } else {
+        // Si no es Boleta, se restablece la serie a 'F001' (Factura)
+        this.facturaForm.patchValue({
+          serie: 'F001'
+        });
+      }
+    });
   }
-
-  processFile($event: any) {
-    if ($event.target.files[0].type.indexOf("image") < 0) {
-      this.toast.warning("WARN", "El archivo no es una imagen");
-      return;
+  onTipoProductoChange(tipo: string) {
+    this.isBien = tipo === 'bien';  // Cambiar la visibilidad de Unidad
+    if (!this.isBien) {
+      this.productForm.get('unidad')?.setValue('NIU'); // Restablecer la unidad a 'Unidades' si es servicio
     }
-    this.payment_file = $event.target.files[0];
-    let reader = new FileReader();
-    reader.readAsDataURL(this.payment_file);
-    reader.onloadend = () => this.imagen_previzualiza = reader.result;
-    this.isLoadingProcess();
   }
 
   isLoadingProcess() {
@@ -167,49 +93,179 @@ export class CreateFacturaComponent {
     }, 50);
   }
 
-  agregarItem(): void {
-    if (this.formItem.invalid) {
-      this.formItem.markAllAsTouched();
-      return;
+  // Getter para acceder al FormArray de productos
+  get detalles(): FormArray {
+    return this.facturaForm.get('details') as FormArray;
+  }
+
+  // Abrir el modal para agregar un producto
+  openModal(productIndex?: number) {
+    if (productIndex !== undefined) {
+      const product = this.detalles.at(productIndex).value;
+      // Si hay un producto seleccionado, precargamos los valores del producto en el modal
+      this.productForm.patchValue({
+        codProducto: product.codProducto,
+        unidad: product.unidad,
+        descripcion: product.descripcion,
+        cantidad: product.cantidad,
+        mtoValorUnitario: product.mtoValorUnitario,
+        porcentajeIgv: product.porcentajeIgv
+      });
+    } else {
+      this.productForm.reset();
     }
 
-    const { productoId, tipoOperacion, precioBase, cantidad } = this.formItem.value as {
-      productoId: number; tipoOperacion: Operacion; precioBase: number; cantidad: number;
-    };
+    this.modalService.open(this.productModal);
+  }
 
-    const prod = this.productos.find(p => p.id === productoId)!;
-    const igvPerc = this.tiposOperacion.find(t => t.value === tipoOperacion)!.igv;
+  // Método para agregar el producto al formulario
+  agregarProducto(modal: any): void {
+    if (this.productForm.valid) {
+      const newProduct = this.productForm.value;
 
-    const subtotal = this.redondear(precioBase * cantidad, 2);
-    const igv = this.redondear(tipoOperacion === 'GRAVADO' ? subtotal * igvPerc : 0, 2);
-    const total = this.redondear(subtotal + igv, 2);
+      // Calcular los valores relacionados con el producto
+      const mtoValorVenta = newProduct.mtoValorUnitario * newProduct.cantidad;
+      const mtoBaseIgv = newProduct.mtoValorUnitario * newProduct.cantidad;
+      const igv = (mtoBaseIgv * newProduct.porcentajeIgv) / 100;
+      const totalImpuestos = igv;
+      const mtoPrecioUnitario = newProduct.mtoValorUnitario + (newProduct.mtoValorUnitario * newProduct.porcentajeIgv) / 100;
+      // Si estamos editando un producto, lo actualizamos
+      const productIndex = this.productForm.value.index;
+      if (productIndex !== undefined) {
+        // Editamos el producto existente en el array
+        this.detalles.at(productIndex).patchValue({
+          codProducto: newProduct.codProducto,
+          unidad: newProduct.unidad,
+          descripcion: newProduct.descripcion,
+          cantidad: newProduct.cantidad,
+          mtoValorUnitario: newProduct.mtoValorUnitario,
+          mtoValorVenta,
+          mtoBaseIgv,
+          porcentajeIgv: newProduct.porcentajeIgv,
+          igv,
+          totalImpuestos,
+          mtoPrecioUnitario
+        });
+      } else {
+        this.detalles.push(this.fb.group({
+          tipAfeIgv: [10],
+          codProducto: [newProduct.codProducto],
+          unidad: [newProduct.unidad],
+          descripcion: [newProduct.descripcion],
+          cantidad: [newProduct.cantidad],
+          mtoValorUnitario: [newProduct.mtoValorUnitario],
+          mtoValorVenta: [mtoValorVenta],
+          mtoBaseIgv: [mtoBaseIgv],
+          porcentajeIgv: [newProduct.porcentajeIgv],
+          igv: [igv],
+          totalImpuestos: [totalImpuestos],
+          mtoPrecioUnitario: [mtoPrecioUnitario]
+        }));
+      }
 
-    const item: ItemVenta = {
-      idTemp: this.rowSeq++,
-      productoId: prod.id,
-      productoNombre: prod.nombre,
-      unidad: prod.unidad,
-      tipoOperacion,
-      cantidad,
-      precioUnitario: precioBase,
+      // Cerrar el modal
+      modal.close();
+      this.productForm.reset();
+    }
+  }
+
+  // Método para eliminar un producto del formulario
+  eliminarProducto(index: number): void {
+    this.detalles.removeAt(index);
+  }
+
+  // Método para armar el JSON y enviarlo al backend
+  enviarFactura() {
+    if (this.facturaForm.valid) {
+      this.isLoading = true;
+
+      const facturaData = {
+        tipoDoc: this.facturaForm.value.tipoDoc,
+        tipoOperacion: this.facturaForm.value.tipoOperacion,
+        serie: this.facturaForm.value.serie,
+        correlativo: this.facturaForm.value.correlativo,
+        fechaEmision: this.facturaForm.value.fechaEmision,
+        formaPago: {
+          moneda: this.facturaForm.value.moneda,
+          tipo: this.facturaForm.value.tipoPago,
+        },
+        tipoMoneda: this.facturaForm.value.moneda,  // Esto lo mantenemos fijo como "PEN"
+        company: {
+          ruc: 20606096225,
+          razonSocial: "Qallpa Tics",
+          nombreComercial: "",
+          address: {
+            ubigueo: "150101",
+            departamento: "LIMA",
+            provincia: "LIMA",
+            distrito: "LIMA",
+            urbanizacion: "-",
+            direccion: "CAL.EDUARDO BELLO NRO. 305 DPTO. 202 URB. SANTA CATALINA LIMA - LIMA - LA VICTORIA",
+            codLocal: "0000"
+          }
+        },
+        client: {
+          tipoDoc: this.facturaForm.value.clientTipoDoc,
+          numDoc: this.facturaForm.value.clientNumDoc,
+          rznSocial: this.facturaForm.value.clientRznSocial
+        },
+        details: this.facturaForm.value.details
+      };
+
+      console.log(facturaData);
+      this.ventasService.createFactura(facturaData).subscribe(
+        (response) => {
+          console.log('Factura enviada con éxito', response);
+
+          // Verificamos la respuesta de SUNAT
+          if (response.sunatResponse.success) {
+            // Si la respuesta de SUNAT es exitosa, mostramos el mensaje de "La Factura ha sido aceptada"
+            this.toast.success("Éxito", response.sunatResponse.cdrResponse.description);
+          } else {
+            // Si la respuesta de SUNAT no es exitosa, mostramos el mensaje de error proporcionado
+            this.toast.error("Error", response.sunatResponse.error.message);
+          }
+        },
+        (error) => {
+          console.error('Error al enviar la factura', error);
+          this.toast.error("Validación", "No se pudo enviar la factura");
+        },
+        () => {
+          this.isLoading = false;
+        }
+      );
+
+    } else {
+      console.log(this.facturaForm)
+      console.log('Formulario inválido');
+      this.toast.error("Validación", "Formulario inválido");
+    }
+  }
+
+  calcularValores(index: number): void {
+    const producto = this.detalles.at(index);
+    const cantidad = producto.value.cantidad;
+    const mtoValorUnitario = producto.value.mtoValorUnitario;
+    const porcentajeIgv = producto.value.porcentajeIgv;
+
+    // Calcular mtoValorVenta y mtoBaseIgv
+    const mtoValorVenta = mtoValorUnitario * cantidad;
+    const mtoBaseIgv = mtoValorUnitario * cantidad;
+
+    // Calcular IGV y Total Impuestos
+    const igv = (mtoBaseIgv * porcentajeIgv) / 100;
+    const totalImpuestos = igv;
+
+    // Calcular mtoPrecioUnitario
+    const mtoPrecioUnitario = mtoValorUnitario + (mtoValorUnitario * porcentajeIgv) / 100;
+
+    // Asignar los valores calculados al producto
+    producto.patchValue({
+      mtoValorVenta,
+      mtoBaseIgv,
       igv,
-      subtotal,
-      total,
-    };
-
-    this.items = [...this.items, item];
-
-    // Opcional: limpiar cantidad (o todo el formulario)
-    this.formItem.patchValue({ cantidad: 1 });
+      totalImpuestos,
+      mtoPrecioUnitario
+    });
   }
-
-  eliminarItem(idTemp: number): void {
-    this.items = this.items.filter(x => x.idTemp !== idTemp);
-  }
-
-  private redondear(n: number, dec = 2): number {
-    const f = Math.pow(10, dec);
-    return Math.round((n + Number.EPSILON) * f) / f;
-  }
-
 }
