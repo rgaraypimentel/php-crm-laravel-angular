@@ -237,5 +237,10 @@ class SunatService
         $pdf = $report->render($invoice, $params);
 
         Storage::put('invoices/' . $invoice->getName() . '.pdf', $pdf);
+
+        return response($pdf, 200)
+        ->header('Content-Type', 'application/pdf')
+        ->header('Content-Disposition', 'attachment; filename="'.$invoice->getName().'.pdf"')
+        ->header('Content-Length', strlen($pdf));
     }
 }

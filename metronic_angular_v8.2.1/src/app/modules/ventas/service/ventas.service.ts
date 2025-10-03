@@ -50,12 +50,10 @@ export class VentasService {
 
   descargarFacturaPdf(data: any) {
     this.isLoadingSubject.next(true);
-    let URL = URL_SERVICIOS + "/invoices/send";
+    let URL = URL_SERVICIOS + "/invoices/downloadPdf";
     let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authservice.token });
     console.log(data);
-    return this.http.post<FacturaResponse>(URL, data, { headers: headers }).pipe(
-      finalize(() => this.isLoadingSubject.next(false))
-    );
+    return this.http.post(URL, data, { headers: headers, responseType: 'blob' });
   }
 
   descargarFacturaXml(data: any) {

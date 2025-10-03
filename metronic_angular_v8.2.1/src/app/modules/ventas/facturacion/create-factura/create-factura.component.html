@@ -273,13 +273,13 @@
 
                     <!-- Selección de Producto (Bien o Servicio) -->
                     <div class="fv-row mb-7">
-                        <label class="fw-bold fs-6 mb-2">Tipo de Producto:</label>
-                        <div class="form-check-inline">
+                        <label class="fw-bold fs-6 mb-2 me-4">Tipo de Producto:</label>
+                        <div class="form-check-inline me-3">
                             <input class="form-check-input" type="radio" formControlName="productoTipo" [value]="'bien'"
                                 (change)="onTipoProductoChange('bien')" id="bien" checked />
                             <label class="form-check-label" for="bien">Bien</label>
                         </div>
-                        <div class="form-check-inline">
+                        <div class="form-check-inline me-3">
                             <input class="form-check-input" type="radio" formControlName="productoTipo"
                                 [value]="'servicio'" (change)="onTipoProductoChange('servicio')" id="servicio" />
                             <label class="form-check-label" for="servicio">Servicio</label>
@@ -325,13 +325,13 @@
 
                     <!-- Selección de IGV -->
                     <div class="fv-row mb-7">
-                        <label class="fw-bold fs-6 mb-2">Seleccionar IGV:</label>
+                        <label class="fw-bold fs-6 mb-2 me-4">Seleccionar IGV:</label>
                         <div class="form-check-inline">
-                            <input class="form-check-input" type="radio" formControlName="porcentajeIgv" [value]="10"
+                            <input class="form-check-input me-3" type="radio" formControlName="porcentajeIgv" [value]="10"
                                 id="igv10" />
                             <label class="form-check-label" for="igv10">10%</label>
                         </div>
-                        <div class="form-check-inline">
+                        <div class="form-check-inline me-3">
                             <input class="form-check-input" type="radio" formControlName="porcentajeIgv" [value]="18"
                                 id="igv18" />
                             <label class="form-check-label" for="igv18">18%</label>

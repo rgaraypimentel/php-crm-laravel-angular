@@ -191,8 +191,8 @@ export class CreateFacturaComponent {
         },
         tipoMoneda: this.facturaForm.value.moneda,  // Esto lo mantenemos fijo como "PEN"
         company: {
-          ruc: 20606096225,
-          razonSocial: "Qallpa Tics",
+          ruc: 20609278235,
+          razonSocial: "Coders Free S.A.C",
           nombreComercial: "",
           address: {
             ubigueo: "150101",
@@ -200,7 +200,7 @@ export class CreateFacturaComponent {
             provincia: "LIMA",
             distrito: "LIMA",
             urbanizacion: "-",
-            direccion: "CAL.EDUARDO BELLO NRO. 305 DPTO. 202 URB. SANTA CATALINA LIMA - LIMA - LA VICTORIA",
+            direccion: "Calle falsa 123",
             codLocal: "0000"
           }
         },
@@ -217,12 +217,24 @@ export class CreateFacturaComponent {
         (response) => {
           console.log('Factura enviada con éxito', response);
 
-          // Verificamos la respuesta de SUNAT
           if (response.sunatResponse.success) {
-            // Si la respuesta de SUNAT es exitosa, mostramos el mensaje de "La Factura ha sido aceptada"
             this.toast.success("Éxito", response.sunatResponse.cdrResponse.description);
+
+            this.ventasService.descargarFacturaPdf(facturaData).subscribe((pdfBlob: any) => {
+              const blob = new Blob([pdfBlob], { type: 'application/pdf' });
+              const url = window.URL.createObjectURL(blob);
+
+              const a = document.createElement('a');
+              a.href = url;
+              const nombrePdf = `${facturaData.company.ruc}-${facturaData.tipoDoc}-${facturaData.serie}-${facturaData.correlativo}.pdf`;
+              a.download = nombrePdf;
+              document.body.appendChild(a);
+              a.click();
+              document.body.removeChild(a);
+
+              window.URL.revokeObjectURL(url);
+            });
           } else {
-            // Si la respuesta de SUNAT no es exitosa, mostramos el mensaje de error proporcionado
             this.toast.error("Error", response.sunatResponse.error.message);
           }
         },
@@ -234,7 +246,6 @@ export class CreateFacturaComponent {
           this.isLoading = false;
         }
       );
-
     } else {
       console.log(this.facturaForm)
       console.log('Formulario inválido');
