@@ -235,8 +235,12 @@ export const SIDEBAR: any = [
         'name': 'Facturacion',
         'permisos': [
             {
-                name: 'Facturacion',
-                permiso: 'facturacion',
+                name: 'Listar',
+                permiso: 'list_facturacion_ventas',
+            },
+            {
+                name: 'Emitir',
+                permiso: 'emitir_facturacion_ventas',
             },
         ]
     },
