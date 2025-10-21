@@ -40,6 +40,7 @@ use App\Http\Controllers\Comission\CategorieComissionController;
 use App\Http\Controllers\Configuration\ProductCategorieController;
 use App\Http\Controllers\Comission\SegmentClientComissionController;
 use App\Http\Controllers\Configuration\SucursaleDeliverieController;
+use App\Http\Controllers\Facturacion\ConsultaRucController;
 
 /*
 |--------------------------------------------------------------------------
@@ -85,6 +86,8 @@ Route::group([
     Route::post('invoices/xml', [InvoiceController::class, 'xml'])->middleware('auth:api');
     Route::post('invoices/pdf', [InvoiceController::class, 'pdf'])->middleware('auth:api');
     Route::post('invoices/downloadPdf', [InvoiceController::class, 'downloadPdf'])->middleware('auth:api');
+
+    Route::get('/consulta-ruc/{numero}', [ConsultaRucController::class, 'buscar']);
 
     // Gestión de 2FA (perfil)
     Route::post('/mfa/setup',   [MfaController::class, 'setup']);

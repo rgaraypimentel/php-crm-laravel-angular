@@ -33,12 +33,14 @@
             <div class="card-body pt-0">
                 <div class="row">
                     <div class="col-6">
+                        <label class="form-label">RUC del Cliente:</label>
                         <input id="numDocCliente" class="form-control" formControlName="clientNumDoc" type="number"
-                            placeholder=" N° Documento" />
+                            placeholder=" N° Documento"/>
                     </div>
                     <div class="col-6">
-                        <input id="rznSocialCliente" class="form-control" formControlName="clientRznSocial" type="text"
-                            placeholder="Razón Social Cliente" />
+                        <label class="form-label">Raz. Social Cliente: (Automático)</label>
+                        <input id="rznSocialCliente" class="form-control bg-secondary" formControlName="clientRznSocial" type="text"
+                            placeholder="Razón Social Cliente" readonly/>
                     </div>
                 </div>
             </div>
@@ -131,7 +133,7 @@
                     </div>
                     <div class="col-3">
                         <button type="button" class="btn btn-sm mx-1 btn-info" (click)="openModal()"
-                            ngbTooltip="Agregar">
+                            ngbTooltip="Agregar Producto">
                             <i class="ki-duotone ki-add-folder fs-2"><span class="path1"></span><span
                                     class="path2"></span></i>
                         </button>
@@ -297,6 +299,7 @@
                     <div *ngIf="isBien" class="fv-row mb-7">
                         <label class="required fw-bold fs-6 mb-2">Unidad:</label>
                         <select id="unidad" formControlName="unidad" class="form-control form-select-solid fw-bolder">
+                            <option value="">Selec. Sucursal</option>
                             <option value="NIU">Unidades</option>
                             <option value="KG">Kilogramos</option>
                         </select>
@@ -305,15 +308,14 @@
                     <!-- Descripción -->
                     <div class="fv-row mb-7">
                         <label class="required fw-bold fs-6 mb-2">Descripción:</label>
-                        <input formControlName="descripcion" type="text"
-                            class="form-control form-control-solid mb-3 mb-lg-0" />
+                        <input formControlName="descripcion" type="text" class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Descripción del producto"/>
                     </div>
 
                     <!-- Cantidad -->
                     <div class="fv-row mb-7">
                         <label class="required fw-bold fs-6 mb-2">Cantidad:</label>
                         <input formControlName="cantidad" type="number"
-                            class="form-control form-control-solid mb-3 mb-lg-0" />
+                            class="form-control form-control-solid mb-3 mb-lg-0" placeholder="Cantidad del producto"/>
                     </div>
 
                     <!-- Monto Valor Unitario -->

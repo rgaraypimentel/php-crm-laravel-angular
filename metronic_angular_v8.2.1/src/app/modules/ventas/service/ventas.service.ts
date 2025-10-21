@@ -66,4 +66,13 @@ export class VentasService {
     );
   }
 
+  obtenerDatosRuc(ruc: string): Observable<any> {
+    this.isLoadingSubject.next(true);
+    let URL = URL_SERVICIOS + "/consulta-ruc/" + ruc;
+    let headers = new HttpHeaders({ 'Authorization': 'Bearer ' + this.authservice.token });
+    return this.http.get(URL, { headers: headers }).pipe(
+      finalize(() => this.isLoadingSubject.next(false))
+    );
+  }
+
 }

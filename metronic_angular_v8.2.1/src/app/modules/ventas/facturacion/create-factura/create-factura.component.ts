@@ -22,6 +22,8 @@ export class CreateFacturaComponent {
   productForm: FormGroup;
   isLoading = false;
 
+  lastRuc: string | null = null;
+
   @ViewChild("discount") something: ElementRef;
   @ViewChild('productModal') productModal: any;
   payment_file: any;
@@ -55,6 +57,13 @@ export class CreateFacturaComponent {
       cantidad: [1, [Validators.required, Validators.min(1)]],
       mtoValorUnitario: [0, [Validators.required]],
       porcentajeIgv: [18, [Validators.required]] // Porcentaje de IGV, predeterminado a 18%
+    });
+    // Escucha cambios en el campo RUC
+    this.facturaForm.get('clientNumDoc')?.valueChanges.subscribe(num => {
+      if (num && num.toString().length === 11 && num !== this.lastRuc) {
+        this.lastRuc = num;  // Almacenar el nuevo RUC
+        this.buscarCliente(num);
+      }
     });
   }
 
@@ -191,8 +200,8 @@ export class CreateFacturaComponent {
         },
         tipoMoneda: this.facturaForm.value.moneda,  // Esto lo mantenemos fijo como "PEN"
         company: {
-          ruc: 20609278235,
-          razonSocial: "Coders Free S.A.C",
+          ruc: 20606096225,
+          razonSocial: "QALLPA TIC S.A.C",
           nombreComercial: "",
           address: {
             ubigueo: "150101",
@@ -200,7 +209,7 @@ export class CreateFacturaComponent {
             provincia: "LIMA",
             distrito: "LIMA",
             urbanizacion: "-",
-            direccion: "Calle falsa 123",
+            direccion: "CAL.EDUARDO BELLO NRO. 305 DPTO. 202 URB. SANTA CATALINA LIMA - LIMA - LA VICTORIA",
             codLocal: "0000"
           }
         },
@@ -277,6 +286,17 @@ export class CreateFacturaComponent {
       igv,
       totalImpuestos,
       mtoPrecioUnitario
+    });
+  }
+
+  buscarCliente(ruc: string) {
+    this.ventasService.obtenerDatosRuc(ruc).subscribe(resp => {
+      console.log(resp);
+      if (resp?.estado === 'ACTIVO') {
+        this.facturaForm.patchValue({ clientRznSocial: resp.nombre });
+      } else {
+        this.facturaForm.patchValue({ clientRznSocial: '' });
+      }
     });
   }
 }
