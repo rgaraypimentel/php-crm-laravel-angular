@@ -1,0 +1,246 @@
+<div class="card">
+    <!--begin::Card header-->
+    <div class="card-header border-0 pt-6">
+        <!--begin::Card title-->
+        <div class="card-title">
+            <div class="row align-items-center">
+                <div class="col-3">
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                                class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listConversions()" name="search" data-kt-customer-table-filter="search"
+                            class="form-control form-control-solid ps-12" placeholder="Buscar N° Orden">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <!-- <label class="required fw-bold fs-6 mb-2">Segmento de Cliente: (*) </label> -->
+                    <select
+                        class="form-control"
+                        name="warehouse_id"
+                        [(ngModel)]="warehouse_id"
+                        placeholder="Selec. Almacen"
+                    >
+                    <option value="">Ninguno</option>
+                        <ng-container *ngFor="let warehouse of warehouses">
+                            <option [value]="warehouse.id">{{ warehouse.name }}</option>
+                        </ng-container>
+                    </select>
+                    <div class="text-muted fs-7">Almacen de atención.</div>
+                </div>
+                <div class="col-3">
+                    <select
+                        class="form-control"
+                        name="unit_start_id"
+                        [(ngModel)]="unit_start_id"
+                        placeholder="Selec. Unidad"
+                    >
+                    <option value="">Ninguno</option>
+                        <ng-container *ngFor="let unit of units">
+                            <option [value]="unit.id">{{ unit.name }}</option>
+                        </ng-container>
+                    </select>
+                    <div class="text-muted fs-7">Unidad Inicial.</div>
+                </div>
+                <div class="col-3">
+                    <select
+                        class="form-control"
+                        name="unit_end_id"
+                        [(ngModel)]="unit_end_id"
+                        placeholder="Selec. Unidad"
+                    >
+                    <option value="">Ninguno</option>
+                        <ng-container *ngFor="let unit of units">
+                            <option [value]="unit.id">{{ unit.name }}</option>
+                        </ng-container>
+                    </select>
+                    <div class="text-muted fs-7">Unidad Final.</div>
+                </div>
+                <div class="col-3">
+                    <div class="d-flex align-items-center position-relative my-1">
+                        <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                                class="path2"></span></i> <input type="text" [(ngModel)]="search_product" (keyup.enter)="listConversions()" name="search" data-kt-customer-table-filter="search"
+                            class="form-control form-control-solid ps-12" placeholder="Buscar Producto">
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group input-group-solid">
+                        <input type="date"
+                        class="form-control form-control-lg form-control-solid"
+                        name="start_date"
+                        [(ngModel)]="start_date"
+                        />
+                      </div>
+                      <div class="text-muted fs-7">Fecha de inicio(Registro).</div>
+                </div>
+                <div class="col-2">
+                    <div class="input-group input-group-solid">
+                        <input type="date"
+                        class="form-control form-control-lg form-control-solid"
+                        name="end_date"
+                        [(ngModel)]="end_date"
+                        />
+                      </div>
+                      <div class="text-muted fs-7">Fecha fin(Registro).</div>
+                </div>
+                <div class="col-1 d-flex">
+                    <button class="btn btn-primary btn-sm mx-1" (click)="listConversions()">
+                        <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    </button>
+                    <button class="btn btn-dark btn-sm mx-1"  (click)="resetlistConversions()">
+                        <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
+                    </button>
+                </div>
+                <div class="col-2">
+                    <button type="button" class="btn btn-primary" (click)="createConversion()">
+                        + Agregar Conversion
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--begin::Card title-->
+        <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+        <!--begin::Card toolbar-->
+        <div class="card-toolbar">
+            <!--begin::Toolbar-->
+            <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+                <!--begin::Add customer-->
+
+                <!--end::Add customer-->
+            </div>
+            <!--end::Toolbar-->
+
+            <!--begin::Group actions-->
+            <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
+                <div class="fw-bold me-5">
+                    <span class="me-2" data-kt-customer-table-select="selected_count"></span> Selected
+                </div>
+
+                <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">
+                    Delete Selected
+                </button>
+            </div>
+            <!--end::Group actions-->
+        </div>
+        <!--end::Card toolbar-->
+    </div>
+    <!--end::Card header-->
+
+    <!--begin::Card body-->
+    <div class="card-body pt-0">
+
+        <!--begin::Table-->
+        <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+            <div id="" class="table-responsive">
+                <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
+                    style="width: 1199.5px;">
+                    <thead>
+                        <tr class="text-start text-gray-500 fw-bold fs-7 text-uppercase gs-0" role="row">
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="1" rowspan="1"
+                                colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">N° Orden</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Producto</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                    colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                        class="dt-column-title" role="button">Almacen</span><span
+                                        class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                    colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                        class="dt-column-title" role="button">Unidad Inicial</span><span
+                                        class="dt-column-order"></span></th>
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                        colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                            class="dt-column-title" role="button">Cantidad Pasada</span><span
+                                            class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                    colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                        class="dt-column-title" role="button">Unidad Final</span><span
+                                        class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                    colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                        class="dt-column-title" role="button">Cantidad Recibida</span><span
+                                        class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="2" rowspan="1"
+                                    colspan="1" aria-label="Email: Activate to sort" tabindex="0"><span
+                                        class="dt-column-title" role="button">Responsable</span><span
+                                        class="dt-column-order"></span></th>
+
+                            <th class="min-w-125px dt-orderable-asc dt-orderable-desc" data-dt-column="5" rowspan="1"
+                                colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                    class="dt-column-title" role="button">Fecha de registro</span><span
+                                    class="dt-column-order"></span></th>
+
+                            <th class="text-end min-w-70px dt-orderable-none" data-dt-column="6" rowspan="1" colspan="1"
+                                aria-label="Actions"><span class="dt-column-title">Actions</span><span
+                                    class="dt-column-order"></span></th>
+                        </tr>
+                    </thead>
+                    <tbody class="fw-semibold text-gray-600">
+                        <ng-container *ngFor="let CONVERSION of CONVERSIONS">
+                            <tr>
+                                <td>
+                                    {{ CONVERSION.id }}
+                                </td>
+                                <td>
+                                    {{ CONVERSION.product.title }}
+                                </td>
+                                <td>
+                                    {{ CONVERSION.warehouse.name }}
+                                </td>
+
+                                <td>
+                                    {{ CONVERSION.unit_start.name }}
+                                </td>
+                                <td>
+                                    {{ CONVERSION.quantity_end }}
+                                </td>
+
+                                <td>
+                                    {{ CONVERSION.unit_end.name }}
+                                </td>
+                                <td>
+                                    {{ CONVERSION.quantity }}
+                                </td>
+
+                                <td>
+                                    {{ CONVERSION.user.full_name }}
+                                </td>
+                                <td>
+                                    {{ CONVERSION.created_at }}
+                                </td>
+
+                                <td>
+                                    <a onclick="return false;" (click)="deleteConversion(CONVERSION)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                        <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </ng-container>
+
+
+                    </tbody>
+                    <tfoot></tfoot>
+                </table>
+            </div>
+            <ngb-pagination
+                [collectionSize]="totalPages"
+                [(page)]="currentPage"
+                [pageSize]="25"
+                [rotate]="true"
+                [boundaryLinks]="true"
+                (pageChange)="loadPage($event)"
+            ></ngb-pagination>
+        </div>
+        <!--end::Table-->
+    </div>
+    <!--end::Card body-->
+</div>

@@ -1,0 +1,33 @@
+services:
+  backend:
+    build:
+      context: ./api-crm-erp
+      dockerfile: Dockerfile
+    image: php-crm-laravel-angular-backend:latest
+    restart: unless-stopped
+    container_name: backend
+    volumes:
+      - ./api-crm-erp:/var/www/html
+      - ./api-crm-erp/.env:/var/www/html/.env
+    ports:
+      - "8000:80"
+    networks:
+      - app_network
+
+  frontend:
+    build:
+      context: ./metronic_angular_v8.2.1
+      dockerfile: Dockerfile
+    image: php-crm-laravel-angular-frontend:latest
+    restart: unless-stopped
+    container_name: frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge

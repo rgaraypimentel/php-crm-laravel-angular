@@ -1,0 +1,107 @@
+<ng-container *ngIf="appFooterContainerCSSClass">
+  <!--begin::Footer container-->
+  <div class="app-container" [ngClass]="appFooterContainerCSSClass">
+    <ng-container *ngTemplateOutlet="footerView"></ng-container>
+  </div>
+  <!--end::Footer container-->
+</ng-container>
+
+<ng-container *ngIf="!appFooterContainerCSSClass">
+  <ng-container *ngTemplateOutlet="footerView"></ng-container>
+</ng-container>
+
+<ng-template #footerView>
+  <!--begin::Copyright-->
+  <div class="text-gray-900 order-2 order-md-1">
+    <span class="text-muted fw-semibold me-1">{{currentDateStr}}&copy;</span>
+    <a href="https://qallpatic.com.pe/" target="_blank" class="text-gray-800 text-hover-primary">Qallpa TIC</a>
+  </div>
+  <!--end::Copyright-->
+
+  <!--begin::Menu-->
+  <ul class="menu menu-gray-600 menu-hover-primary fw-semibold order-1">
+    <li class="menu-item"><a href="https://qallpatic.com.pe/" target="_blank" class="menu-link px-2">Nosotros</a></li>
+
+    <li class="menu-item"><a href="https://qallpatic.com.pe/" target="_blank" class="menu-link px-2">Soporte</a></li>
+
+    <!-- <li class="menu-item"><a href="https://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469"
+        target="_blank" class="menu-link px-2">Purchase</a></li> -->
+    <li class="menu-item"><a href="https://www.qallpamerch.com/"
+        target="_blank" class="menu-link px-2">Compras</a></li>
+  </ul>
+  <!--end::Menu-->
+</ng-template>
+
+<!-- Chatbot Bubble -->
+<div class="chatbot-container">
+  <!-- Chat Bubble Button -->
+  <div class="chat-bubble" (click)="toggleChat()" [class.active]="isChatOpen">
+    <img src="./assets/media/logos/bot.png" alt="Bot">
+  </div>
+
+  <!-- Chat Window -->
+  <div class="chat-window" [class.active]="isChatOpen">
+    <!-- Chat Header -->
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <div class="chat-avatar">
+          <i class="fas fa-robot"></i>
+        </div>
+        <div class="chat-title">
+          <h5>Asistente Virtual</h5>
+          <span>Qallpa TIC</span>
+        </div>
+      </div>
+      <button class="chat-close-btn" (click)="closeChat()">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Chat Messages -->
+    <div class="chat-messages">
+      <div *ngFor="let message of messages" 
+            class="message" 
+            [ngClass]="{'user-message': message.isUser, 'bot-message': !message.isUser}">
+        <div class="message-bubble">
+          <div class="message-text">{{ message.text }}</div>
+          <div class="message-time">
+            {{ message.timestamp | date:'HH:mm' }}
+          </div>
+        </div>
+      </div>
+      
+      <!-- Loading indicator -->
+      <div *ngIf="isLoading" class="message bot-message">
+        <div class="message-bubble">
+          <div class="typing-indicator">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat Input -->
+    <div class="chat-input">
+      <div class="input-group">
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Escribe tu mensaje..."
+          [value]="currentMessage"
+          (input)="onInputChange($event)"
+          (keypress)="onKeyPress($event)"
+          [disabled]="isLoading"
+        />
+        <button 
+          class="btn-send" 
+          (click)="sendMessage()"
+          [disabled]="!currentMessage.trim() || isLoading"
+        >
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

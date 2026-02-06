@@ -1,0 +1,278 @@
+<div class="card">
+  <!--begin::Card header-->
+  <div class="card-header border-0 pt-6">
+      <!--begin::Card title-->
+      <div class="card-title">
+          <!--begin::Search-->
+          <div class="row align-items-center">
+              <div class="col-3">
+                  <div class="d-flex align-items-center position-relative my-1">
+                      <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-5"><span class="path1"></span><span
+                              class="path2"></span></i> <input type="text" [(ngModel)]="search" (keyup.enter)="listProducts()" name="search" data-kt-customer-table-filter="search"
+                          class="form-control form-control-solid w-250px ps-12" placeholder="Buscar Productos">
+                  </div>
+              </div>
+              <div class="col-3">
+                  <select class="form-select mb-2" [(ngModel)]="product_categorie_id" name="product_categorie_id">
+                      <ng-container *ngFor="let CATEGORIE of CATEGORIES">
+                          <option [value]="CATEGORIE.id" >{{ CATEGORIE.name }}</option>
+                      </ng-container>
+                  </select>
+                  <!--end::Select2-->
+                  <!--begin::Description-->
+                  <div class="text-muted fs-7">Categoria.</div>
+              </div>
+              <div class="col-2">
+                  <select class="form-select mb-2" [(ngModel)]="disponibilidad" name="disponibilidad">
+                      <option value="1">Vender los productos sin stock</option>
+                      <option value="2">No vender los productos sin stock </option>
+                      <option value="3">Proyectar con los contratos que se tenga</option>
+                  </select>
+                  <!--end::Select2-->
+                  <!--begin::Description-->
+                  <div class="text-muted fs-7">Disponibilidad.</div>
+              </div>
+              <div class="col-2">
+                  <select class="form-select mb-2" [(ngModel)]="tax_selected" name="tax_selected" data-control="select2" data-hide-search="true" data-placeholder="Select an option">
+                      <option value="1">Libre de impuesto</option>
+                      <option value="2">Bienes sujeto a impuesto</option>
+                      <option value="3">Producto descargable</option>
+                  </select>
+                  <!--end::Select2-->
+                  <!--begin::Description-->
+                  <div class="text-muted fs-7">Tipo de impuesto.</div>
+              </div>
+              <div class="col-1 d-flex">
+                  <button class="btn btn-primary btn-sm mx-1" (click)="listProducts()">
+                      <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                  </button>
+                  <button class="btn btn-dark btn-sm"  (click)="resetlistProducts()">
+                      <i class="ki-duotone ki-loading fs-2"><span class="path1"></span><span class="path2"></span></i>
+                  </button>
+              </div>
+
+          </div>
+          <!--end::Search-->
+      </div>
+      <!--begin::Card title-->
+      <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+      <!--begin::Card toolbar-->
+      <div class="card-toolbar">
+          <!--begin::Toolbar-->
+          <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
+              <!--begin::Add customer-->
+              <button type="button" class="btn btn-primary" routerLink="/productos/registro">
+                  + Agregar Producto
+              </button>
+              <!--end::Add customer-->
+          </div>
+          <!--end::Toolbar-->
+
+          <!--begin::Group actions-->
+          <div class="d-flex justify-content-end align-items-center d-none" data-kt-customer-table-toolbar="selected">
+              <div class="fw-bold me-5">
+                  <span class="me-2" data-kt-customer-table-select="selected_count"></span> Selected
+              </div>
+
+              <button type="button" class="btn btn-danger" data-kt-customer-table-select="delete_selected">
+                  Delete Selected
+              </button>
+          </div>
+          <!--end::Group actions-->
+      </div>
+      <!--end::Card toolbar-->
+  </div>
+  <!--end::Card header-->
+
+  <!--begin::Card body-->
+  <div class="card-body pt-0">
+      <div class="row align-items-center">
+          <div class="col-1">
+              <select class="form-select mb-2" [(ngModel)]="sucursale_price_multiple" name="sucursale_price_multiple" placeholder="Select an option">
+                  <ng-container *ngFor="let SUCURSALE of SUCURSALES">
+                      <option [value]="SUCURSALE.id">{{ SUCURSALE.name }}</option>
+                  </ng-container>
+              </select>
+              <!--end::Select2-->
+              <!--begin::Description-->
+              <div class="text-muted fs-7">Sucursal.</div>
+          </div>
+          <div class="col-2">
+              <select class="form-select mb-2" [(ngModel)]="almacen_warehouse" name="almacen_warehouse" placeholder="Select an option">
+                  <ng-container *ngFor="let WAREHOUSE of WAREHOUSES">
+                      <option [value]="WAREHOUSE.id">{{ WAREHOUSE.name }}</option>
+                  </ng-container>
+              </select>
+              <!--end::Select2-->
+              <!--begin::Description-->
+              <div class="text-muted fs-7">Almacen.</div>
+          </div>
+          <div class="col-2">
+              <select class="form-select mb-2" [(ngModel)]="client_segment_price_multiple" name="client_segment_price_multiple" placeholder="Select an option">
+                  <ng-container *ngFor="let CLIENT_SEGMENT of CLIENT_SEGMENTS">
+                      <option [value]="CLIENT_SEGMENT.id">{{ CLIENT_SEGMENT.name }}</option>
+                  </ng-container>
+              </select>
+              <!--end::Select2-->
+              <!--begin::Description-->
+              <div class="text-muted fs-7">Segmento de cliente.</div>
+          </div>
+          <div class="col-2">
+              <select class="form-select mb-2" [(ngModel)]="unit_warehouse" name="unit_warehouse" placeholder="Select an option">
+                  <ng-container *ngFor="let UNIT of UNITS">
+                      <option [value]="UNIT.id">{{ UNIT.name }}</option>
+                  </ng-container>
+              </select>
+              <!--end::Select2-->
+              <!--begin::Description-->
+              <div class="text-muted fs-7">Unidad/Almacen.</div>
+          </div>
+          <div class="col-2">
+              <select class="form-select mb-2" [(ngModel)]="state_stock" name="state_stock" placeholder="Select an option">
+                  <option value="1">Disponible</option>
+                  <option value="2">Por agotar</option>
+                  <option value="3">Agotado</option>
+              </select>
+              <!--end::Select2-->
+              <!--begin::Description-->
+              <div class="text-muted fs-7">Disponibilidad de stock.</div>
+          </div>
+          <div class="col-2">
+              <button class="btn btn-success btn-sm" (click)="downloadProducts()">
+                  <i class="ki-duotone ki-folder-down fs-2"><span class="path1"></span><span class="path2"></span></i>
+              </button>
+
+              <button class="btn btn-success btn-sm mx-1" (click)="importProducts()">
+                  <i class="ki-duotone ki-update-folder fs-2"><span class="path1"></span><span class="path2"></span></i>
+              </button>
+
+              <button *ngIf="num_products_agotado > 0" class="btn btn-danger btn-sm mx-1" (click)="selectAgotado()">
+                  ({{ num_products_agotado }})
+              </button>
+              <button *ngIf="num_products_por_agotar > 0" class="btn btn-warning btn-sm mx-1" (click)="selectPorAgotado()">
+                  ({{ num_products_por_agotar  }})
+              </button>
+
+          </div>
+      </div>
+      <!--begin::Table-->
+      <div id="kt_customers_table_wrapper" class="dt-container dt-bootstrap5 dt-empty-footer">
+          <div id="" class="table-responsive">
+              <table class="table align-middle table-row-dashed fs-6 gy-5 dataTable" id="kt_customers_table"
+                  style="width: 1199.5px;border-bottom: 2px solid #edeaea;">
+                  <thead style="font-weight: 900;border-right: 2px solid #edeaea; background-color: #eeeeee;">
+                      <tr class="text-start text-gray-700 fw-bold fs-7 text-uppercase gs-0" role="row">
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Producto</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Categoria</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Precio General</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Disponibilidad</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="1" rowspan="1"
+                              colspan="1" aria-label="Customer Name: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">SKU</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="5" rowspan="1"
+                              colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Tipo de Impuesto</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="min-w-125px dt-orderable-asc dt-orderable-desc text-center" data-dt-column="5" rowspan="1"
+                              colspan="1" aria-label="Created Date: Activate to sort" tabindex="0"><span
+                                  class="dt-column-title" role="button">Estado</span><span
+                                  class="dt-column-order"></span></th>
+
+                          <th class="text-end min-w-70px dt-orderable-none text-center" data-dt-column="6" rowspan="1" colspan="1"
+                              aria-label="Actions"><span class="dt-column-title">Acciones</span><span
+                                  class="dt-column-order"></span></th>
+                      </tr>
+                  </thead>
+                  <tbody class="fw-semibold text-gray-500">
+                      <ng-container *ngFor="let PRODUCT of PRODUCTS">
+                          <tr style="border-bottom: 2px solid #edeaea;border-right: 1px solid #edeaea;border-left: 1px solid #edeaea;">
+                              <td>
+                                  <div class="d-flex align-items-center">
+                                      <div class="symbol symbol-50px me-5">
+                                          <img [src]="PRODUCT.imagen" class="" alt="">
+                                      </div>
+
+                                      <div class="d-flex justify-content-start flex-column">
+                                          <a  class="text-gray-900 fw-bold text-hover-primary mb-1 fs-6">{{ PRODUCT.title }}</a>
+                                          <span class="text-muted fw-semibold text-muted d-block fs-7">Peso: {{ PRODUCT.weight }}</span>
+                                          <span class="badge badge-light-primary" *ngIf="PRODUCT.state_stock == 1">Disponible</span>
+                                          <span class="badge badge-light-warning" *ngIf="PRODUCT.state_stock == 2">Por agotar</span>
+                                          <span class="badge badge-light-danger" *ngIf="PRODUCT.state_stock == 3">Agotado</span>
+                                      </div>
+
+
+                                  </div>
+                              </td>
+
+                              <td>
+                                  {{ PRODUCT.product_categorie.name }}
+                              </td>
+
+                              <td>
+                                  {{ PRODUCT.price_general }}
+                              </td>
+
+                              <td >
+                                  {{ getDisponibilidad(PRODUCT.disponibilidad) }} </td>
+
+                              <td >
+                                  {{ PRODUCT.sku }} </td>
+
+                              <td >
+                                  {{ getTaxSelected(PRODUCT.tax_selected) }} </td>
+
+
+                              <td class="text-center">
+                                  <span class="badge badge-light-success" *ngIf="PRODUCT.state == 1">Activo</span>
+                                  <span class="badge badge-light-danger" *ngIf="PRODUCT.state == 2">Inactivo</span>
+                              </td>
+                              <td class="">
+                                  <a [routerLink]="'/productos/list/editar/'+PRODUCT.id"  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                      <i class="ki-duotone ki-pencil fs-2" style="color: #007bff;"><span class="path1"></span><span class="path2"></span></i>
+                                  </a>
+
+                                  <a  onclick="return false;" (click)="deleteProduct(PRODUCT)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm" style="box-shadow: 0 2px 5px rgba(0,0,0,0.2); border-radius: 8px;">
+                                      <i class="ki-duotone ki-trash fs-2" style="color: #dc3545;"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                  </a>
+                              </td>
+                          </tr>
+                      </ng-container>
+
+
+                  </tbody>
+                  <tfoot></tfoot>
+              </table>
+          </div>
+          <ngb-pagination
+              [collectionSize]="totalPages"
+              [(page)]="currentPage"
+              [pageSize]="25"
+              [rotate]="true"
+              [boundaryLinks]="true"
+              (pageChange)="loadPage($event)"
+          ></ngb-pagination>
+      </div>
+      <!--end::Table-->
+  </div>
+  <!--end::Card body-->
+</div>

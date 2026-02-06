@@ -1,0 +1,28 @@
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black !important;
+    text-align: center;
+    padding: 5px;
+}
+th {
+    background-color: #f2f2f2;
+}
+.row-table td{
+    text-wrap: nowrap;
+}
+
+.colum-comission{
+    background-color: #c4ffdc;
+}
+.colum-venta-total{
+    background-color: #c4e4ff;
+}
+.colum-comision-total{
+    background-color: #ffeac4;
+}
+.colum-venta-corta{
+    background-color: #d1c4ff;
+}

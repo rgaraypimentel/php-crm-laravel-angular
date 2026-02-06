@@ -1,0 +1,536 @@
+<div class="d-flex flex-column flex-column-fluid" data-select2-id="select2-data-131-dzps">
+    <!--begin::Content-->
+    <div id="kt_app_content" class="app-content  flex-column-fluid " data-select2-id="select2-data-kt_app_content">
+
+
+        <!--begin::Content container-->
+        <div id="kt_app_content_container" class="app-container  container-xxl "
+            data-select2-id="select2-data-kt_app_content_container">
+            <!--begin::Form-->
+            <form id="kt_ecommerce_edit_order_form"
+                class="form d-flex flex-column flex-lg-row fv-plugins-bootstrap5 fv-plugins-framework"
+                data-kt-redirect="/metronic8/demo1/apps/ecommerce/sales/listing.html"
+                data-select2-id="select2-data-kt_ecommerce_edit_order_form">
+                <!--begin::Aside column-->
+                <div class="w-100 flex-lg-row-auto w-lg-300px mb-7 me-7 me-lg-10"
+                    data-select2-id="select2-data-130-y9wa">
+
+                    <!--begin::Order details-->
+                    <div class="card card-flush py-4" data-select2-id="select2-data-129-w2zd">
+                        <!--begin::Card header-->
+                        <div class="card-header">
+                            <div class="card-title">
+                                <h2>Proforma</h2>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0" data-select2-id="select2-data-128-9mmu">
+                            <div class="d-flex flex-column gap-10" data-select2-id="select2-data-127-2qsf">
+                                <!--begin::Input group-->
+                                <div class="fv-row">
+                                    <!--begin::Label-->
+                                    <label class="form-label">Fecha</label>
+                                    <!--end::Label-->
+
+                                    <!--begin::Auto-generated ID-->
+                                    <div class="fw-bold fs-3">{{ TODAY }}</div>
+                                    <!--end::Input-->
+                                </div>
+                                <!--end::Input group-->
+                                <div class="fv-row mt-4">
+                                    <select
+                                        class="form-control form-select-solid fw-bolder"
+                                        name="method_payment_id"
+                                        placeholder="Selec. Metodo de pago"
+                                        [(ngModel)]="method_payment_id"
+                                        (change)="changeMethodPayment()"
+                                    >
+                                        <option value="">Selec. Metodo de pago</option>
+                                        <ng-container *ngFor="let method_payment of method_payments">
+                                            <option [value]="method_payment.id">{{ method_payment.name }}</option>
+                                        </ng-container>
+
+                                    </select>
+                                </div>
+                                <div class="fv-row" *ngIf="METHOD_PAYMENT_SELECTED && METHOD_PAYMENT_SELECTED.bancos.length > 0">
+                                    <select
+                                        class="form-control form-select-solid fw-bolder"
+                                        name="banco_id"
+                                        placeholder="Selec. Banco"
+                                        [(ngModel)]="banco_id"
+                                    >
+                                        <option value="">Selec. Banco</option>
+                                        <!-- <ng-container > -->
+                                            <ng-container *ngFor="let BANCO of METHOD_PAYMENT_SELECTED.bancos">
+                                                <option [value]="BANCO.id">{{ BANCO.name }}</option>
+                                            </ng-container>
+
+                                        <!-- </ng-container> -->
+
+                                    </select>
+                                </div>
+                                <div class="fv-row">
+                                    <input type="number" [(ngModel)]="amount_payment" name="amount_payment" class="form-control mb-2" placeholder="Monto" />
+                                </div>
+                                <div class="fv-row">
+                                    <label for="formFile" class="form-label">Comprobante</label>
+                                    <input class="form-control" type="file" accept=".jpeg, .bmp, .jpg, .png, .gif, .webp" (change)="processFile($event)" id="formFile">
+                                    <div *ngIf="imagen_previzualiza">
+                                        <img [src]="imagen_previzualiza" width="125px" alt="">
+                                    </div>
+                                </div>
+                                <!-- <div class="fv-row">
+                                    <button class="btn btn-md btn-primary">Agregar Pago</button>
+                                </div> -->
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::Order details-->
+                </div>
+                <!--end::Aside column-->
+                <span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+                <!--begin::Main column-->
+                <div class="d-flex flex-column flex-lg-row-fluid gap-7 gap-lg-10">
+                    <!--begin::Order details-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header" style="display: block;">
+                            <!-- <div class="card-title"> -->
+                                <div class="row justify-content-between">
+                                    <div class="col-6 d-flex align-items-center">
+                                        <h2 class="d-flex align-items-center"> <i class="ki-duotone ki-user fs-2tx"><span class="path1"></span><span class="path2"></span></i>  Cliente :
+                                        </h2>
+                                        <small class="mx-2"> {{ CLIENT_SELECTED ? CLIENT_SELECTED.client_segment.name : 'NO HA SELECCIONADO UN CLIENTE' }}</small>
+                                    </div>
+                                    <div class="col-4">
+                                        <button class="btn btn-sm mx-1 btn-primary" (click)="searchClients()" placement="top-start" ngbTooltip="Buscar">
+                                            <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                        <button class="btn btn-sm mx-1 btn-success" (click)="createClientPerson()" placement="top-start" ngbTooltip="Cliente Persona">
+                                            <i class="ki-duotone ki-user fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                        <button class="btn btn-sm mx-1 btn-info" (click)="createClientCompany()" placement="top-start" ngbTooltip="Cliente Empresa">
+                                            <i class="ki-duotone ki-delivery-time fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                        </button>
+                                        <button class="btn btn-sm mx-1 btn-dark" (click)="resetClient()" placement="top-start" ngbTooltip="Limpiar">
+                                            <i class="ki-duotone ki-arrows-circle fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-4">
+                                    <input type="text" (keyup.enter)="searchClients()" [(ngModel)]="n_document" name="n_document" class="form-control mb-2" placeholder=" N° Documento" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" (keyup.enter)="searchClients()" [(ngModel)]="full_name" name="full_name" class="form-control mb-2" placeholder="Nombre completo" />
+                                </div>
+                                <div class="col-4">
+                                    <input type="text" (keyup.enter)="searchClients()" [(ngModel)]="phone" name="phone" class="form-control mb-2" placeholder="Telefono" />
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::Order details-->
+                    <!--begin::Order details-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header" style="display: block;">
+                            <!-- <div class="card-title"> -->
+                                <div class="row justify-content-between">
+                                    <div class="col-6 d-flex align-items-center">
+                                        <h2 class="d-flex align-items-center">
+                                            <i class="ki-duotone ki-delivery-door fs-2tx"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span></i>
+                                            Producto :</h2>
+
+                                        <small class="mx-2">{{ PRODUCT_SELECTED ? PRODUCT_SELECTED.product_categorie.name : 'NO HAY UN PRODUCTO SELECCIONADO' }}</small>
+                                    </div>
+                                    <div class="col-3">
+                                        <button class="btn btn-sm mx-1 btn-primary" (click)="searchProducts()" placement="top-start" ngbTooltip="Buscar">
+                                            <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                        <button class="btn btn-sm mx-1 btn-dark" (click)="resetProduct()" placement="top-start" ngbTooltip="Limpiar">
+                                            <i class="ki-duotone ki-arrows-circle fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                        <button class="btn btn-sm mx-1 btn-info" (click)="addProduct()" placement="top-start" ngbTooltip="Agregar">
+                                            <i class="ki-duotone ki-add-folder fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <div class="d-flex flex-column gap-10">
+                                <div id="kt_ecommerce_edit_order_product_table_wrapper"
+                                    class="dt-container dt-bootstrap5 dt-empty-footer">
+                                    <div id="" class="row">
+                                      <div class="col-6">
+                                            <div class="d-flex align-items-center position-relative mb-n7 ">
+                                                <i class="ki-duotone ki-magnifier fs-3 position-absolute ms-4"><span
+                                                        class="path1"></span><span class="path2"></span></i> <input type="text"
+                                                    data-kt-ecommerce-edit-order-filter="search"
+                                                    class="form-control form-control-solid w-100 ps-12"
+                                                    placeholder="Buscar Producto"
+                                                    name="search_product"
+                                                    [(ngModel)]="search_product"
+                                                    (keyup.enter)="searchProducts()"
+                                                    >
+                                            </div>
+                                      </div>
+                                      <div class="col-3">
+                                        <input type="number" [(ngModel)]="price" disabled name="price" class="form-control mb-2" placeholder="Precio" />
+                                        <small>Precio del producto</small>
+                                        </div>
+                                      <div class="col-3">
+                                        <input type="number" [(ngModel)]="quantity_product" name="quantity_product" class="form-control mb-2" placeholder="Cantidad" />
+                                        <small>Cantidad del producto</small>
+                                        </div>
+                                      <div class="col-3">
+                                        <select
+                                            class="form-control form-select-solid fw-bolder"
+                                            name="unidad_product"
+                                            [(ngModel)]="unidad_product"
+                                            placeholder="Selec. Unidad"
+                                            *ngIf="!loadUnidad"
+                                            (change)="changeUnitProduct($event)"
+                                        >
+                                            <option value="">Selec. Unidad</option>
+                                            <ng-container *ngIf="PRODUCT_SELECTED">
+                                                <ng-container *ngFor="let unit of PRODUCT_SELECTED.units">
+                                                    <option [value]="unit.id">{{ unit.name }}</option>
+                                                </ng-container>
+                                            </ng-container>
+
+                                        </select>
+                                      </div>
+                                      <div class="col-3">
+                                        <select
+                                            class="form-control form-select-solid fw-bolder"
+                                            name="almacen_product"
+                                            [(ngModel)]="almacen_product"
+                                            placeholder="Selec. Almacen"
+                                        >
+                                            <option value="">Selec. Almacen</option>
+                                            <ng-container *ngFor="let almacen of warehouses_product">
+                                                <option [value]="almacen.id">{{ almacen.warehouse.name }} ({{ almacen.quantity }})</option>
+                                            </ng-container>
+
+                                        </select>
+                                      </div>
+                                      <div class="col-3">
+                                        <textarea class="form-control form-control-solid" rows="3" [(ngModel)]="description_product" name="description_product" placeholder="Nota"></textarea>
+                                      </div>
+                                      <div class="col-3" *ngIf="PRODUCT_SELECTED && PRODUCT_SELECTED.is_gift == 2">
+                                        <label class="form-label">¿Es gratuito?</label>
+                                        <div class="form-check form-check-custom form-check-solid mb-2">
+                                            <input class="form-check-input" type="checkbox" (click)="isGift()" />
+                                            <label class="form-check-label">Costo 0</label>
+                                        </div>
+                                      </div>
+                                      <div class="col-6">
+                                        <span *ngIf="unidad_product && warehouses_product.length == 0" class="text-danger">No hay de esa unidad disponible en ninguna sucursal</span>
+                                        <br>
+                                        <span *ngIf="unidad_product && warehouses_product.length > 0 && exits_warehouse.length == 0" class="text-danger">No hay de esa unidad disponible en nuestra sucursal</span>
+                                        <span *ngIf="message_disponibilidad" class="text-info">{{ message_disponibilidad }}</span>
+                                        <br>
+
+                                        </div>
+                                      <div class="col-4 mt-1" *ngIf="PRODUCT_SELECTED && PRODUCT_SELECTED.is_discount == 2">
+                                        <!-- (keyup)="verifiedDiscount()" -->
+                                        <input type="number" #discount [(ngModel)]="amount_discount" name="amount_discount"  class="form-control mb-2" placeholder="Descuento" />
+                                        <small>Descuento del producto</small>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <div>
+                                    <div class="fw-bold fs-4">
+                                        Costo Total:
+                                        <span id="kt_ecommerce_edit_order_total_price" *ngIf="PRODUCT_SELECTED">
+                                            {{ ( ((price - amount_discount) + (price - amount_discount)*(PRODUCT_SELECTED.importe_iva*0.01))*quantity_product ).toFixed(2) }}
+                                        </span>
+                                        <span id="kt_ecommerce_edit_order_total_price" *ngIf="!PRODUCT_SELECTED">
+                                          0
+                                        </span> PEN
+                                        <br>
+                                        Subtotal: {{ (price - amount_discount) }} PEN
+                                        <ng-container *ngIf="PRODUCT_SELECTED">
+                                            <br>
+                                            Impuesto: {{ (price - amount_discount)*(PRODUCT_SELECTED.importe_iva*0.01) }} PEN
+                                        </ng-container>
+                                        <ng-container *ngIf="!PRODUCT_SELECTED">
+                                            <br>
+                                            Impuesto: 0 PEN
+                                        </ng-container>
+
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!--end::Card header-->
+                    </div>
+                    <!--end::Order details-->
+                    <!--begin::Order details-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header" style="display: block;">
+                            <!-- <div class="card-title"> -->
+                                <div class="row justify-content-between">
+                                    <div class="col-5">
+                                        <h2 class="d-flex align-items-center"> <i class="ki-duotone ki-questionnaire-tablet text-gray-900 fs-2tx"><span class="path1"></span><span class="path2"></span></i>
+                                            Detallado de la proforma : </h2>
+                                    </div>
+                                    <div class="col-3">
+
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="table-responsive">
+                                        <!--begin::Table-->
+                                        <table class="table table-row-bordered table-row-gray-100 align-middle gs-0 gy-3">
+                                            <!--begin::Table head-->
+                                            <thead>
+                                                <tr class="fw-bold text-muted">
+                                                    <th class="min-w-150px">Producto</th>
+                                                    <th class="min-w-140px">Unidad</th>
+                                                    <th class="min-w-120px">Precio Unitario</th>
+                                                    <th class="min-w-120px">Cantidad</th>
+                                                    <th class="min-w-120px">SubTotal</th>
+                                                    <th class="min-w-120px">Total</th>
+                                                    <th class="min-w-100px text-end">Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <!--end::Table head-->
+
+                                            <!--begin::Table body-->
+                                            <tbody>
+                                                <ng-container *ngFor="let DETAIL_PROFOR of DETAIL_PROFORMAS;let i=index">
+                                                    <tr>
+
+                                                        <td>
+                                                            <a  onclick="return false;" class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                                {{ DETAIL_PROFOR.product.title }}
+                                                            </a>
+                                                        </td>
+
+                                                        <td>
+                                                            <!-- <a  class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">Brasil</a> -->
+                                                            <span class="text-muted fw-semibold text-muted d-block fs-7">Unidad: {{ DETAIL_PROFOR.unit.name }}</span>
+                                                        </td>
+
+                                                        <td>
+                                                            <a  onclick="return false;" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6" style="text-wrap: nowrap;">{{ DETAIL_PROFOR.price_unit }} PEN</a>
+                                                            <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Code: Paid</span> -->
+                                                        </td>
+
+                                                        <td>
+                                                            <a  onclick="return false;" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6">{{ DETAIL_PROFOR.quantity }}</a>
+                                                            <!-- <span class="text-muted fw-semibold text-muted d-block fs-7">Web, UI/UX Design</span> -->
+                                                        </td>
+
+                                                        <td class="text-gray-900 fw-bold text-hover-primary fs-6">
+                                                            <a  onclick="return false;" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6" style="text-wrap: nowrap;">{{ DETAIL_PROFOR.subtotal }} PEN</a>
+
+                                                        <td>
+                                                            <a  onclick="return false;" class="text-gray-900 fw-bold text-hover-primary d-block mb-1 fs-6" style="text-wrap: nowrap;">{{ DETAIL_PROFOR.total }} PEN</a>
+                                                        </td>
+
+                                                        <td class="text-end">
+                                                            <!-- <a  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <i class="ki-duotone ki-switch fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a>
+                                                            -->
+                                                            <a  onclick="return false;" (click)="editProduct(DETAIL_PROFOR,i)"  class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
+                                                                <i class="ki-duotone ki-pencil fs-2"><span class="path1"></span><span class="path2"></span></i>                                </a>
+
+                                                            <a  onclick="return false" (click)="deleteProduct(DETAIL_PROFOR,i)" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                                <i class="ki-duotone ki-trash fs-2"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>                                </a>
+                                                        </td>
+                                                    </tr>
+                                                </ng-container>
+
+                                            </tbody>
+                                            <!--end::Table body-->
+                                        </table>
+                                        <!--end::Table-->
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="separator"></div>
+
+                                <div>
+                                    <div class="fw-bold fs-4">
+                                        Total:
+                                        <span id="kt_ecommerce_edit_order_total_price">
+                                          {{ TOTAL_PROFORMA }}
+                                        </span> PEN
+                                        <br>
+                                        Impuesto: {{ TOTAL_IMPUESTO_PROFORMA }} PEN
+                                        <br>
+                                        Deuda: {{ DEBT_PROFORMA - (amount_payment ? amount_payment : 0) }} PEN
+                                        <br>
+                                        Pagado: {{ PAID_OUT_PROFORMA + (amount_payment ? amount_payment : 0) }} PEN
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <!--begin::Order details-->
+                    <div class="card card-flush py-4">
+                        <!--begin::Card header-->
+                        <div class="card-header" style="display: block;">
+                            <!-- <div class="card-title"> -->
+                                <div class="row justify-content-between">
+                                    <div class="col-4">
+                                        <h2 class="d-flex align-items-center"> <i class="ki-duotone ki-delivery-geolocation text-gray-900 fs-2tx"><span class="path1"></span><span class="path2"></span><span class="path3"></span><span class="path4"></span><span class="path5"></span></i>
+                                            Lugar de entrega : </h2>
+                                    </div>
+                                    <div class="col-3">
+                                        <!-- <button class="btn btn-sm mx-1 btn-primary" placement="top-start" ngbTooltip="Buscar">
+                                            <i class="ki-duotone ki-magnifier fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button> -->
+                                        <button class="btn btn-sm mx-1 btn-dark" (click)="resetSucursaleDeliverie()" placement="top-start" ngbTooltip="Limpiar">
+                                            <i class="ki-duotone ki-arrows-circle fs-2"><span class="path1"></span><span class="path2"></span></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            <!-- </div> -->
+                        </div>
+                        <!--end::Card header-->
+
+                        <!--begin::Card body-->
+                        <div class="card-body pt-0">
+                            <div class="row">
+                                <div class="col-3">
+                                    <select
+                                        class="form-control form-select-solid fw-bolder"
+                                        name="sucursale_deliverie_id"
+                                        placeholder="Selec. Lugar de entrega"
+                                        [(ngModel)]="sucursale_deliverie_id"
+                                    >
+                                        <option value="">Selec. Lugar de entrega</option>
+                                        <ng-container *ngFor="let sucursale_deliv of sucursale_deliveries">
+                                            <option [value]="sucursale_deliv.id">{{ sucursale_deliv.name }}</option>
+                                        </ng-container>
+
+                                    </select>
+                                </div>
+                                <div class="col-5">
+                                    <textarea *ngIf="sucursale_deliverie_id == 5 || sucursale_deliverie_id == 6" class="form-control form-control-solid" rows="3" name="address" [(ngModel)]="address" placeholder="Dirección completa"></textarea>
+                                </div>
+                                <div class="col-4">
+                                    <input type="date"
+                                    class="form-control form-control-lg form-control-solid"
+                                    [(ngModel)]="date_entrega"
+                                    name="date_entrega"
+                                    />
+                                    <small>Fecha de entrega</small>
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id == 6">
+                                    <select
+                                        class="form-control form-select-solid fw-bolder"
+                                        name="ubigeo_region"
+                                        [(ngModel)]="ubigeo_region"
+                                        placeholder="Selec. Región"
+                                        (change)="changeRegion($event)"
+                                    >
+                                    <option value="">Selec. Región</option>
+                                        <ng-container *ngFor="let REGION of REGIONES">
+                                            <option [value]="REGION.id">{{ REGION.name }}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id == 6">
+                                    <select
+                                          class="form-control form-select-solid fw-bolder"
+                                          name="ubigeo_provincia"
+                                          [(ngModel)]="ubigeo_provincia"
+                                          placeholder="Selec. Provincia"
+                                          (change)="changeProvincia($event)"
+                                    >
+                                        <option value="">Selec. Provincia</option>
+                                        <ng-container *ngFor="let PROVINCIA of PROVINCIA_SELECTEDS">
+                                            <option [value]="PROVINCIA.id">{{ PROVINCIA.name }}</option>
+                                        </ng-container>
+
+                                    </select>
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id == 6">
+                                    <select
+                                        class="form-control form-select-solid fw-bolder"
+                                        name="ubigeo_distrito"
+                                        [(ngModel)]="ubigeo_distrito"
+                                        placeholder="Selec. Distrito"
+                                    >
+                                        <option value="">Selec. Distrito</option>
+
+                                        <ng-container *ngFor="let DISTRITO of DISTRITO_SELECTEDS">
+                                            <option [value]="DISTRITO.id">{{ DISTRITO.name }}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id != 5 && validationDeliverie()">
+                                    <input type="text" [(ngModel)]="agencia" name="agencia" class="form-control mb-2" placeholder=" Agencia de Envio" />
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id != 5 && validationDeliverie()">
+                                    <input type="text" [(ngModel)]="full_name_encargado" name="full_name_encargado" class="form-control mb-2" placeholder="Nombre del encargado de recojo" />
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id != 5 && validationDeliverie()">
+                                    <input type="text" [(ngModel)]="documento_encargado" name="documento_encargado" class="form-control mb-2" placeholder="Documento del encargado de recojo" />
+                                </div>
+                                <div class="col-3" *ngIf="sucursale_deliverie_id != 5 && validationDeliverie()">
+                                    <input type="text" [(ngModel)]="telefono_encargado" name="telefono_encargado" class="form-control mb-2" placeholder="Telefono del encargado de recojo" />
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Card body-->
+                    </div>
+                    <!--end::Order details-->
+                    <div class="row justify-content-between">
+                        <!--begin::Button-->
+                        <div class="col-6">
+                            <textarea class="form-control form-control-solid mx-2" rows="3" [(ngModel)]="description" name="description" placeholder="Descripción general"></textarea>
+                        </div>
+
+                        <div class="col-3">
+                            <button type="button" (click)="save()" class="btn btn-primary">
+                                <span class="indicator-label">
+                                    Crear Proforma
+                                </span>
+                                <!-- <span class="indicator-progress">
+                                    Please wait... <span class="spinner-border spinner-border-sm align-middle ms-2"></span>
+                                </span> -->
+                            </button>
+                        </div>
+                        <!--end::Button-->
+                    </div>
+                </div>
+                <!--end::Main column-->
+            </form>
+            <!--end::Form-->
+        </div>
+        <!--end::Content container-->
+    </div>
+    <!--end::Content-->
+
+</div>
